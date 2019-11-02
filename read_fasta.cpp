@@ -25,21 +25,27 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 					sequences.push_back(new_seq);		//rassemble TOUTES les sequences
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);		//rassemble les allèles (uniques)
-					}
 				}
+			}
 			for (size_t i(0) ; i < ALLELES.size() ; ++i){
 				double c(0);
 				for (size_t k(0) ; k < sequences.size() ; ++k) if (ALLELES[i] == sequences[k]) ++c; //compte le nbre d'apparition de l'allèle
 				F.push_back(c/sequences.size());
-				}
-			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
+			}
+			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;	//attribution de valeurs
 			confstr.close();
 		} else throw("Could not open configuration file " + file);
+	} catch(std::ifstream::failure &e){
+		throw(e.what());		//on renvoie l'erreur dans le main pour pourvoir return 1;
 		} 
-	}
-	/* à ajouter dans le main*/
+}
 
-catch(std::ifstream::failure &e){
-			std::cout << e.what() << std::endl;
-			return 1;
-				}
+	/* à ajouter dans le main*/
+	
+int main(){
+	
+	catch(std::ifstream::failure &e){
+		std::cout << e.what() << std::endl;
+		return 0;
+		}
+	}
