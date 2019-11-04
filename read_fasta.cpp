@@ -35,17 +35,13 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;	//attribution de valeurs
 			confstr.close();
 		} else throw("Could not open configuration file " + file);
-	} catch(std::ifstream::failure &e){
-		throw(e.what());		//on renvoie l'erreur dans le main pour pourvoir return 1;
-		} 
+	}
 }
 
-	/* à ajouter dans le main*/
-	
-int main(){
+/* à ajouter dans le main
 	
 	catch(std::ifstream::failure &e){
 		std::cout << e.what() << std::endl;
 		return 0;
 		}
-	}
+*/
