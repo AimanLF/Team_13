@@ -8,7 +8,7 @@
    Population parameters:
   - \ref individuals : total number of individuals
   - \ref alleles : total number of alleles
-  - \ref frenquencies_ini : the initial frequencies
+  - \ref frenquence : the initial frequencies
   - \ref genetic_code : list of the different codons
  */
 
@@ -20,7 +20,7 @@ public :
   Default constructor initializes the following variables:
   \param _n (size_t): total number of individuals
   \param _a (size_t): total number of alleles 
-  \param _f (vector<double>): the initial frequencies
+  \param _f (vector<double>): frequencies of different alleles
   \param _c (vector<string>): list of the different codons
  */
 	Population(size_t _n, size_t _a, const std::vector<double>& _f, const std::vector<std::string>& _c)

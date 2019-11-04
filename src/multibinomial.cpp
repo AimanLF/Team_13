@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-std::vector<double> multibinomiale (int N, std::vector<double> f)
+std::vector<double> multibinomial (int N, std::vector<double> f)
 {
 	std::mt19937 rng;
 	std::random_device rd;

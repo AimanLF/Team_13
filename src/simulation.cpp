@@ -7,13 +7,15 @@ Simulation::Simulation(const size_t _t, const size_t _r, size_t _n, size_t _a,
 {
 	for (size_t i(0); i<_r;++i){
 		Population pop (_n,_a,_f,_c);
-		pops.push_back(pop);
+		populations.push_back(pop);
 	}
 }
 
 void Simulation::run() {
-	for (size_t i(0); i<pops.size();++i){
-		pops[i].step();
-		pops[i].print();
+	for (size_t t(0); t<endtime; ++t){
+		for (size_t i(0); i<populations.size();++i){
+			populations[i].step();
+			populations[i].print();
+		}
 	}
 }
