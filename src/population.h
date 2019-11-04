@@ -1,19 +1,44 @@
-#include <vector>
 #include <string>
+#include <vector>
+#include <iostream>
 
+/*! \class Population
+  A population is a number of \ref individuals with each a number of \ref alleles
+  
+   Population parameters:
+  - \ref individuals : total number of individuals
+  - \ref alleles : total number of alleles
+  - \ref frenquencies_ini : the initial frequencies
+  - \ref genetic_code : list of the different codons
+ */
 
 class Population{
+
 public :
-	Population(size_t n_, size_t a_, const std::vector<double> &frequence_, const std::vector<std::string> &codons_);
-	//Mis à jour de la population avec les nouvelles fréquences d'allèles
+
+/*! 
+  Default constructor initializes the following variables:
+  \param _n (size_t): total number of individuals
+  \param _a (size_t): total number of alleles 
+  \param _f (vector<double>): the initial frequencies
+  \param _c (vector<string>): list of the different codons
+ */
+	Population(size_t _n, size_t _a, const std::vector<double>& _f, const std::vector<std::string>& _c)
+	:individuals(_n), alleles(_a), frequence(_f), genetic_code(_c){};
+		
+/*! 
+  Performs one time-step of the simulation, update the population with new frenquienies of alleles
+ */
 	void step();
-	//Affiche la population
+
+/*! 
+  Print the results of step to show caracteristics of the population
+*/
 	void print() const;
 	
 private :
-	size_t n; //Nb d'individus
-	size_t a; //Nb allèle
-	std::vector<double> frequence; //Frequence de chaque allèle
-	std::vector<std::string> codons; //Codons de chaque allèle
-	
+	size_t individuals; 
+	size_t alleles; 
+	std::vector<double> frequence; 
+	std::vector<std::string> genetic_code; 
 };
