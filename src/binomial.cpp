@@ -1,36 +1,42 @@
 #include <random>
 #include <iostream>
 
-//Seulement un cpp, une méthode
-//vector multibinomial(int N, vector 
-//return nouveau tableau de fréquences
-
-//avec f tableau de fréquence actuelles, N nombre d'individus
-
+#include <random>
+#include <iostream>
 
 
 std::vector<double> multinomiale (int N, std::vector<double> f)
 {
+	std::mt19937 rng;
+	std::random_device rd;
+	rng = std::mt19937(rd());
+		
 	std::vector<double> new_frequences;
 	
-	for(int i(0); i<N ; ++i) {
+	for(size_t i(0); i< f.size()-1; ++i) {
 		double mean(N);
 		double var(f[i]);
 		double tmps(N);
 		
-		for(int j(0); j<i; ++j) {
+		for(size_t j(0); j<i; ++j) {
 			mean -= new_frequences[j];
 			tmps -=f[j];
 		}
 		
 		var = var/tmps;
 		
-		std::binomial_distribution<double> distribution(mean, var);
-		new_frequences[i] = distribution(rng);
+		std::binomial_distribution<> distribution(mean*100, var); //pour avoir le chiffres réels
+		
+		new_frequences.push_back(distribution(rng)*0.01); //on transforme en pourcentage
+		
 	}
+	
+	double f_last(1);
+	for(auto f : new_frequences) {
+		f_last -= f;
+	}
+	
+	new_frequences.push_back(f_last);
+	
 	return new_frequences;
 }
-
-/*il faut qu'on met un random generateur qqpart
- * donc dans quels fichiers si on s'en sert plusieurs fois ?
- */
