@@ -32,10 +32,10 @@ int main(int argc, char ** argv) {
   
   cmd.parse(argc, argv);
   
-  if(file_name.getValue() != "" ) {
+ /* if(file_name.getValue() != "" ) {
 	//on lit le fichier
 	  	//if la fonction qui lit le ficher renvoit un message d'erreur on utilise les valeurs par défauts
-	 } 
+	 } */
 	  
   if (population_size.getValue() < 1) {
     std::cerr << "Population size must be strictly positive" << std::endl;
@@ -75,33 +75,6 @@ int main(int argc, char ** argv) {
 }
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
