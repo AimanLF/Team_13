@@ -5,11 +5,10 @@
 #include <sstream>
 #include <algorithm>
 
-void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file){
+bool read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file){
 	try{
 		std::ifstream confstr(file);
 		if (confstr.is_open()){
-			for (auto val : marqueurs) if (val < 0) throw std::invalid_argument("Invalid markers given in file : " + file);	//marqueurs négatif rejetés
 			
 			std::vector<std::string> sequences, ALLELES;
 			std::vector<double> F;
@@ -28,7 +27,10 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 					sequences.push_back(new_seq);
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);
-				} else throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
+				} else {
+					throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
+					return false;
+				}
 			}
 			for (size_t i(0) ; i < ALLELES.size() ; ++i){
 				double c(0);
@@ -37,14 +39,14 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			}
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
 			confstr.close();
-		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
+		} else {
+			throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
+			return false;
+		}
 	}
-}
-
-/* à ajouter dans le main
-	
 	catch(std::invalid_argument &e){
 		std::cout << e.what() << std::endl;
-		return 0;
 		}
-*/
+	return true;
+}
+
