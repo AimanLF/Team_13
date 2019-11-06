@@ -65,8 +65,6 @@ int main(int argc, char ** argv) {
 	  
 	  if (f < 0 or f > 1)  {
 		  std::cerr << "Frequencies must be between 0 and 1 included" << std::endl;
-	   
-		  
 		  return 1;
 		}
 	  }
