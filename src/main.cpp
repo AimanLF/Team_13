@@ -11,24 +11,28 @@ int main(int argc, char ** argv) {
   cmd.add(file_name);
 
   //Taille de la population
-  TCLAP::ValueArg <size_t> population_size("N", "size", "number of individuals", true, 100, "size_t");
+  TCLAP::ValueArg <size_t> population_size("N", "size", "number of individuals", false, 100, "size_t");
   cmd.add(population_size);
 
   //Durée (en nombre de générations) de la simulation 
-  TCLAP::ValueArg <size_t> duration("T", "time", "number of generations", true, 10, "size_t");
+  TCLAP::ValueArg <size_t> duration("T", "time", "number of generations", false, 10, "size_t");
   cmd.add(duration);
 
   //Nombre d’allèles dans la population
-  TCLAP::ValueArg <size_t> alleles_number("A", "alleles number", "number of alleles in the population", true, 2, "size_t");
+  TCLAP::ValueArg <size_t> alleles_number("A", "alleles number", "number of alleles in the population", false, 2, "size_t");
   cmd.add(alleles_number);
   
   //Fréquences initiales des allèles 
-  TCLAP::MultiArg<double> freq("f", "frequences", "frequencies (as fraction of the population)", true, "double" );
+  TCLAP::MultiArg<double> freq("f", "frequences", "frequencies (as fraction of the population)", false, "double" );
   cmd.add(freq);
 
   //la simulation sera répétée R fois
-  TCLAP::ValueArg <size_t> repetitions("R", "number of repetions", "simulation will be repeted R times", true, 2, "size_t");
+  TCLAP::ValueArg <size_t> repetitions("R", "number of repetions", "simulation will be repeted R times", false, 2, "size_t");
   cmd.add(repetitions);
+  
+  //positions le long de la séquence qui déterminent les allèles	
+  TCLAP::MultiArg<size_t> markers("M", "markers", "alleles' positions on the sequence", false, "size_t" );
+  cmd.add(markers);  	
   
   cmd.parse(argc, argv);
   
