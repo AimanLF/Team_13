@@ -11,31 +11,35 @@ int main(int argc, char ** argv) {
   cmd.add(file_name);
 
   //Taille de la population
-  TCLAP::ValueArg <size_t> population_size("N", "size", "number of individuals", true, 100, "size_t");
+  TCLAP::ValueArg <size_t> population_size("N", "size", "number of individuals", false, 100, "size_t");
   cmd.add(population_size);
 
   //Durée (en nombre de générations) de la simulation 
-  TCLAP::ValueArg <size_t> duration("T", "time", "number of generations", true, 10, "size_t");
+  TCLAP::ValueArg <size_t> duration("T", "time", "number of generations", false, 10, "size_t");
   cmd.add(duration);
 
   //Nombre d’allèles dans la population
-  TCLAP::ValueArg <size_t> alleles_number("A", "alleles number", "number of alleles in the population", true, 2, "size_t");
+  TCLAP::ValueArg <size_t> alleles_number("A", "alleles number", "number of alleles in the population", false, 2, "size_t");
   cmd.add(alleles_number);
   
   //Fréquences initiales des allèles 
-  TCLAP::MultiArg<double> freq("f", "frequences", "frequencies (as fraction of the population)", true, "double" );
+  TCLAP::MultiArg<double> freq("f", "frequences", "frequencies (as fraction of the population)", false, "double" );
   cmd.add(freq);
 
   //la simulation sera répétée R fois
-  TCLAP::ValueArg <size_t> repetitions("R", "number of repetions", "simulation will be repeted R times", true, 2, "size_t");
+  TCLAP::ValueArg <size_t> repetitions("R", "number of repetions", "simulation will be repeted R times", false, 2, "size_t");
   cmd.add(repetitions);
+  
+  //positions le long de la séquence qui déterminent les allèles	
+  TCLAP::MultiArg<size_t> markers("M", "markers", "alleles' positions on the sequence", false, "size_t" );
+  cmd.add(markers);  	
   
   cmd.parse(argc, argv);
   
-  if(file_name.getValue() != "" ) {
+ /* if(file_name.getValue() != "" ) {
 	//on lit le fichier
 	  	//if la fonction qui lit le ficher renvoit un message d'erreur on utilise les valeurs par défauts
-	 } 
+	 } */
 	  
   if (population_size.getValue() < 1) {
     std::cerr << "Population size must be strictly positive" << std::endl;
@@ -61,8 +65,6 @@ int main(int argc, char ** argv) {
 	  
 	  if (f < 0 or f > 1)  {
 		  std::cerr << "Frequencies must be between 0 and 1 included" << std::endl;
-	   
-		  
 		  return 1;
 		}
 	  }
@@ -75,33 +77,6 @@ int main(int argc, char ** argv) {
 }
   return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
