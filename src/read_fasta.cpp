@@ -27,10 +27,7 @@ bool read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 					sequences.push_back(new_seq);
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);
-				} else {
-					throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
-					return false;
-				}
+				} else throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
 			}
 			for (size_t i(0) ; i < ALLELES.size() ; ++i){
 				double c(0);
@@ -39,13 +36,11 @@ bool read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			}
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
 			confstr.close();
-		} else {
-			throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
-			return false;
-		}
+		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
 	}
 	catch(std::invalid_argument &e){
 		std::cout << e.what() << std::endl;
+		return false;
 		}
 	return true;
 }
