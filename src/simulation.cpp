@@ -20,6 +20,6 @@ void Simulation::run() {
 	}
 }
 
-std::vector getFreqPop (size_t numPopu) const{
+std::vector getFreqPop<double> (size_t numPopu) const{
 	return populations[numPopu].getAllelesFreq();
 }
