@@ -35,7 +35,7 @@ public:
 /*!
   Return the allelic frequencies of a given population
  */	
-    std::vector getFreqPop (size_t numPopu) const;
+    std::vector<double> getFreqPop (size_t numPopu) const;
 
 private:
 	std::vector<Population> populations;
