@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <random>
 
 /*! \class Population
   A population is a number of \ref individuals with each a number of \ref alleles
@@ -10,6 +11,7 @@
   - \ref alleles : total number of alleles
   - \ref frenquence : the initial frequencies
   - \ref genetic_code : list of the different codons
+  - \ref rng : random generator of all the populations (static)
  */
 
 class Population{
@@ -24,7 +26,11 @@ public :
   \param _c (vector<string>): list of the different codons
  */
 	Population(size_t _n, size_t _a, const std::vector<double>& _f, const std::vector<std::string>& _c)
-	:individuals(_n), alleles(_a), frequence(_f), genetic_code(_c){};
+	:individuals(_n), alleles(_a), frequence(_f), genetic_code(_c)
+	{
+		std::random_device rd;
+		rng = std::mt19937(rd());
+	};
 		
 /*! 
   Performs one time-step of the simulation, update the population with new frenquienies of alleles
@@ -32,13 +38,14 @@ public :
 	void step();
 
 /*! 
-  Print the results of step to show caracteristics of the population
+  Return a string of the alleles frenquencies.
 */
-	void print() const;
+	std::string getAlleles() const;
 	
 private :
 	size_t individuals; 
 	size_t alleles; 
 	std::vector<double> frequence; 
 	std::vector<std::string> genetic_code; 
+	static std::mt19937 rng;
 };
