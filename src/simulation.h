@@ -1,4 +1,5 @@
 #include "population.h"
+#include <string>
 
 /*! \class Simulation
   This class defines the simulation parameters and constructs all the \ref Population in \ref pops.
@@ -31,6 +32,10 @@ public:
   Each iteration calls \ref Population::step and \ref Population::print
  */
     void run();
+/*!
+  Return the allelic frequencies of a given population
+ */	
+    std::vector getFreqPop (size_t numPopu) const;
 
 private:
 	std::vector<Population> populations;
