@@ -25,11 +25,11 @@ size_t nbPop(100); //Is 100 populations enough ?
       f4 += freq[3];
       f5 += freq[4];
     }
-    EXPECT_NEAR(freq1, f1, 1e-4); //Approximation?
-    EXPECT_NEAR(freq2, f2, 1e-4);
-    EXPECT_NEAR(freq3, f3, 1e-4);
-    EXPECT_NEAR(freq4, f4, 1e-4);
-    EXPECT_NEAR(freq5, f5, 1e-4);
+    EXPECT_NEAR(freq1, f1/nbPop, 1e-4); //Approximation?
+    EXPECT_NEAR(freq2, f2/nbPop, 1e-4);
+    EXPECT_NEAR(freq3, f3/nbPop, 1e-4);
+    EXPECT_NEAR(freq4, f4/nbPop, 1e-4);
+    EXPECT_NEAR(freq5, f5/nbPop, 1e-4);
   }
 }
 
