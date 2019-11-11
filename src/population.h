@@ -40,8 +40,9 @@ public :
 /*! 
   Return a string of the alleles frenquencies.
 */
-	std::string getAlleles() const;
+	std::string getAllelesFreq() const;
 	
+	std::vector<double> getAllelesFreq() const;
 private :
 	size_t individuals; 
 	size_t alleles; 
