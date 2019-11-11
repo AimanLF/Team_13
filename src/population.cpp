@@ -1,11 +1,15 @@
 #include "population.h"
 #include "multibinomial.cpp"
+#include <string>
 	
 void Population:: step(){
 	frequence = multibinomial(individuals, frequence);
 }
 
-void Population::print() const{
+std::string Population::getAlleles const{
+	std::string alleles ('|');
 	for (auto f : frequence){
-		std::cout << f << '|';}
+		alleles = alleles + f + '|';	
+	}
+	return alleles;
 }
