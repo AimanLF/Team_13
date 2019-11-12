@@ -15,11 +15,11 @@ void Simulation::run() {
 	for (size_t t(0); t<endtime; ++t){
 		for (size_t i(0); i<populations.size();++i){
 			populations[i].step();
-			populations[i].print();
+			//populations[i].print(); To modify given the choise of the user
 		}
 	}
 }
 
-std::vector getFreqPop<double> (size_t numPopu) const{
-	return populations[numPopu].getAllelesFreq();
+std::vector<double> Simulation:: getFreqPop(size_t numPopu) const{
+	return populations[numPopu].getFreq();
 }

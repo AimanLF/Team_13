@@ -42,7 +42,7 @@ public :
 */
 	std::string getAllelesFreq() const;
 	
-	std::vector<double> getAllelesFreq() const;
+	std::vector<double> getFreq() const;
 private :
 	size_t individuals; 
 	size_t alleles; 
