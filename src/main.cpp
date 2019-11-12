@@ -138,10 +138,10 @@ int main(int argc, char ** argv) {
   
 }
 
-	/*
-	catch() {}  //erreurs de tout le monde
-*/
 
+	catch(std::invalid_argument &e){			//catch les erreurs de read_fasta()
+		std::cout << e.what() << std::endl;
+		}
 
   return 0;
 }

@@ -5,8 +5,7 @@
 #include <sstream>
 #include <algorithm>
 
-bool read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file){
-	try{
+void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file){
 		std::ifstream confstr(file);
 		if (confstr.is_open()){
 			
@@ -37,11 +36,5 @@ bool read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
 			confstr.close();
 		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
-	}
-	catch(std::invalid_argument &e){
-		std::cout << e.what() << std::endl;
-		return false;
-		}
-	return true;
 }
 
