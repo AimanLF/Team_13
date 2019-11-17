@@ -14,6 +14,11 @@ std::string Population::getAllelesFreq() const{
 	return alleles;
 }
 
-std::vector<double> Population:: getFreq() const {
+std::vector<double> Population::getFreq() const {
 	return frequence;
+}
+
+
+std::vector<std::string> Population::getgenetic_code() const {
+	return genetic_code;
 }
