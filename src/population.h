@@ -9,7 +9,7 @@
    Population parameters:
   - \ref individuals : total number of individuals
   - \ref alleles : total number of alleles
-  - \ref frenquence : the initial frequencies
+  - \ref frequence : the initial frequencies
   - \ref genetic_code : list of the different codons
   - \ref rng : random generator of all the populations (static)
  */
