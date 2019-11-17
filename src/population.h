@@ -33,7 +33,7 @@ public :
 	};
 		
 /*! 
-  Performs one time-step of the simulation, update the population with new frenquienies of alleles
+  Performs one time-step of the simulation, update the population with new frequencies of alleles
  */
 	void step();
 
@@ -43,6 +43,9 @@ public :
 	std::string getAllelesFreq() const;
 	
 	std::vector<double> getFreq() const;
+	
+	std::vector<std::string> getgenetic_code() const;
+	
 private :
 	size_t individuals; 
 	size_t alleles; 
