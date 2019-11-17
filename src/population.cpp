@@ -3,7 +3,7 @@
 #include <string>
 	
 void Population:: step(){
-	frequence = multibinomial(individuals, frequence);
+	frequence = multibinomial(individuals, frequence, rng);
 }
 
 std::string Population::getAllelesFreq() const{
