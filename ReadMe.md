@@ -4,7 +4,7 @@ Aim is to simulate the evolution of a genetic population over time. A population
 ## Run the program
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes: 
 git clone https://github.com/EPFL-SV-cpp-projects/Team_13.git 
-cd Team_13 '\n'
+cd Team_13
 rm -rf build 
 mkdir build cd build 
 cmake ../ 
