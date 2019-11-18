@@ -5,6 +5,14 @@
 #include <sstream>
 #include <algorithm>
 
+char pick_nucleotide(){
+	double i(rand() % 4);
+	if (i == 0) return 'A';
+	if (i == 1) return 'T';
+	if (i == 2) return 'G';
+	return 'C';
+}
+
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file){
 		std::ifstream confstr(file);
 		if (confstr.is_open()){
@@ -21,8 +29,9 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
                 line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
                 std::transform(line.begin(), line.end(), line.begin(), ::toupper);
                 if (line[0] == '>') ++N_ind;
-                else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C'){
-					for (auto num : marqueurs) new_seq += line[num];
+                else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C' or line[0] == 'N'){
+					for (auto num : marqueurs)  if (line[num] == 'N') new_seq += pick_nucleotide(); 					//comme demandé en cours, pick un nucleotide au hasard (même proba)
+												else new_seq += line[num];												//à chaque N rencontré
 					sequences.push_back(new_seq);
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);
