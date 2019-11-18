@@ -11,7 +11,7 @@ std::vector<double> multibinomial (int N, std::vector<double> f,std::mt19937 rng
 	
 	for(size_t i(0); i< f.size()-1; ++i) {
 		if(f[i] == 0 ) {
-			new_frequnces.push_back(0.0);
+			new_frequences.push_back(0.0);
 		} else {
 			double mean(N);
 			double var(f[i]);
