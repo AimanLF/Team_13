@@ -72,8 +72,8 @@ int main(int argc, char ** argv) {
 			Population new_pop(_population_size, _alleles_number, _freqs, _genetic_code);
 			
 		} else {
-			std::vector<std::string> default_code(4,"-");
-			
+			std::vector<std::string> default_code;
+			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) default_code.push_back(std::to_string(i+1));
 			Population new_pop(population_size.getValue(), alleles_number.getValue(), freq.getValue(), default_code);
 			
 		}
@@ -126,4 +126,4 @@ int main(int argc, char ** argv) {
 	return nerr;
 }
 
-    
+   
