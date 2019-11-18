@@ -1,6 +1,6 @@
 #include <tclap/CmdLine.h>
-#include "read_fasta.cpp"
-#include "population.h"
+#include "read_fasta.h"
+#include "simulation.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -101,18 +101,18 @@ int main(int argc, char ** argv) {
 		double total_freq(0);
 		for(auto f : freq.getValue()) {
 			total_freq += f;
-			
-			if (total_freq != 1) {
-			   std::cerr << "Sum of frequencies must be equal to 1" << std::endl;
-			   nerr+= 1;
+		
+		if (f < 0 or f > 1)  {
+		   std::cerr << "Frequencies must be between 0 and 1 included" << std::endl;
+		   nerr+= 1;
 			}
-			
-			if (f < 0 or f > 1)  {
-			  std::cerr << "Frequencies must be between 0 and 1 included" << std::endl;
-			  nerr+= 1;
-			}
-		}
 	  
+		}
+		if (total_freq != 1) {
+		   std::cerr << "Sum of frequencies must be equal to 1" << std::endl;
+		   nerr+= 1;
+			}
+			
 	  if (repetitions.getValue() < 1) {
 		std::cerr << "Number of repetitions must be strictly positive" << std::endl;
 		nerr+= 1;

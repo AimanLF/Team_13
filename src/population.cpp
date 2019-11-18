@@ -1,5 +1,5 @@
 #include "population.h"
-#include "multibinomial.cpp"
+#include "multibinomial.h"
 #include <string>
 	
 void Population:: step(){

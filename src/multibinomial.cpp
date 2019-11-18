@@ -1,9 +1,7 @@
 #include <random>
 #include <iostream>
-
-#include <random>
-#include <iostream>
-
+#include <vector>
+#include <multibinomial.h>
 
 std::vector<double> multibinomial (int N, std::vector<double> f,std::mt19937 rng)
 {

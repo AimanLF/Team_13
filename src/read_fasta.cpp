@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <read_fasta.h>
 
 char pick_nucleotide(){
 	double i(rand() % 4);

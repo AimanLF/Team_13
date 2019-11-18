@@ -1,0 +1,6 @@
+#include <vector>
+#include <string>
+
+
+char pick_nucleotide();
+void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file);
