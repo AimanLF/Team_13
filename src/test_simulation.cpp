@@ -9,7 +9,7 @@ double freq2 (0.4);
 double freq3 (0.1);
 double freq4 (0.05);
 double freq5 (0.15);
-size_t nbPop(100); //Is 100 populations enough ?
+size_t nbPop(100);
 
 //Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
  for (size_t i(0); i < 3; i++){
@@ -25,10 +25,38 @@ size_t nbPop(100); //Is 100 populations enough ?
       f4 += freq[3];
       f5 += freq[4];
     }
-    EXPECT_NEAR(freq1, f1/nbPop, 1e-4); //Approximation?
+    EXPECT_NEAR(freq1, f1/nbPop, 1e-4);
     EXPECT_NEAR(freq2, f2/nbPop, 1e-4);
     EXPECT_NEAR(freq3, f3/nbPop, 1e-4);
     EXPECT_NEAR(freq4, f4/nbPop, 1e-4);
     EXPECT_NEAR(freq5, f5/nbPop, 1e-4);
   }
+}
+
+TEST(simulationTest,fixation_time){
+double freqx (0.6);
+double freqy (0.4);
+Simulation simulation1(300,1,100,2,std::vector<double> = {freqx, freqy}, std::vector<std::string> (2,''));
+simulation1.run();
+bool cond1(1.0 == simulation1.getFreqPop(0) or 1.0 == simulation1.getFreqPop(1));		//float ?
+
+double freq1 (0.3);
+double freq2 (0.4);
+double freq3 (0.1);
+double freq4 (0.05);
+double freq5 (0.15);
+Simulation simulation2(300,1,100,2,std::vector<double> = {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,''));
+simulation2.run();
+bool cond2(1.0 == simulation2.getFreqPop(0) or 1.0 == simulation2.getFreqPop(1) or 1.0 == simulation2.getFreqPop(2)
+			or 1.0 == simulation2.getFreqPop(3) or 1.0 == simulation2.getFreqPop(4));		//float ?
+
+
+EXPECT_TRUE(cond1);
+EXPECT_TRUE(cond2);
+
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
