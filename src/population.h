@@ -26,11 +26,7 @@ public :
   \param _c (vector<string>): list of the different codons
  */
 	Population(size_t _n, size_t _a, const std::vector<double>& _f, const std::vector<std::string>& _c)
-	:individuals(_n), alleles(_a), frequence(_f), genetic_code(_c)
-	{
-		std::random_device rd;
-		rng = std::mt19937(rd());
-	};
+	:individuals(_n), alleles(_a), frequence(_f), genetic_code(_c){};
 		
 /*! 
   Performs one time-step of the simulation, update the population with new frequencies of alleles

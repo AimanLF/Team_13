@@ -1,6 +1,9 @@
 #include "population.h"
 #include "multibinomial.h"
 #include <string>
+
+std::random_device rd;
+std::mt19937 Population::rng = std::mt19937(rd());
 	
 void Population:: step(){
 	frequence = multibinomial(individuals, frequence, rng);
