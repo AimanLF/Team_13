@@ -1,5 +1,6 @@
 #include "population.h"
 #include <string>
+#include <fstream>
 
 /*! \class Simulation
   This class defines the simulation parameters and constructs all the \ref Population in \ref pops.
@@ -24,14 +25,19 @@ public:
   \param _f (vector<double>): frequence of the _r populations find in \ref pops; 
   \param _c (vector<string):codon of the _r populations find in \ref pops;
  */
-    Simulation(const size_t _t, const size_t _r, size_t _n, size_t _a, 
+    Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
 					const std::vector<double>& _f, const std::vector<std::string>& _c);
 	
 /*!
   The main operation of this class: runs the simulation through a loop with \ref endtime steps. 
   Each iteration calls \ref Population::step and \ref Population::print
  */
-    void run();
+	void step();
+	void run();
+	void print_term();
+	void print_fichier();
+	void print();
+
 /*!
   Return the allelic frequencies of a given population
  */	
@@ -41,4 +47,7 @@ private:
 	std::vector<Population> populations;
 	size_t endtime;			
 	size_t repetition;		
+	bool term;	
+	bool fichier;
+	std::ofstream output;
 };

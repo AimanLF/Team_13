@@ -13,7 +13,7 @@ size_t nbPop(100);
 
 //Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
  for (size_t i(0); i < 3; i++){
-    Simulation simulation(i,nbPop,300,5,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-")); 
+    Simulation simulation(i,nbPop,300,5,true, true,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-")); 
     simulation.run();
     
     double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
@@ -37,7 +37,7 @@ TEST(simulationTest,fixation_time){
 	//Test si une allèle se fixe avec 2 allèles
 	double freqx (0.6);
 	double freqy (0.4);
-	Simulation simulation1(300,1,100,2,std::vector<double> {freqx, freqy}, std::vector<std::string> (2,"-"));
+	Simulation simulation1(300,1,100,2,true, false,std::vector<double> {freqx, freqy}, std::vector<std::string> (2,"-"));
 	simulation1.run();
 
 	std::vector <double> f1 (simulation1.getFreqPop(0));
@@ -49,7 +49,7 @@ TEST(simulationTest,fixation_time){
 	double freq3 (0.1);
 	double freq4 (0.05);
 	double freq5 (0.15);
-	Simulation simulation2(300,1,100,2,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"));
+	Simulation simulation2(300,1,100,2, false, true, std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"));
 	simulation2.run();
 	
 	std::vector <double> f2 (simulation2.getFreqPop(0));
