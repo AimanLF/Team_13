@@ -4,36 +4,39 @@
 #include <multibinomial.h>
 
 std::vector<double> multibinomial (int N, std::vector<double> f,std::mt19937 rng)
-{
+{	
 	std::vector<double> new_frequences;
+	double mean(N);
+	double sum(N);	
 	
 	for(size_t i(0); i< f.size()-1; ++i) {
-		if(f[i] == 0 ) {
-			new_frequences.push_back(0.0);
-		} else {
-			double mean(N);
-			double var(f[i]);
-			double tmps(N);
+			
+			double var(f[i]*N);
+			
+			if(sum !=0) {
 		
-			for(size_t j(0); j<i; ++j) {
-				mean -= new_frequences[j];
-				tmps -=f[j];
+				std::binomial_distribution<> distribution(mean, var/sum); //pour avoir le chiffres réels
+		
+				new_frequences.push_back(distribution(rng)); //on transforme en pourcentage
+			
+				sum -= var;
+				mean -= new_frequences[i];
+			} else {
+				new_frequences.push_back(0.0);
 			}
 		
-			var = var/tmps;
-		
-			std::binomial_distribution<> distribution(mean*100, var); //pour avoir le chiffres réels
-		
-			new_frequences.push_back(distribution(rng)*0.01); //on transforme en pourcentage
-		}
 	}
 	
-	double f_last(1);
-	for(auto f : new_frequences) {
-		f_last -= f;
+	double f_last(N);
+	for(auto _f : new_frequences) {
+		f_last -= _f;
 	}
 	
 	new_frequences.push_back(f_last);
 	
+	for(auto& fre : new_frequences) {
+		fre = fre/N;
+	}
+	 	
 	return new_frequences;
 }
