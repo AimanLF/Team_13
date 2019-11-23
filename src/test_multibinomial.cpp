@@ -33,7 +33,7 @@ TEST(MultibinomialTest,somme1){
 }
 
 TEST(MultibinomialTest, fixation){
- //Test que une allèles étant = 0 ne peut pas réapparaître
+ //Test qu'un allèle à 0 ne peut pas réapparaître
  std::vector<double> test = {0.3,0.2,0.5,0.0};
  
  for(size_t i(0); i < 10; i++) {
