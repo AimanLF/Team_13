@@ -6,12 +6,11 @@ These instructions will get you a copy of the project up and running on your loc
 git clone https://github.com/EPFL-SV-cpp-projects/Team_13.git   
 cd Team_13  
 rm -rf build   
-mkdir build cd build   
-cmake ../   
+mkdir build 
+cd build   
+cmake ..  
 make   
 make doc   
-make test   
-cd ../../  
 
 ## Output
 
@@ -20,8 +19,8 @@ tbd
 ```
 
 ## Understand the tests
-
-Explain how to run the automated tests for this system
+To execute the tests, type the command:
+make test
 
 Explain what these tests test and why
 
