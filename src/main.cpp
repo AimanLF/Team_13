@@ -126,4 +126,30 @@ int main(int argc, char ** argv) {
 	return nerr;
 }
 
-   
+ /*#include <math>
+#include <algorithm>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+
+
+int main()
+{
+	vector<vector<double>> matrix;() 
+	
+	//condition pour quue la taille des pop soit constante : r(0,1) + r(2,1) = r(1,0) + r(1,2)  (=le nombre d'individus arrivant de la pop 0 et la pop 2 dans la pop 1 doit être égal à celui partant de la pop 1 vers la pop 0 et 2)
+	std::srand(unsigned(std::time(0)));
+	for(size_t i(0), i < get_PopulationsSize(), ++i) {
+
+		if(i = get_PopulationsSize() -1 ) {
+			move_pop(i, 0, vector<size_t>(round(ratio * size_pop), );
+		} else { 
+			move_pop(i, i+1, vector<size_t>(round(ratio * size_pop), );	//méthode de simulation qui prendrait en argument une population de départ, une d'arrivée et les individus à faire migrer
+		} 
+		
+		std::random_shuffle(population[i].begin(), population[i].end();  //on mélange la population pour que se soient toujours les mêmes individus qui migrent
+		
+		}
+	return 0;
+}
+*/
