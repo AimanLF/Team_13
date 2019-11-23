@@ -14,7 +14,7 @@ make doc_
 
 ## Use read_fasta
 In order for the program to read you .fasta file, it will have to contain nucleotides sequences composed of A, T, C, G or N. In this last case, N will be replaces randomly by an other nucleotide.
-Other lines (chromosome number) has to start with ">" symbol.
+Other lines (chromosome number) have to start with ">" symbol.
 Example:
 ```
 >chr11 
