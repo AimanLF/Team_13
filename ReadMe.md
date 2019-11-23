@@ -27,7 +27,9 @@ sameAverage: tests the stability of alleles frequencies over time. For a large n
 fixation_time: for any simulation, one allele will always reach a frequency equal to 1 (so only one to remain). This test verify it's the case (with 2 and 5 alleles).  
 
 ### test_simulation
+somme1: check if sum of alleles frequencies remains equal to 1 after a given number of calls to multibinomial (10 in this case). 
 
+fixation: controls that if an allele disappear (ie. its frequence is null) it won't reappear in the simulation. 
 ```
 tbd
 ```
