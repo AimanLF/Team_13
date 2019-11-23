@@ -12,7 +12,19 @@ cmake ..
 make   
 make doc_
 
-## Output
+## Use read_fasta
+In order for the program to read you .fasta file, it will have to contain nucleotides sequences composed of A, T, C, G or N. In this last case, N will be replaces randomly by an other nucleotide.
+Other lines (chromosome number) has to start with ">" symbol.
+Example:
+```
+>chr11 
+CACTGTGTNTGATGATCAACAAAAACCTGGGGGGGGTAGTAGTAGTCC
+>chr7 
+AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
+...
+```
+
+## Read the output
 
 ```
 tbd
@@ -22,6 +34,7 @@ tbd
 To execute the tests, type the command:
 
 _make test_
+
 ### Test_multibinomial
 sameAverage: tests the stability of alleles frequencies over time. For a large number of populations, frequencies after 1, 2, 3 generations on average are the same has for t=0.
 
@@ -30,7 +43,7 @@ fixation_time: for any simulation, one allele will always reach a frequency equa
 ### test_simulation
 somme1: check if sum of alleles frequencies remains equal to 1 after a given number of calls to multibinomial (10 in this case). 
 
-fixation: controls that if an allele disappear (ie. its frequence is null) it won't reappear in the simulation. 
+fixation: controls that if an allele disappear (ie. its frequence is null) it won't reappear in the simulation (corresponds to extinction of the character). 
 ```
 tbd
 ```
