@@ -3,14 +3,14 @@ Aim is to simulate the evolution of a genetic population over time. A population
 
 ## Run the program
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes:   
-git clone https://github.com/EPFL-SV-cpp-projects/Team_13.git   
+_git clone https://github.com/EPFL-SV-cpp-projects/Team_13.git   
 cd Team_13  
 rm -rf build   
 mkdir build 
 cd build   
 cmake ..  
 make   
-make doc
+make doc_
 
 ## Output
 
@@ -20,7 +20,8 @@ tbd
 
 ## Understand the tests
 To execute the tests, type the command:
-make test
+
+_make test_
 ### Test_multibinomial
 sameAverage: tests the stability of alleles frequencies over time. For a large number of populations, frequencies after 1, 2, 3 generations on average are the same has for t=0.
 
