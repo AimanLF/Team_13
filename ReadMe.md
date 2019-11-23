@@ -22,7 +22,10 @@ tbd
 To execute the tests, type the command:
 make test
 ### Test_multibinomial
-Explain what these tests test and why
+sameAverage: tests the stability of alleles frequencies over time. For a large number of populations, frequencies after 1, 2, 3 generations on average are the same has for t=0.
+fixation_time: for any simulation, one allele will always reach a frequency equal to 1 (so only one to remain). This test verify it's the case (with 2 and 5 alleles).  
+
+### test_simulation
 
 ```
 tbd
