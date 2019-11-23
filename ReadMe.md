@@ -6,7 +6,7 @@ These instructions will get you a copy of the project up and running on your loc
 git clone https://github.com/EPFL-SV-cpp-projects/Team_13.git   
 cd Team_13  
 rm -rf build   
-mkdir build 
+$mk$dir build 
 cd build   
 cmake ..  
 make   
