@@ -1,9 +1,18 @@
 #include <iostream>
 #include <vector>
 #include <multibinomial.h>
+#include <assert.h>
+// uncomment to disable assert()
+// #define NDEBUG 
 
 std::vector<double> multibinomial (int N, std::vector<double> f,std::mt19937 rng)
 {	
+	double sommefreq(0);
+	for (auto freq : f)
+		sommefreq += freq;
+	assert(sommefreq == 1);
+	assert(N > 0);
+	
 	std::vector<double> new_frequences;
 	double mean(N);
 	double sum(N);	
