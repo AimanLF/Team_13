@@ -10,7 +10,7 @@ cd build
 cmake ..  
 make  
 make doc  
-./Wright_Fisherblabla
+./Wright_Fisherblabla_
 
 ## Use read_fasta
 In order for the program to read you .fasta file, it will have to contain nucleotides sequences composed of A, T, C, G or N. In this last case, N will be replaces randomly by an other nucleotide.
