@@ -60,7 +60,7 @@ int main(int argc, char ** argv) {
 		if(file_name.isSet()) {
 			
 			try {
-				for (auto val : markers.getValue()) if (val < 0) throw TCLAP::ArgException("Markers must be positive");
+				for (auto val : markers.getValue()) if (val < 1) throw TCLAP::ArgException("Markers must be strictly positive");
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
