@@ -41,8 +41,8 @@ int main(int argc, char ** argv) {
 	  cmd.add(repetitions);
 	  
 	  //marqueurs	
-	  TCLAP::MultiArg<int> markers("m", "markers", "alleles' positions on the sequence", false, "int" );
-	  cmd.add(markers);  	
+	  TCLAP::MultiArg<size_t> markers("m", "markers", "alleles' positions on the sequence", false, "size_t" );
+	  cmd.add(markers);
 	  
 	  cmd.parse(argc, argv);		//trié les exeptions en fonctions du fasta/terminal
 	    	
@@ -52,7 +52,7 @@ int main(int argc, char ** argv) {
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
-	  std::vector<int> _markers(markers.getValue());
+	  std::vector<size_t> _markers(markers.getValue());
 	  int _population_size(population_size.getValue());
 	  size_t _alleles_number((freq.getValue()).size());
 	  std::string _file_name(file_name.getValue());
@@ -60,7 +60,7 @@ int main(int argc, char ** argv) {
 		if(file_name.isSet()) {
 			
 			try {
-				for (auto val : markers.getValue()) if (val < 1) throw TCLAP::ArgException("Markers must be strictly positive");
+				//for (auto val : markers.getValue()) if (val < 1) throw TCLAP::ArgException("Markers must be strictly positive"); //les size_t négatifs sont convertis en positifs donc pas de sens
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
