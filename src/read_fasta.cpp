@@ -26,7 +26,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			bool exist(false);
 			
 			while(std::getline(confstr, line)){
-				
+				//attention marqueurs > line.size()
                 line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
                 std::transform(line.begin(), line.end(), line.begin(), ::toupper);
                 if (line[0] == '>') ++N_ind;

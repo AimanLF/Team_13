@@ -17,7 +17,7 @@ int main(int argc, char ** argv) {
 	  TCLAP::CmdLine cmd("commande");
   
 	  //Saisie par l'utilisateur
-	  TCLAP::ValueArg <std::string> file_name("f", "file name", "File with parameters", false, "", "string");
+	  TCLAP::ValueArg <std::string> file_name("f", "file_name", "File with parameters", false, "", "string");
 	  cmd.add(file_name);
 	  
 	  //Affichage terminal et/ou fichier
@@ -35,7 +35,7 @@ int main(int argc, char ** argv) {
 	  cmd.add(duration);
 
 	  //Nombre de combinaisons de nucléotides différentes aux positions markers
-	  TCLAP::ValueArg <size_t> alleles_number("a", "alleles number", "number of alleles in the population", false, 2, "size_t");
+	  TCLAP::ValueArg <size_t> alleles_number("a", "alleles_number", "number of alleles in the population", false, 2, "size_t");
 	  cmd.add(alleles_number);
 	  
 	  //Fréquences initiales des allèles 
@@ -43,7 +43,7 @@ int main(int argc, char ** argv) {
 	  cmd.add(freq);
 
 	  //la simulation sera répétée R fois
-	  TCLAP::ValueArg <size_t> repetitions("r", "number of repetions", "simulation will be repeted R times", false, 2, "size_t");
+	  TCLAP::ValueArg <size_t> repetitions("r", "number_repetions", "simulation will be repeted R times", false, 2, "size_t");
 	  cmd.add(repetitions);
 	  
 	  //positions le long de la séquence qui déterminent les allèles	
@@ -105,11 +105,11 @@ int main(int argc, char ** argv) {
 			}
 	  
 		}
-		if (total_freq != 1) {
+	/*	if (total_freq != 1) {
 		   std::cerr << "Sum of frequencies must be equal to 1" << std::endl;
 		   nerr+= 1;
 			}
-			
+		*/	
 	  if (repetitions.getValue() < 1) {
 		std::cerr << "Number of repetitions must be strictly positive" << std::endl;
 		nerr+= 1;
