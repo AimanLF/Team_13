@@ -25,7 +25,6 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			size_t N_ind(0);
 			
 			std::string line;
-			bool exist(false);
 			
 			while(std::getline(confstr, line)){
 				line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
@@ -34,6 +33,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
                 else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C' or line[0] == 'N'){
 					for (auto val : marqueurs) if (val > line.size()) throw std::invalid_argument("Markers refer to non-existant nucleotide.");
 					std::string new_seq("");
+					bool exist(false);
 					for (auto num : marqueurs)  if (line[num-1] == 'N') new_seq += pick_nucleotide();
 												else new_seq += line[num-1];
 					sequences.push_back(new_seq);
