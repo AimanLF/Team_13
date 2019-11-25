@@ -10,8 +10,6 @@
 
 int main(int argc, char ** argv) {
 	
-	int nerr = 0;
-	
 	try {
 	
 	  TCLAP::CmdLine cmd("commande");
@@ -39,7 +37,7 @@ int main(int argc, char ** argv) {
 	  cmd.add(freq);
 
 	  //la simulation sera répétée R fois
-	  TCLAP::ValueArg <size_t> repetitions("r", "number_repetions", "simulation will be repeted R times", false, 2, "size_t");
+	  TCLAP::ValueArg <size_t> repetitions("r", "number_repetions", "simulation will be repeated R times", false, 3, "size_t");
 	  cmd.add(repetitions);
 	  
 	  //positions le long de la séquence qui déterminent les allèles	
@@ -47,6 +45,17 @@ int main(int argc, char ** argv) {
 	  cmd.add(markers);  	
 	  
 	  cmd.parse(argc, argv);
+	    
+	    double total_freq(0);
+		for(auto f : freq.getValue()) {
+			total_freq += f;
+			if (f < 0 or f > 1) throw TCLAP::ArgException("Frequencies must be between 0 and 1 included");
+		}
+		if (1-total_freq > 0.001 or 1-total_freq < -0.001) throw TCLAP::ArgException("Sum of frequencies must be equal to 1");	
+		if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified"); 
+		if (population_size.getValue() < 1) throw TCLAP::ArgException("Population size must be strictly positive");
+		if (duration.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive");
+		if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive");
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
@@ -56,13 +65,12 @@ int main(int argc, char ** argv) {
 	  std::string _file_name(file_name.getValue());
 	  
 		if(file_name.isSet()) {
-		//on lit le fichier 
-
+			
 			try {
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
-				nerr+= 1;
+				return -2;
 			}
 			
 		} else {
@@ -70,51 +78,14 @@ int main(int argc, char ** argv) {
 		}
 		
 		Simulation simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
-	 
-		  
-		if(!terminal.isSet() and !print_file.isSet()) {
-			std::cerr << "At least one output has to specified" << std::endl; 
-		}
-			
-		if(population_size.getValue() < 1) {
-			std::cerr << "Population size must be strictly positive" << std::endl;
-			nerr+= 1;
-		}
-		
-		if(duration.getValue() < 1) {
-			std::cerr << "Simulation duration must be strictly positive" << std::endl;
-			nerr+= 1;
-		}
-	  
-		double total_freq(0);
-		for(auto f : freq.getValue()) {
-			total_freq += f;
-		
-		if (f < 0 or f > 1)  {
-		   std::cerr << "Frequencies must be between 0 and 1 included" << std::endl;
-		   nerr+= 1;
-			}
-	  
-		}
-	/*	if (total_freq != 1) {
-		   std::cerr << "Sum of frequencies must be equal to 1" << std::endl;
-		   nerr+= 1;
-			}
-		*/	
-	  if (repetitions.getValue() < 1) {
-		std::cerr << "Number of repetitions must be strictly positive" << std::endl;
-		nerr+= 1;
-	  }
-	  
-	  simulation.run();
-	
+		simulation.run();
 	  
 	} catch (TCLAP::ArgException &e) {
-		std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
-		nerr+= 1;
+		std::cerr << "error: " << e.error() << std::endl;
+		return -1;
 	}
 	
-	return nerr;
+	return 0;
 }
 
  /*#include <math>
