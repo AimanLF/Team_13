@@ -24,23 +24,23 @@ int main(int argc, char ** argv) {
 	  TCLAP::ValueArg <bool> print_file("i", "print_file", "Print results in a file", false, "", "bool");
 	  cmd.add(print_file);
 
-	  //Taille de la population (= aussi nombre de séquences dans le .fasta)
+	  //Taille de la population
 	  TCLAP::ValueArg <int> population_size("n", "size", "number of individuals", false, 100, "int");
 	  cmd.add(population_size);
 
-	  //Durée (en nombre de générations) de la simulation 
+	  //Durée en nombre de générations 
 	  TCLAP::ValueArg <int> duration("t", "time", "number of generations", false, 10, "int");
 	  cmd.add(duration);
 
-	  //Fréquences initiales des allèles 
+	  //Fréquences 
 	  TCLAP::MultiArg<double> freq("p", "frequences", "frequencies (as fraction of the population)", false, "double" );
 	  cmd.add(freq);
 
-	  //la simulation sera répétée R fois
+	  //Répétitions de la simulation
 	  TCLAP::ValueArg <int> repetitions("r", "number_repetions", "simulation will be repeated R times", false, 3, "int");
 	  cmd.add(repetitions);
 	  
-	  //positions le long de la séquence qui déterminent les allèles	
+	  //marqueurs	
 	  TCLAP::MultiArg<int> markers("m", "markers", "alleles' positions on the sequence", false, "int" );
 	  cmd.add(markers);  	
 	  
@@ -60,11 +60,11 @@ int main(int argc, char ** argv) {
 		if(file_name.isSet()) {
 			
 			try {
+				for (auto val : markers.getValue()) if (val < 0) throw TCLAP::ArgException("Markers must be positive");
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
 				return -2;
-				for (auto val : markers.getValue()) if (val < 0) throw TCLAP::ArgException("Markers must be positive");
 			}
 			
 		} else {
