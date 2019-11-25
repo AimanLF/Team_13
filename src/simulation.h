@@ -34,9 +34,12 @@ public:
  */
 	void step();
 	void run();
-	void print_term();
-	void print_fichier();
-	void print();
+	void print_term(int t);
+	void print_fichier(int t);
+	void print(int t);
+	void print_term_alleles();
+	void print_fichier_alleles();
+	void printAlleles();
 
 /*!
   Return the allelic frequencies of a given population
