@@ -52,26 +52,14 @@ void Simulation::print_fichier(int t){
 
 
 void Simulation::print(int t) {
-	if (term) {
-		print_term(t);
-		if (fichier){
-			print_fichier(t);
-		}
-	} else if (fichier) {
-		print_fichier(t);
-	}
+	if (term) print_term(t);
+	if (fichier) print_fichier(t);
 }
 
 void Simulation::printAlleles(){
-	if (term) {
-		print_term_alleles();
-		if (fichier){
-			print_fichier_alleles();
+	if (term) print_term_alleles();
+	if (fichier) print_fichier_alleles();
 		}
-	} else if (fichier) {
-		print_fichier_alleles();
-	}
-}
 
 
 void Simulation:: print_term_alleles(){
