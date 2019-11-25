@@ -23,9 +23,9 @@ void Simulation::step() {
 
 void Simulation::run() {
 	for (size_t t(0); t<endtime; ++t){
-		step();
 		print(t);
-	} // en soit on peut faire print tout seul et l'appeler dans le main apres run mais run sans pritn aucun sens
+		step();
+	} 
 	printAlleles();
 }
 
@@ -47,7 +47,7 @@ void Simulation::print_fichier(int t){
 		(*_output) << populations[i].getAllelesFreq() << "\t";
 	}
 	(*_output) << std::endl;
-	if (output.is_open()) output.close();
+	//if (output.is_open()) output.close();
 }
 
 
@@ -78,6 +78,7 @@ void Simulation:: print_term_alleles(){
 	for (size_t i(0); i<populations.size();++i){
 		std::vector<std::string> popcode;
 		popcode = populations[i].getgenetic_code();
+		std::cout << "\t";
 		for (auto codon : popcode){
 			std::cout << codon << "|";	
 		}
@@ -93,11 +94,12 @@ void Simulation::print_fichier_alleles(){
 	for (size_t i(0); i<populations.size();++i){
 		std::vector<std::string> popcode;
 		popcode = populations[i].getgenetic_code();
+		(*_output)  << "\t";
 		for (auto codon : popcode){
-			(*_output) << codon << "|";	
+			(*_output)  << codon << "|";	
 		}
-		std::cout << "\t";
+		(*_output)  << "\t";
 	}
-	std::cout << std::endl;
+	(*_output)  << std::endl;
 	if (output.is_open()) output.close();
 }
