@@ -8,10 +8,10 @@ Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal
 						const std::vector<double>& _f, const std::vector<std::string>& _c)
 :endtime(_t), repetition(_r), term(terminal), fichier(file)
 {
-	double sommefreq(0);
+	/*double sommefreq(0);
 	for (auto freq : _f)
 		sommefreq += freq;
-	assert(sommefreq == 1);
+	assert(sommefreq == 1);*/
 	
 	for (size_t i(0); i<_r;++i){
 		Population pop (_n,_a,_f,_c);
