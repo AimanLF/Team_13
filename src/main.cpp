@@ -25,11 +25,11 @@ int main(int argc, char ** argv) {
 	  cmd.add(print_file);
 
 	  //Taille de la population (= aussi nombre de séquences dans le .fasta)
-	  TCLAP::ValueArg <size_t> population_size("n", "size", "number of individuals", false, 100, "size_t");
+	  TCLAP::ValueArg <int> population_size("n", "size", "number of individuals", false, 100, "int");
 	  cmd.add(population_size);
 
 	  //Durée (en nombre de générations) de la simulation 
-	  TCLAP::ValueArg <size_t> duration("t", "time", "number of generations", false, 10, "size_t");
+	  TCLAP::ValueArg <int> duration("t", "time", "number of generations", false, 10, "int");
 	  cmd.add(duration);
 
 	  //Fréquences initiales des allèles 
@@ -37,30 +37,23 @@ int main(int argc, char ** argv) {
 	  cmd.add(freq);
 
 	  //la simulation sera répétée R fois
-	  TCLAP::ValueArg <size_t> repetitions("r", "number_repetions", "simulation will be repeated R times", false, 3, "size_t");
+	  TCLAP::ValueArg <int> repetitions("r", "number_repetions", "simulation will be repeated R times", false, 3, "int");
 	  cmd.add(repetitions);
 	  
 	  //positions le long de la séquence qui déterminent les allèles	
-	  TCLAP::MultiArg<size_t> markers("m", "markers", "alleles' positions on the sequence", false, "size_t" );
+	  TCLAP::MultiArg<int> markers("m", "markers", "alleles' positions on the sequence", false, "int" );
 	  cmd.add(markers);  	
 	  
-	  cmd.parse(argc, argv);
-	    
-	    double total_freq(0);
-		for(auto f : freq.getValue()) {
-			total_freq += f;
-			if (f < 0 or f > 1) throw TCLAP::ArgException("Frequencies must be between 0 and 1 included");
-		}
-		if (1-total_freq > 0.001 or 1-total_freq < -0.001) throw TCLAP::ArgException("Sum of frequencies must be equal to 1");	
+	  cmd.parse(argc, argv);		//trié les exeptions en fonctions du fasta/terminal
+	    	
 		if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified"); 
-		if (population_size.getValue() < 1) throw TCLAP::ArgException("Population size must be strictly positive");
 		if (duration.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive");
 		if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive");
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
-	  std::vector<size_t> _markers(markers.getValue());
-	  size_t _population_size(population_size.getValue());
+	  std::vector<int> _markers(markers.getValue());
+	  int _population_size(population_size.getValue());
 	  size_t _alleles_number((freq.getValue()).size());
 	  std::string _file_name(file_name.getValue());
 	  
@@ -71,9 +64,19 @@ int main(int argc, char ** argv) {
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
 				return -2;
+				for (auto val : markers.getValue()) if (val < 0) throw TCLAP::ArgException("Markers must be positive");
 			}
 			
 		} else {
+			
+			double total_freq(0);
+			for(auto f : freq.getValue()) {
+				total_freq += f;
+				if (f < 0 or f > 1) throw TCLAP::ArgException("Frequencies must be between 0 and 1 included");
+				}
+			if (1-total_freq > 0.001 or 1-total_freq < -0.001) throw TCLAP::ArgException("Sum of frequencies must be equal to 1");
+			if (population_size.getValue() < 1) throw TCLAP::ArgException("Population size must be strictly positive");
+			
 			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) _genetic_code.push_back(std::to_string(i+1));		
 		}
 		
