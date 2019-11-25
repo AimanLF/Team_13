@@ -52,16 +52,16 @@ int main(int argc, char ** argv) {
 	  
 	  cmd.parse(argc, argv);
 	  
+	  std::vector<std::string> _genetic_code;
+	  std::vector<double> _freqs(freq.getValue());
+	  std::vector<size_t> _markers(markers.getValue());
+	  size_t _population_size(population_size.getValue());
+	  size_t _alleles_number(alleles_number.getValue());
+	  std::string _file_name(file_name.getValue());
+	  
 		if(file_name.isSet()) {
 		//on lit le fichier 
-		
-			std::vector<double> _freqs;
-			std::vector<std::string> _genetic_code;
-			std::vector<size_t> _markers;
-			size_t _population_size;
-			size_t _alleles_number;
-			std::string _file_name;
-			
+
 			try {
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
@@ -69,15 +69,12 @@ int main(int argc, char ** argv) {
 				nerr+= 1;
 			}
 			
-			Population new_pop(_population_size, _alleles_number, _freqs, _genetic_code);
-			
 		} else {
-			std::vector<std::string> default_code;
-			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) default_code.push_back(std::to_string(i+1));
-			Population new_pop(population_size.getValue(), alleles_number.getValue(), freq.getValue(), default_code);
-			
+			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) _genetic_code.push_back(std::to_string(i+1));		
 		}
-				 
+		
+		Simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
+	 
 		  
 		if(!terminal.isSet() and !print_file.isSet()) {
 			std::cerr << "At least one output has to specified" << std::endl; 
