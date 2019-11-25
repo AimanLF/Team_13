@@ -23,7 +23,7 @@ void Simulation::step() {
 
 void Simulation::run() {
 	for (size_t t(0); t<endtime; ++t){
-		print(t);
+		print(t+1);
 		step();
 	} 
 	printAlleles();
