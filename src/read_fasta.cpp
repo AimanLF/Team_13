@@ -5,6 +5,8 @@
 #include <sstream>
 #include <algorithm>
 #include <read_fasta.h>
+#include <ctime>
+#include <stdlib.h>
 
 char pick_nucleotide(){
 	double i(rand() % 4);
@@ -14,8 +16,8 @@ char pick_nucleotide(){
 	return 'C';
 }
 
-void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, size_t& N, size_t& A, std::string& file){
-		std::ifstream confstr(file);
+void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<int> marqueurs, int& N, size_t& A, std::string& file){
+		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
 			
 			std::vector<std::string> sequences, ALLELES;
