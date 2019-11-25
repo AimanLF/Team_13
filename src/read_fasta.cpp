@@ -16,7 +16,7 @@ char pick_nucleotide(){
 	return 'C';
 }
 
-void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<int> marqueurs, int& N, size_t& A, std::string& file){
+void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
 			
@@ -31,11 +31,11 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 				line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
                 std::transform(line.begin(), line.end(), line.begin(), ::toupper);
                 if (line[0] == '>') ++N_ind;
-                else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C' or line[0] == 'N'){		//marqueurs commencent à 0 ?
+                else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C' or line[0] == 'N'){
 					for (auto val : marqueurs) if (val > line.size()) throw std::invalid_argument("Markers refer to non-existant nucleotide.");
 					std::string new_seq("");
-					for (auto num : marqueurs)  if (line[num] == 'N') new_seq += pick_nucleotide();
-												else new_seq += line[num];
+					for (auto num : marqueurs)  if (line[num-1] == 'N') new_seq += pick_nucleotide();
+												else new_seq += line[num-1];
 					sequences.push_back(new_seq);
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);
