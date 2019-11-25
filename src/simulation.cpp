@@ -1,7 +1,7 @@
 #include "simulation.h"
 #include <assert.h>
 // uncomment to disable assert()
-// #define NDEBUG 
+#define NDEBUG 
 
 
 Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
