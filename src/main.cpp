@@ -34,10 +34,6 @@ int main(int argc, char ** argv) {
 	  TCLAP::ValueArg <size_t> duration("t", "time", "number of generations", false, 10, "size_t");
 	  cmd.add(duration);
 
-	  //Nombre de combinaisons de nucléotides différentes aux positions markers
-	  TCLAP::ValueArg <size_t> alleles_number("a", "alleles_number", "number of alleles in the population", false, 2, "size_t");
-	  cmd.add(alleles_number);
-	  
 	  //Fréquences initiales des allèles 
 	  TCLAP::MultiArg<double> freq("p", "frequences", "frequencies (as fraction of the population)", false, "double" );
 	  cmd.add(freq);
@@ -56,7 +52,7 @@ int main(int argc, char ** argv) {
 	  std::vector<double> _freqs(freq.getValue());
 	  std::vector<size_t> _markers(markers.getValue());
 	  size_t _population_size(population_size.getValue());
-	  size_t _alleles_number(alleles_number.getValue());
+	  size_t _alleles_number((freq.getValue()).size());
 	  std::string _file_name(file_name.getValue());
 	  
 		if(file_name.isSet()) {
@@ -73,7 +69,7 @@ int main(int argc, char ** argv) {
 			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) _genetic_code.push_back(std::to_string(i+1));		
 		}
 		
-		Simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
+		Simulation simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
 	 
 		  
 		if(!terminal.isSet() and !print_file.isSet()) {
@@ -87,11 +83,6 @@ int main(int argc, char ** argv) {
 		
 		if(duration.getValue() < 1) {
 			std::cerr << "Simulation duration must be strictly positive" << std::endl;
-			nerr+= 1;
-		}
-	  
-		if(alleles_number.getValue() < 1) {
-			std::cerr << "Number of alleles must be strictly positive" << std::endl;
 			nerr+= 1;
 		}
 	  
@@ -114,6 +105,9 @@ int main(int argc, char ** argv) {
 		std::cerr << "Number of repetitions must be strictly positive" << std::endl;
 		nerr+= 1;
 	  }
+	  
+	  simulation.run();
+	
 	  
 	} catch (TCLAP::ArgException &e) {
 		std::cerr << "error: " << e.error() << " for arg " << e.argId() << std::endl;
