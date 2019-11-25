@@ -10,7 +10,7 @@ cd build
 cmake ..  
 make   
 make doc
-./Wright_Fisher
+./Wright_Fisherblabla
 
 ## Use read_fasta
 In order for the program to read you .fasta file, it will have to contain nucleotides sequences composed of A, T, C, G or N. In this last case, N will be replaces randomly by an other nucleotide.
@@ -35,7 +35,7 @@ Standard output is formated this way:
 4 0.067|0.208|0.287|0.438  0.088|0.196|0.311|0.405  0.106|0.222|0.279|0.393
   ACG|ACA|ATA|ATG          ACT|ACA|AGA|GCA          ACG|AGA|AGT|AAA
 ```
-Each line corresponds to one generation, the first column is the generation number (i.e. time), each subsequent column represents a replica of the simulation where each is represented by the frequencies of the alleles in the population (separated by '|'). If a fasta fi le was provided as input, the last line indicates the calculated alleles.
+Each line corresponds to one generation, the first column is the generation number (i.e. time), each subsequent column represents a replica of the simulation where each is represented by the frequencies of the alleles in the population (separated by '|'). If a fasta file was provided as input, the last line indicates the calculated alleles.
 
 ## Understand the tests
 To execute the tests, type the command:
