@@ -91,3 +91,6 @@ void Simulation::print_fichier_alleles(){
 	(*_output)  << std::endl;
 	if (output.is_open()) output.close();
 }
+
+size_t Simulation::getEndtime()
+{ return endtime; }

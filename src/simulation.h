@@ -40,6 +40,8 @@ public:
 	void print_term_alleles();
 	void print_fichier_alleles();
 	void printAlleles();
+	
+	size_t getEndtime();
 
 /*!
   Return the allelic frequencies of a given population
