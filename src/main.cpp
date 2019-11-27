@@ -1,6 +1,7 @@
 #include <tclap/CmdLine.h>
 #include "read_fasta.h"
 #include "simulation.h"
+#include "migration.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -15,7 +16,7 @@ int main(int argc, char ** argv) {
 	  TCLAP::CmdLine cmd("commande");
   
 	  //Saisie par l'utilisateur
-	  TCLAP::ValueArg <std::string> file_name("f", "file_name", "File with parameters", false, "", "string");
+	  TCLAP::ValueArg <std::string> file_name("f", "file_name", "File with parameters", false, "string");
 	  cmd.add(file_name);
 	  
 	  //Affichage terminal et/ou fichier
@@ -44,11 +45,31 @@ int main(int argc, char ** argv) {
 	  TCLAP::MultiArg<size_t> markers("m", "markers", "alleles' positions on the sequence", false, "size_t" );
 	  cmd.add(markers);
 	  
-	  cmd.parse(argc, argv);		//trié les exeptions en fonctions du fasta/terminal
-	    	
-		if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified"); 
-		if (duration.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive");
-		if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive");
+	  //Extension:
+	  //Remplissage de la matrice 
+	  TCLAP::ValueArg <string> star("s", "star", "Star migration pattern", false, "string");
+      TCLAP::ValueArg <string> ring("g", "ring", "Ring migration pattern", false, "string");
+	  TCLAP::ValueArg <string> complete("c", "complete", "Complete migration pattern", false, "string");
+      cmd.xorAdd(star, ring, complete);
+	  
+	  //Ratio de population à migrer
+	  TCLAP::ValueArg <double> migration_ratio("a", "migration_ratio", "Percentage of the population to move", false, 0, "double");
+	  cmd.add(migration_ratio);
+	  
+	  cmd.parse(argc, argv);		//trier les exeptions en fonctions du fasta/terminal
+	   
+	   
+	  //Gestion d'erreurs 	
+	  if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified"); 
+	  if (duration.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive");
+	  if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive");
+	  if ( (repetitions.getValue() < 0) or (repetitions.getValue() > 1) ) throw TCLAP::ArgException("Ratio has to be between 0 and 1");
+	  
+	  std::string migration_type;
+	  if (star.isSet()) migration_type = star.getValue() );
+      else if(ring.isSet()) migration_type = ring.getValue() );
+      else migration_type = "";
+
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
@@ -80,9 +101,14 @@ int main(int argc, char ** argv) {
 			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) _genetic_code.push_back(std::to_string(i+1));		
 		}
 		
-		Simulation simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
-		simulation.run();
-	  
+		if(migration_type != "") {					
+			Migration migration(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code, migration_type,migration_ratio.getValue())
+			migration.run();
+		} else {
+			Simulation simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
+			simulation.run();
+		}
+		
 	} catch (TCLAP::ArgException &e) {
 		std::cerr << "error: " << e.error() << std::endl;
 		return -1;
@@ -90,31 +116,3 @@ int main(int argc, char ** argv) {
 	
 	return 0;
 }
-
- /*#include <math>
-#include <algorithm>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
-
-
-int main()
-{
-	vector<vector<double>> matrix;() 
-	
-	//condition pour quue la taille des pop soit constante : r(0,1) + r(2,1) = r(1,0) + r(1,2)  (=le nombre d'individus arrivant de la pop 0 et la pop 2 dans la pop 1 doit être égal à celui partant de la pop 1 vers la pop 0 et 2)
-	std::srand(unsigned(std::time(0)));
-	for(size_t i(0), i < get_PopulationsSize(), ++i) {
-
-		if(i = get_PopulationsSize() -1 ) {
-			move_pop(i, 0, vector<size_t>(round(ratio * size_pop), );
-		} else { 
-			move_pop(i, i+1, vector<size_t>(round(ratio * size_pop), );	//méthode de simulation qui prendrait en argument une population de départ, une d'arrivée et les individus à faire migrer
-		} 
-		
-		std::random_shuffle(population[i].begin(), population[i].end();  //on mélange la population pour que se soient toujours les mêmes individus qui migrent
-		
-		}
-	return 0;
-}
-*/
