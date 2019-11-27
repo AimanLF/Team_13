@@ -50,10 +50,7 @@ std::vector<double> multibinomial (int N, std::vector<double> f)
 	
 	for(auto& fre : new_frequences) {
 		fre = fre/N;
-		
-		
-		
-		
+
 	}
 	 	
 	return new_frequences;

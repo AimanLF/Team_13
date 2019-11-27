@@ -1,4 +1,8 @@
 #include "simulation.h"
+#include <assert.h>
+
+// uncomment to disable assert()
+// #define NDEBUG 
 
 
 Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
@@ -12,7 +16,8 @@ Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal
 }
 
 std::vector<double> Simulation:: getFreqPop(size_t numPopu) const{
-	return populations[numPopu].getFreq();
+	assert(populations.size() > numPopu);
+	return populations[numPopu].getFreq(); 
 }
 
 void Simulation::step() {
