@@ -6,15 +6,17 @@
 // uncomment to disable assert()
 // #define NDEBUG 
 
-std::random_device rad;
-std::mt19937 r = std::mt19937(rad());
+std::random_device rd;
+std::mt19937 rng = std::mt19937(rd());
 
-std::vector<double> multibinomial (int N, std::vector<double> f,std::mt19937 rng)
+std::vector<double> multibinomial (int N, std::vector<double> f)
 {	
-	/*double sommefreq(0);
+	//Assertions
+	double sommefreq(0);
 	for (auto freq : f)
 		sommefreq += freq;
-	assert(sommefreq == 1);*/
+		
+	assert(std::abs(sommefreq - 1) < 1e-8);
 	assert(N > 0);
 	
 	std::vector<double> new_frequences;
@@ -29,7 +31,7 @@ std::vector<double> multibinomial (int N, std::vector<double> f,std::mt19937 rng
 		
 				std::binomial_distribution<int> distribution(mean, var/sum); //pour avoir le chiffres réels
 		
-				new_frequences.push_back(distribution(r)); //on transforme en pourcentage
+				new_frequences.push_back(distribution(rng)); //on transforme en pourcentage
 			
 				sum -= var;
 				mean -= new_frequences[i];

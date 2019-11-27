@@ -1,7 +1,6 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <random>
 
 /*! \class Population
   A population is a number of \ref individuals with each a number of \ref alleles
@@ -11,7 +10,6 @@
   - \ref alleles : total number of alleles
   - \ref frequence : the initial frequencies
   - \ref genetic_code : list of the different codons
-  - \ref rng : random generator of all the populations (static)
  */
 
 class Population{
@@ -47,5 +45,4 @@ private :
 	size_t alleles; 
 	std::vector<double> frequence; 
 	std::vector<std::string> genetic_code; 
-	static std::mt19937 rng;
 };
