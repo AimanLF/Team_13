@@ -15,7 +15,8 @@ class Migration : Simulation
 		void run(); //override; à ajouter, mais enlevé pour l'instant sinon compile pas
 		void migrate(Population& pop1, Population& pop2, Matrix matrix);
 		void print_matrix() const;
+		static Matrix create_matrix(std::string matrix, size_t n, double value);		//avec le string = type de migration
+
 	private:
 		Matrix matrix;
-		static Matrix create_matrix(std::string matrix, size_t n, double value);		//avec le string = type de migration
 };
