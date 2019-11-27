@@ -3,14 +3,6 @@
 #include <random>
 #include <vector>
 
-/*std::mt19937 rng;
-std::random_device rd;
-rng = std::mt19937(rd());
-* 
-std::random_device rd;
-std::mt19937 rng(rd());
-*/
-
 //variable externe, comment faire mieux ? 
 extern std::random_device rd;
 extern std::mt19937 rng = std::mt19937(rd());
