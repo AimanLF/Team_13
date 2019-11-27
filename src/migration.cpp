@@ -24,7 +24,7 @@ void Migration::run()
 
 void Migration::migrate(Population& pop1, Population& pop2, Matrix matrix)
 {
-// à coder
+// in progress ...
 }
 
 Matrix Migration::create_matrix(std::string matrix, size_t n, double migration_ratio){
