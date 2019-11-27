@@ -1,4 +1,4 @@
-#include "test_simulation.cpp"
+#include "test_simulation_migration.cpp"
 #include "test_multibinomial.cpp"
 
 int main(int argc, char **argv) {
