@@ -1,7 +1,7 @@
 #include <tclap/CmdLine.h>
 #include "read_fasta.h"
 #include "simulation.h"
-#include "migration.h"
+//#include "migration.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -16,7 +16,7 @@ int main(int argc, char ** argv) {
 	  TCLAP::CmdLine cmd("commande");
   
 	  //Saisie par l'utilisateur
-	  TCLAP::ValueArg <std::string> file_name("f", "file_name", "File with parameters", false, "string");
+	  TCLAP::ValueArg <std::string> file_name("f", "file_name", "File with parameters", false, "", "string");
 	  cmd.add(file_name);
 	  
 	  //Affichage terminal et/ou fichier
@@ -47,10 +47,15 @@ int main(int argc, char ** argv) {
 	  
 	  //Extension:
 	  //Remplissage de la matrice 
-	  TCLAP::ValueArg <string> star("s", "star", "Star migration pattern", false, "string");
-      TCLAP::ValueArg <string> ring("g", "ring", "Ring migration pattern", false, "string");
-	  TCLAP::ValueArg <string> complete("c", "complete", "Complete migration pattern", false, "string");
-      cmd.xorAdd(star, ring, complete);
+	  TCLAP::ValueArg <std::string> star("s", "star", "Star migration pattern", false, "","string");
+      TCLAP::ValueArg <std::string> ring("g", "ring", "Ring migration pattern", false, "", "string");
+	  TCLAP::ValueArg <std::string> complete("c", "complete", "Complete migration pattern", false, "", "string");
+      std::vector<TCLAP::Arg*>  xorlist;
+      xorlist.push_back(&star);
+      xorlist.push_back(&ring);
+      xorlist.push_back(&complete);
+      cmd.xorAdd(xorlist);
+
 	  
 	  //Ratio de population à migrer
 	  TCLAP::ValueArg <double> migration_ratio("a", "migration_ratio", "Percentage of the population to move", false, 0, "double");
@@ -66,9 +71,9 @@ int main(int argc, char ** argv) {
 	  if ( (repetitions.getValue() < 0) or (repetitions.getValue() > 1) ) throw TCLAP::ArgException("Ratio has to be between 0 and 1");
 	  
 	  std::string migration_type;
-	  if (star.isSet()) migration_type = star.getValue() );
-          else if(ring.isSet()) migration_type = ring.getValue() );
-          else migration_type = "";
+	  if (star.isSet()) migration_type = star.getValue();
+      else if(ring.isSet()) migration_type = ring.getValue();
+      else migration_type = "";
 
 	  
 	  std::vector<std::string> _genetic_code;
@@ -102,8 +107,8 @@ int main(int argc, char ** argv) {
 		}
 		
 		if(migration_type != "") {					
-			Migration migration(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code, migration_type,migration_ratio.getValue())
-			migration.run();
+			//Migration migration(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code, migration_type,migration_ratio.getValue());
+			//migration.run();
 		} else {
 			Simulation simulation(duration.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);
 			simulation.run();
