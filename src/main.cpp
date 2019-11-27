@@ -67,8 +67,8 @@ int main(int argc, char ** argv) {
 	  
 	  std::string migration_type;
 	  if (star.isSet()) migration_type = star.getValue() );
-      else if(ring.isSet()) migration_type = ring.getValue() );
-      else migration_type = "";
+          else if(ring.isSet()) migration_type = ring.getValue() );
+          else migration_type = "";
 
 	  
 	  std::vector<std::string> _genetic_code;
