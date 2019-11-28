@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cmath>
 
 Migration::Migration(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
 					const std::vector<double>& _f, const std::vector<std::string>& _c,
@@ -22,16 +23,35 @@ void Migration::run()
 	printAlleles();
 }
 
-void Migration::migrate(Population& pop1, Population& pop2, Matrix matrix)
+void Migration::migrate(const Matrix& matrix)   // fait migrer toutes les populations de la simulation
 {
-// in progress ...
+   for(size_t i(0); i < populations.size(); ++i) {
+	   for(size_t j(0); j < populations.size(); ++j) {
+			
+			if(i == j) { // exclure auto transfert
+				break;
+			}
+			
+			size_t NumberToMove( ceil(matrix[i][j] * populations[i].getIndividuals()) );
+			
+			// ajoute à la pop d'arrivée j les fréquences de la pop de départ i comprises entre 0 et ration * taille de la pop i
+			populations[j].frequence.insert(populations[j].frequence.end(), populations[i].frequence.begin(), populations[i].frequence.begin() + NumberToMove);
+			// Effacer frequences correspondantes dans population i 
+			populations[i].frequence.erase(populations[i].frequence.begin(), populations[i].frequence.begin() + NumberToMove);
+			
+			// Same avec genetic code
+			populations[j].genetic_code.insert(populations[j].genetic_code.end(), populations[i].genetic_code.begin(), populations[i].genetic_code.begin() + NumberToMove);
+			populations[i].genetic_code.erase(populations[i].genetic_code.begin(), populations[i].genetic_code.begin() + NumberToMove);
+	   }
+   }
 }
 
-Matrix Migration::create_matrix(std::string matrix, size_t n, double migration_ratio){
-Matrix matrice;
+Matrix Migration::create_matrix(std::string matrix_type, size_t n, double migration_ratio) 
+{
+	Matrix matrice;
 		
-	if (matrix == "star"){
-			
+	if (matrix_type == "star") {
+
 		Ligne ligne1({0});
 		for (size_t i(1) ; i < n ; ++i) ligne1.push_back(migration_ratio);
 		matrice.push_back(ligne1);				// 1ère ligne ok
@@ -39,10 +59,9 @@ Matrix matrice;
 		for (size_t i(1) ; i < n ; ++i) ligne.push_back(0);		//création des autres lignes
 		
 		for (size_t k(1) ; k < n ; ++k) matrice.push_back(ligne);	//ajout des autres lignes
-		return matrice;
 		}
 			
-	else if (matrix == "ring"){
+	else if (matrix_type == "ring"){
 
 		for (size_t i(0) ; i < n ; ++i){
 			Ligne ligne;
@@ -54,10 +73,9 @@ Matrix matrice;
 			}
 			matrice[0][n-1] = migration_ratio;
 			matrice[n-1][0] = migration_ratio;
-			return matrice;
 		}
 			
-	else if (matrix == "complete"){
+	else if (matrix_type == "complete"){
 		for (size_t i(0) ; i < n ; ++i){
 			Ligne ligne;
 			for (size_t k(0) ; k < n ; ++k){
@@ -66,8 +84,12 @@ Matrix matrice;
 				}
 				matrice.push_back(ligne);
 			}
-			return matrice;
 		}
+	else {
+		// Erreur gérée dans le main
+	}
+	
+	return matrice;
 }
 
 void Migration::print_matrix() const

@@ -64,7 +64,7 @@ void Simulation::print(int t) {
 void Simulation::printAlleles(){
 	if (term) print_term_alleles();
 	if (fichier) print_fichier_alleles();
-		}
+}
 
 
 void Simulation:: print_term_alleles(){

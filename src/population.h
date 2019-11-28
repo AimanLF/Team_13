@@ -2,6 +2,8 @@
 #include <vector>
 #include <iostream>
 
+
+
 /*! \class Population
   A population is a number of \ref individuals with each a number of \ref alleles
   
@@ -13,8 +15,9 @@
  */
 
 class Population{
+	friend class Migration;
 
-public :
+public : // l'espace?
 
 /*! 
   Default constructor initializes the following variables:
@@ -38,7 +41,9 @@ public :
 	
 	std::vector<double> getFreq() const;
 	
-	std::vector<std::string> getgenetic_code() const;
+	std::vector<std::string> getgenetic_code() const; //il manque la majuscule! + on pourrait retourner un const&?
+	
+	std::size_t getIndividuals() const;
 	
 private :
 	size_t individuals; 

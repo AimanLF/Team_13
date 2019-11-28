@@ -48,7 +48,7 @@ public:
  */	
     std::vector<double> getFreqPop (size_t numPopu) const;
 
-private:
+protected:
 	std::vector<Population> populations;
 	size_t endtime;			
 	size_t repetition;		

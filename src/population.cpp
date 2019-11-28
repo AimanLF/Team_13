@@ -19,7 +19,10 @@ std::vector<double> Population::getFreq() const {
 	return frequence;
 }
 
-
 std::vector<std::string> Population::getgenetic_code() const {
 	return genetic_code;
+}
+
+std::size_t Population::getIndividuals() const {
+	return individuals;
 }
