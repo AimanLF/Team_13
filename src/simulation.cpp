@@ -27,8 +27,8 @@ void Simulation::step() {
 }
 
 void Simulation::run() {
-	for (size_t t(0); t<endtime; ++t){
-		print(t+1);
+	for (size_t t(0); t<endtime +1; ++t){
+		print(t);
 		step();
 	} 
 	printAlleles();
@@ -45,8 +45,8 @@ void Simulation::print_term(int t){
 
 void Simulation::print_fichier(int t){
 	std::ostream *_output = &std::cout; 
-	if (output.is_open()) _output = &output;
 	if(output.fail()) std::cerr << "ERROR output failed" << std::endl;
+	if (output.is_open()) _output = &output;
 	(*_output) << t << "\t" ;
 	for (size_t i(0); i<populations.size();++i){
 		(*_output) << populations[i].getAllelesFreq() << "\t";
