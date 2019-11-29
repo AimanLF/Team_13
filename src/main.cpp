@@ -69,6 +69,7 @@ int main(int argc, char ** argv) {
 		if(file_name.isSet()) {													//option fasta
 			
 			try {
+				if (!markers.isSet()) throw ("Expect markers to read the file");
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
