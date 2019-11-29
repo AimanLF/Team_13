@@ -1,6 +1,7 @@
-#include <simulation.h>
-#include <vector>
-#include <string>
+#ifndef MIGRATION
+#define MIGRATION
+
+#include "simulation.h"
 
 typedef std::vector<std::vector<double>> Matrix;
 typedef std::vector<double> Ligne;
@@ -20,3 +21,5 @@ public:
 private:
 	Matrix matrix;
 };
+
+#endif

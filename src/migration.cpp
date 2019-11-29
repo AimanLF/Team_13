@@ -1,8 +1,5 @@
-#include <migration.h>
-#include <iostream>
-#include <vector>
-#include <string>
 #include <cmath>
+#include "migration.h"
 
 Migration::Migration(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
 					const std::vector<double>& _f, const std::vector<std::string>& _c,
@@ -14,9 +11,9 @@ Migration::Migration(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,b
 
 void Migration::run()
 {
-	size_t end = getEndtime();
+	size_t end = getEndtime() +1;
 	for (size_t t(0); t< end; ++t){
-		print(t+1);
+		print(t);
 		step();
 		// use migrate(...) dans une boucle;
 	} 

@@ -1,12 +1,6 @@
 #include <tclap/CmdLine.h>
 #include "read_fasta.h"
 #include "migration.h"
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <map>
-#include <vector>
 
 int main(int argc, char ** argv) {
 	
@@ -57,7 +51,7 @@ int main(int argc, char ** argv) {
 	  if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified."); 
 	  if (generation.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive.");
 	  if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive.");
-	  if ( (repetitions.getValue() < 0) or (repetitions.getValue() > 1) ) throw TCLAP::ArgException("Ratio has to be between 0 and 1.");
+	  //if ( (ratio.getValue() < 0) or (ratio.getValue() > 1) ) throw TCLAP::ArgException("Ratio has to be between 0 and 1.");
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());

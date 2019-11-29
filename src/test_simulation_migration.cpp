@@ -1,34 +1,36 @@
 #include <gtest/gtest.h>
 #include "migration.h"
-#include <vector>
-#include <string>
 
-#include <iostream>
-
+/*!
+  TOUS LES COMMENTAIRES DOIVENT ÊTRE SUPPRIMER DU CPP DONC EXPLIQUER LES TESTS DANS READ ME
+  TEST(simulationTest,sameAverage): Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
+  TEST(simulationTest,fixation_time): Test si une allèle se fixe avec 3 allèles (9 fois au minimum sur 10) et Test si une allèle se fixe avec 5 allèles
+  TEST(migration_test, create_matrix): Test si les matrices se font correctement
+ */
+ 
 bool isEqual(double x, double y, double epsilon){return std::abs(x - y) < epsilon;}
 bool isEqual(double x, double y){return isEqual(x, y, 6e-2);}
 
 TEST(simulationTest,sameAverage){
-double freq1 (0.3);
-double freq2 (0.4);
-double freq3 (0.1);
-double freq4 (0.05);
-double freq5 (0.15);
-size_t nbPop(50000);
+	double freq1 (0.3);
+	double freq2 (0.4);
+	double freq3 (0.1);
+	double freq4 (0.05);
+	double freq5 (0.15);
+	size_t nbPop(50000);
 
-//Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
- for (size_t i(0); i < 3; i++){
-    Simulation simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-")); 
-    simulation.run();
+	for (size_t i(0); i < 3; i++){
+		Simulation simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-")); 
+	simulation.run();
     
     double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
     for (size_t i(0); i < nbPop; i++){ 
-      std::vector <double> freq (simulation.getFreqPop(i));
-      f1 += freq[0];
-      f2 += freq[1];
-      f3 += freq[2];
-      f4 += freq[3];
-      f5 += freq[4];
+		std::vector <double> freq (simulation.getFreqPop(i));
+		f1 += freq[0];
+		f2 += freq[1];
+		f3 += freq[2];
+		f4 += freq[3];
+		f5 += freq[4];
     }
     EXPECT_NEAR(freq1, f1/nbPop, 7e-2);
     EXPECT_NEAR(freq2, f2/nbPop, 7e-2);
@@ -39,7 +41,6 @@ size_t nbPop(50000);
 }
 
 TEST(simulationTest,fixation_time){
-	//Test si une allèle se fixe avec 3 allèles, 9 fois au minimum sur 10
 	int testOK(0);
 	for (size_t i(0); i < 10; ++i){
 		double freqx (0.85);
@@ -51,7 +52,6 @@ TEST(simulationTest,fixation_time){
 		if(isEqual(1.0,f1[0]) or isEqual(1.0,f1[1])) ++testOK;
 	}		
 
-	//Test si une allèle se fixe avec 5 allèles
 	double freq1 (0.3);
 	double freq2 (0.4);
 	double freq3 (0.1);
@@ -67,7 +67,6 @@ TEST(simulationTest,fixation_time){
 	EXPECT_TRUE(cond2);
 
 }
-
 
 TEST(migration_test, create_matrix){
 	Matrix M1 = Migration::create_matrix("star", 5, 0.3);
@@ -89,5 +88,12 @@ TEST(migration_test, create_matrix){
 							 {0.4, 0.4, 0.4, 0, 0.4, 0.4},
 							 {0.4, 0.4, 0.4, 0.4, 0, 0.4},
 							 {0.4, 0.4, 0.4, 0.4, 0.4, 0}}));
-	}
+}
+	
+	
+/* //Pratique pour voir l'affichage
+TEST(simulationTest, output){
+	Simulation simul(150,3,100,4,true, true,std::vector<double> {0.1, 0.2, 0.3, 0.4}, {"AAA", "GGG", "TTT", "CCC"});
+	simul.run();
+}*/
 

@@ -1,13 +1,9 @@
-#include "simulation.h"
 #include <assert.h>
+#include "simulation.h"
 
-// uncomment to disable assert()
-// #define NDEBUG 
-
-
-Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
+Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool _terminal,bool _file,
 						const std::vector<double>& _f, const std::vector<std::string>& _c)
-:endtime(_t), repetition(_r), term(terminal), fichier(file), output("test.txt")
+:endtime(_t), repetition(_r), terminal(_terminal), file(_file), output("test.txt")
 {
 	for (size_t i(0); i<_r;++i){
 		Population pop (_n,_a,_f,_c);
@@ -15,15 +11,9 @@ Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal
 	}	
 }
 
-std::vector<double> Simulation:: getFreqPop(size_t numPopu) const{
-	assert(populations.size() > numPopu);
-	return populations[numPopu].getFreq(); 
-}
-
 void Simulation::step() {
-	for (size_t i(0); i<populations.size();++i){
+	for (size_t i(0); i<populations.size();++i)
 		populations[i].step();
-	}
 }
 
 void Simulation::run() {
@@ -34,68 +24,56 @@ void Simulation::run() {
 	printAlleles();
 }
 
-void Simulation::print_term(int t){
+void Simulation::print(int t) {
+	if (terminal) print_terminal(t);
+	if (file) print_file(t);
+}
+
+void Simulation::print_terminal(int t){
 	std::cout << t << "\t" ;
-	for (size_t i(0); i<populations.size();++i){
-			std::cout << populations[i].getAllelesFreq() << "\t";
-		}
+	for (size_t i(0); i<populations.size();++i)
+		std::cout << populations[i].getAllelesFreq() << "\t";
 	std::cout << std::endl;
 }
 
 
-void Simulation::print_fichier(int t){
+void Simulation::print_file(int t){
 	std::ostream *_output = &std::cout; 
 	if(output.fail()) std::cerr << "ERROR output failed" << std::endl;
 	if (output.is_open()) _output = &output;
 	(*_output) << t << "\t" ;
-	for (size_t i(0); i<populations.size();++i){
+	for (size_t i(0); i<populations.size();++i)
 		(*_output) << populations[i].getAllelesFreq() << "\t";
-	}
 	(*_output) << std::endl;
-	//if (output.is_open()) output.close();
 }
 
-
-void Simulation::print(int t) {
-	if (term) print_term(t);
-	if (fichier) print_fichier(t);
-}
 
 void Simulation::printAlleles(){
-	if (term) print_term_alleles();
-	if (fichier) print_fichier_alleles();
+	if (terminal) print_terminal_alleles();
+	if (file) print_file_alleles();
 }
 
-
-void Simulation:: print_term_alleles(){
-	for (size_t i(0); i<populations.size();++i){
-		std::vector<std::string> popcode;
-		popcode = populations[i].getgenetic_code();
-		std::cout << "\t";
-		for (auto codon : popcode){
-			std::cout << codon << "|";	
-		}
-		std::cout << "\t";
-	}
+void Simulation:: print_terminal_alleles(){
+	for (size_t i(0); i<populations.size();++i)
+		std::cout << "\t" << populations[i].getCodons() << "\t";
 	std::cout << std::endl;
 }
 
-void Simulation::print_fichier_alleles(){
+void Simulation::print_file_alleles(){
 	std::ostream *_output = &std::cout; 
 	if (output.is_open()) _output = &output;
 	if(output.fail()) std::cerr << "ERROR output failed" << std::endl;
-	for (size_t i(0); i<populations.size();++i){
-		std::vector<std::string> popcode;
-		popcode = populations[i].getgenetic_code();
-		(*_output)  << "\t";
-		for (auto codon : popcode){
-			(*_output)  << codon << "|";	
-		}
-		(*_output)  << "\t";
-	}
-	(*_output)  << std::endl;
+	for (size_t i(0); i<populations.size();++i)
+		(*_output) << populations[i].getCodons() << "\t";
+	(*_output) << std::endl;
 	if (output.is_open()) output.close();
 }
+		
+std::vector<double> Simulation:: getFreqPop(size_t nbSim) const{
+	assert(populations.size() > nbSim);
+	return populations[nbSim].getFreq(); 
+}
 
-size_t Simulation::getEndtime()
-{ return endtime; }
+size_t Simulation::getEndtime() const{ 
+	return endtime; 
+}

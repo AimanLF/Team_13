@@ -1,11 +1,13 @@
+#ifndef POPULATION
+#define POPULATION
+
 #include <string>
 #include <vector>
 #include <iostream>
 
-
-
 /*! \class Population
-  A population is a number of \ref individuals with each a number of \ref alleles
+  A population is a number of \ref individuals with each a number of \ref alleles.
+  Share its attributs with friend class \ref Migration.
   
    Population parameters:
   - \ref individuals : total number of individuals
@@ -17,10 +19,10 @@
 class Population{
 	friend class Migration;
 
-public : // l'espace?
+public : 
 
 /*! 
-  Default constructor initializes the following variables:
+  Constructor initializes the following variables:
   \param _n (size_t): total number of individuals
   \param _a (size_t): total number of alleles 
   \param _f (vector<double>): frequencies of different alleles
@@ -35,19 +37,29 @@ public : // l'espace?
 	void step();
 
 /*! 
-  Return a string of the alleles frenquencies.
+   \return the sequence of alleles frequencies of the population
 */
 	std::string getAllelesFreq() const;
 	
+/*! 
+   \return the sequence of the codon in the genetic code of the population
+*/
+	std::string getCodons() const;
+
+/*!
+   \return  table containing alleles frequencies of the population 
+*/
 	std::vector<double> getFreq() const;
 	
-	std::vector<std::string> getgenetic_code() const; //il manque la majuscule! + on pourrait retourner un const&?
-	
+/*!
+   \return  the frenquencies of the population 
+*/
 	std::size_t getIndividuals() const;
-	
+
 private :
 	size_t individuals; 
 	size_t alleles; 
 	std::vector<double> frequence; 
 	std::vector<std::string> genetic_code; 
 };
+#endif

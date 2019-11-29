@@ -1,12 +1,9 @@
-#include <string>
-#include <vector>
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-#include <read_fasta.h>
 #include <ctime>
 #include <stdlib.h>
+#include "read_fasta.h"
 
 char pick_nucleotide(){
 	double i(rand() % 4);
