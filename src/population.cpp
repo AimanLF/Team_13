@@ -8,10 +8,11 @@ void Population:: step(){
 }
 
 std::string Population::getAllelesFreq() const{
-	std::string alleles ("|");
+	std::string alleles;
 	for (auto f : frequence){
-		alleles = alleles + std::to_string(f) + '|';	
+		alleles += std::to_string(f) + '|';	
 	}
+	alleles = alleles.substr(0, alleles.length() -1);
 	return alleles;
 }
 
