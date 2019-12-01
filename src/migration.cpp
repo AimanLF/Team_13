@@ -23,13 +23,52 @@ void Migration::run()
 void Migration::migrate(const Matrix& matrix)   // fait migrer toutes les populations de la simulation
 {
    for(size_t i(0); i < populations.size(); ++i) {
+	   
+	   /*vector<double> populationI;
+	   for(size_t k(0); k < populations[i].frequence.size(); ++k)
+				populationI.push_back(populations[i].frequence * populations[i].getIndividuals());*/
+	   
 	   for(size_t j(0); j < populations.size(); ++j) {
 			
 			if(i == j) { // exclure auto transfert
 				break;
 			}
 			
-			size_t NumberToMove( ceil(matrix[i][j] * populations[i].getIndividuals()) );
+			/*vector<double> populationJ;
+			for(size_t k(0); k < populations[k].frequence.size(); ++k)
+				populationI.push_back(populations[j].frequence * populations[j].getIndividuals());*/
+			
+			//Determine nb à faire migrer
+			size_t NumberToMove( ceil(matrix[i][j] * populations[i].getIndividuals()));
+			
+			/*//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
+			while(NumberToMove > 0){
+				for (size_t y(0); y < populationI.size(); ++y){
+					size_t toMoveAlleleI  //Nb aléatoire entre 0 et min(populationI[y],NumberToMove)
+					populationI[y] -= toMoveAlleleI;
+					populationJ[y] += toMOveAlleleI;
+				}
+			}
+			
+			//Recalculer les fréquences 
+			size_t sommeI(0);
+			size_t sommeJ(0);
+			for (auto ind : populationI)
+				sommeI += ind;
+			for (auto ind : populationJ)
+				sommeJ += ind;
+			
+			for(auto ind : populationI)
+				ind = ind/sommeI;
+			for(auto ind : populationJ)
+				ind = ind/sommeJ;
+			
+			populations[i].frequence = populationI;
+			populations[i].individuals = sommeI;
+			populations[j].frequence = populationJ;
+			populations[j].individuals = sommeJ;*/
+				
+				
 			
 			// ajoute à la pop d'arrivée j les fréquences de la pop de départ i comprises entre 0 et ration * taille de la pop i
 			populations[j].frequence.insert(populations[j].frequence.end(), populations[i].frequence.begin(), populations[i].frequence.begin() + NumberToMove);
