@@ -4,6 +4,10 @@
 
 int main(int argc, char ** argv) {
 	
+	float temps;
+    clock_t ti, tf;
+	ti=clock();
+	
 	try {
 	
 	  TCLAP::CmdLine cmd("commande");
@@ -95,6 +99,10 @@ int main(int argc, char ** argv) {
 		std::cerr << "error: " << e.error() << std::endl;
 		return -1;
 	}
+	
+	tf=clock();
+	temps = (tf-ti)/CLOCKS_PER_SEC;
+	printf("temps = %f\n", temps);
 	
 	return 0;
 }
