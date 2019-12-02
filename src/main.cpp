@@ -1,4 +1,5 @@
 #include <tclap/CmdLine.h>
+#include <ctime>
 #include "read_fasta.h"
 #include "migration.h"
 
