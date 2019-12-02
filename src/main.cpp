@@ -38,12 +38,10 @@ int main(int argc, char ** argv) {
 	  TCLAP::MultiArg <size_t> markers("m", "markers", "Alleles' positions on the sequence.", false, "size_t" );
 	  cmd.add(markers);
 	  
-	  //Type et ratio de migration
+	  //Type de migration
 	  TCLAP::ValueArg <std::string> migration_type("M", "Migration_type", "Choose a migration type (star/ring/complete).", false, "","string");
       cmd.add(migration_type);
-      TCLAP::ValueArg <double> ratio("R", "Ratio", "Choose a migration ratio.", false, 0, "double");
-	  cmd.add(ratio);
-	  
+      
 	  cmd.parse(argc, argv);		//trier les exeptions en fonctions du fasta/terminal
 	   
 	   
@@ -51,7 +49,6 @@ int main(int argc, char ** argv) {
 	  if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified."); 
 	  if (generation.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive.");
 	  if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive.");
-	  //if ( (ratio.getValue() < 0) or (ratio.getValue() > 1) ) throw TCLAP::ArgException("Ratio has to be between 0 and 1.");
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
@@ -83,12 +80,11 @@ int main(int argc, char ** argv) {
 			for (size_t i(0) ; i < (freq.getValue()).size() ; ++i) _genetic_code.push_back(std::to_string(i+1));		
 		}
 		
-		if(migration_type.isSet() and ratio.isSet()) {							//option migration		
+		if(migration_type.isSet()) {							//option migration		
 			std::string t = migration_type.getValue();
 			if (t != "star" and t != "ring" and t != "complete") throw TCLAP::ArgException("Migration type invalid.");
-			if (0 <= ratio.getValue() or ratio.getValue() >= 1) throw TCLAP::ArgException("Migration ratio must be stricly BETWEEN 0 and 1.");
 			
-			Migration migration(generation.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code, migration_type.getValue() , ratio.getValue());
+			Migration migration(generation.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code, migration_type.getValue());
 			migration.run();
 		} else {
 			Simulation simulation(generation.getValue(), repetitions.getValue(), _population_size, _alleles_number, terminal.getValue(), print_file.getValue(), _freqs, _genetic_code);

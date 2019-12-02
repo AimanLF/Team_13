@@ -69,25 +69,7 @@ TEST(simulationTest,fixation_time){
 }
 
 TEST(migration_test, create_matrix){
-	Matrix M1 = Migration::create_matrix("star", 5, 0.3);
-	Matrix M2 = Migration::create_matrix("ring", 4, 0.2);
-	Matrix M3 = Migration::create_matrix("complete", 6, 0.4);
-	
-	EXPECT_TRUE(M1 == Matrix({{0, 0.3, 0.3, 0.3, 0.3},
-							 {0.3, 0, 0, 0, 0},
-							 {0.3, 0, 0, 0, 0},
-							 {0.3, 0, 0, 0, 0},
-							 {0.3, 0, 0, 0, 0}}) );
-	EXPECT_TRUE(M2 == Matrix({{0, 0.2, 0, 0.2},
-							 {0.2, 0, 0.2, 0},
-							 {0, 0.2, 0, 0.2},
-							 {0.2, 0, 0.2, 0}}));
-	EXPECT_TRUE(M3 == Matrix({{0, 0.4, 0.4, 0.4, 0.4, 0.4},
-							 {0.4, 0, 0.4, 0.4, 0.4, 0.4},
-							 {0.4, 0.4, 0, 0.4, 0.4, 0.4},
-							 {0.4, 0.4, 0.4, 0, 0.4, 0.4},
-							 {0.4, 0.4, 0.4, 0.4, 0, 0.4},
-							 {0.4, 0.4, 0.4, 0.4, 0.4, 0}}));
+//à refaire
 }
 TEST(migrationTest,sameAverage){
 	double freq1 (0.3);
@@ -98,7 +80,7 @@ TEST(migrationTest,sameAverage){
 	size_t nbPop(50000);
 
 	for (size_t i(0); i < 3; i++){
-		Migration simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"), "star", 0.2); 
+		Migration simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"), "star"); 
 	simulation.run();
     
     double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
@@ -118,7 +100,7 @@ TEST(migrationTest,sameAverage){
   }
 
 	for (size_t i(0); i < 3; i++){
-		Migration simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"), "ring", 0.2); 
+		Migration simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"), "ring"); 
 	simulation.run();
     
     double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
@@ -138,7 +120,7 @@ TEST(migrationTest,sameAverage){
   }
   
   for (size_t i(0); i < 3; i++){
-		Migration simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"), "complete", 0.2); 
+		Migration simulation(i,nbPop,2000,5,false, false,std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"), "complete"); 
 	simulation.run();
     
     double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
@@ -163,7 +145,7 @@ TEST(migrationTest,fixation_time){
 	for (size_t i(0); i < 10; ++i){
 		double freqx (0.85);
 		double freqy (0.15);
-		Migration simulation1(50000,1,5000,2,false, false,std::vector<double> {freqx, freqy}, std::vector<std::string> (2,"-"),"complete",0.3);
+		Migration simulation1(50000,1,5000,2,false, false,std::vector<double> {freqx, freqy}, std::vector<std::string> (2,"-"),"complete");
 		simulation1.run();
 
 		std::vector <double> f1 (simulation1.getFreqPop(0));
@@ -175,7 +157,7 @@ TEST(migrationTest,fixation_time){
 	double freq3 (0.1);
 	double freq4 (0.05);
 	double freq5 (0.15);
-	Migration simulation2(50000,1,5000,5, false, false, std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"),"ring", 0.2);
+	Migration simulation2(50000,1,5000,5, false, false, std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"),"ring");
 	simulation2.run();
 	
 	std::vector <double> f2 (simulation2.getFreqPop(0));
