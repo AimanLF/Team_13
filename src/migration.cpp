@@ -1,6 +1,6 @@
 #include <cmath>
 #include "migration.h"
-
+#include <random>
 Migration::Migration(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
 					const std::vector<double>& _f, const std::vector<std::string>& _c,
 					std::string _matrix)
@@ -89,35 +89,37 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n)
 	if (matrix_type == "star") {
 
 		Ligne ligne1({0});
-		for (size_t i(1) ; i < n ; ++i) ligne1.push_back(pick_ratio());
-		matrice.push_back(ligne1);				// 1ère ligne ok
-		Ligne ligne({pick_ratio()});
-		for (size_t i(1) ; i < n ; ++i) ligne.push_back(0);		//création des autres lignes
-		
-		for (size_t k(1) ; k < n ; ++k) matrice.push_back(ligne);	//ajout des autres lignes
-		}
-			
-	else if (matrix_type == "ring"){
-
-		for (size_t i(0) ; i < n ; ++i){
-			Ligne ligne;
-			for (size_t k(0) ; k < n ; ++k){
-				if (k == i+1 or k == i-1) ligne.push_back(pick_ratio());
-				else ligne.push_back(0);
-				}
+		for (size_t i(1) ; i < n ; ++i) ligne1.push_back(pick_ratio(n));
+		matrice.push_back(ligne1);
+		for (size_t k(1) ; k < n ; ++k){
+			Ligne ligne({ligne1[k]});
+			for (size_t i(1) ; i < n ; ++i) ligne.push_back(0);
 			matrice.push_back(ligne);
 			}
-			matrice[0][n-1] = pick_ratio();
-			matrice[n-1][0] = pick_ratio();
-		}
-			
+		}	
+	else if (matrix_type == "ring"){
+		
+		Ligne ligne;
+		for (size_t i(0) ; i < n ; ++i) ligne.push_back(0);
+		for (size_t i(0) ; i < n ; ++i) matrice.push_back(ligne);
+		double ratio1 = pick_ratio(n);
+		matrice[1][0] = ratio1, matrice[0][1] = ratio1;
+		
+		for (size_t p(2) ; p < n ; ++p){
+			matrice[p][p-1] = pick_ratio(n);
+			matrice[p-1][p] = matrice[p][p-1];
+			}
+			double ratio = pick_ratio(n);
+			matrice[n-1][0] = ratio, matrice[0][n-1] = ratio;
+		}	
 	else if (matrix_type == "complete"){
+		double x(pick_ratio(n));
 		for (size_t i(0) ; i < n ; ++i){
 			Ligne ligne;
 			for (size_t k(0) ; k < n ; ++k){
 				if (i == k) ligne.push_back(0);
-				else ligne.push_back(pick_ratio());
-			}
+				else ligne.push_back(x);
+				}
 				matrice.push_back(ligne);
 			}
 		}
@@ -135,7 +137,12 @@ void Migration::print_matrix() const
 	std::cout << std::endl;
 }
 
-double Migration::pick_ratio()
+std::random_device rd2;
+std::mt19937 rng2 = std::mt19937(rd2());
+
+double Migration::pick_ratio(int n)
 {
-	return 0.0;
-	}
+std::uniform_int_distribution<> distribution(1, n-1);
+double val = distribution(rng2);
+return val/n;
+}
