@@ -14,7 +14,7 @@ public:
 				std::string _matrix);
 				
 	void run(); //override; à ajouter, mais enlevé pour l'instant sinon compile pas
-	void migrate(const Matrix& matrix);	// fait migrer toutes les populations de la simulation
+	void migrate();	// fait migrer toutes les populations de la simulation
 	void print_matrix() const;
 	static Matrix create_matrix(std::string matrix, size_t n); //avec le string = type de migration
 	static double pick_ratio(int n);

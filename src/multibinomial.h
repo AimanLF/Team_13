@@ -12,4 +12,11 @@
 */ 
 std::vector<double> multibinomial (int N, std::vector<double> f);
 
+/*!
+  \param a: inferior bound of the uniform distribution
+  \param b : upper bound of the uniform distribution
+  \return a int randomly generated following a uniform distribution
+*/ 
+int randomUniform (int a, int b);
+
 #endif

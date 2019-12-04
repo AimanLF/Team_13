@@ -1,6 +1,8 @@
 #include <cmath>
 #include "migration.h"
-#include <random>
+#include "multibinomial.h"
+#include <algorithm>
+
 Migration::Migration(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,bool file,
 					const std::vector<double>& _f, const std::vector<std::string>& _c,
 					std::string _matrix)
@@ -15,18 +17,19 @@ void Migration::run()
 	for (size_t t(0); t< end; ++t){
 		print(t);
 		step();
-		// use migrate(...) dans une boucle;
+		//migrate();
 	} 
 	printAlleles();
 }
 
-void Migration::migrate(const Matrix& matrix)   // fait migrer toutes les populations de la simulation
+void Migration::migrate()   // fait migrer toutes les populations de la simulation
 {
    for(size_t i(0); i < populations.size(); ++i) {
+	   std::vector<double> populationI;
+	   double sommeI(populations[i].getIndividuals());
 	   
-	   /*vector<double> populationI;
 	   for(size_t k(0); k < populations[i].frequence.size(); ++k)
-				populationI.push_back(populations[i].frequence * populations[i].getIndividuals());*/
+				populationI.push_back(populations[i].frequence[k] * sommeI);
 	   
 	   for(size_t j(0); j < populations.size(); ++j) {
 			
@@ -34,51 +37,45 @@ void Migration::migrate(const Matrix& matrix)   // fait migrer toutes les popula
 				break;
 			}
 			
-			/*vector<double> populationJ;
-			for(size_t k(0); k < populations[k].frequence.size(); ++k)
-				populationI.push_back(populations[j].frequence * populations[j].getIndividuals());*/
+			std::vector<double> populationJ;
+			double sommeJ(populations[j].getIndividuals());
+			for(size_t k(0); k < populations[j].frequence.size(); ++k)
+				populationJ.push_back(populations[j].frequence[k] *sommeJ);
 			
 			//Determine nb à faire migrer
-			size_t NumberToMove( ceil(matrix[i][j] * populations[i].getIndividuals()));
+			double NumberToMove(round(matrix[i][j] * sommeI));
 			
-			/*//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
+			//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
 			while(NumberToMove > 0){
-				for (size_t y(0); y < populationI.size(); ++y){
-					size_t toMoveAlleleI  //Nb aléatoire entre 0 et min(populationI[y],NumberToMove)
-					populationI[y] -= toMoveAlleleI;
-					populationJ[y] += toMOveAlleleI;
-				}
+					int whichAllele = randomUniform(0,(populationI.size() - 1));
+					int toMoveAlleleI = randomUniform(0, std::min(NumberToMove,populationI[whichAllele])); 
+					
+					populationI[whichAllele] -= toMoveAlleleI;
+					sommeI -= toMoveAlleleI;
+					populationJ[whichAllele] += toMoveAlleleI;
+					sommeJ += toMoveAlleleI;
+					NumberToMove -= toMoveAlleleI;
 			}
 			
 			//Recalculer les fréquences 
-			size_t sommeI(0);
-			size_t sommeJ(0);
-			for (auto ind : populationI)
-				sommeI += ind;
-			for (auto ind : populationJ)
-				sommeJ += ind;
-			
-			for(auto ind : populationI)
-				ind = ind/sommeI;
-			for(auto ind : populationJ)
+			for(auto& ind : populationJ)
 				ind = ind/sommeJ;
-			
-			populations[i].frequence = populationI;
-			populations[i].individuals = sommeI;
+				
 			populations[j].frequence = populationJ;
-			populations[j].individuals = sommeJ;*/
-				
-				
-			
-			// ajoute à la pop d'arrivée j les fréquences de la pop de départ i comprises entre 0 et ration * taille de la pop i
-			populations[j].frequence.insert(populations[j].frequence.end(), populations[i].frequence.begin(), populations[i].frequence.begin() + NumberToMove);
-			// Effacer frequences correspondantes dans population i 
-			populations[i].frequence.erase(populations[i].frequence.begin(), populations[i].frequence.begin() + NumberToMove);
-			
-			// Same avec genetic code
-			populations[j].genetic_code.insert(populations[j].genetic_code.end(), populations[i].genetic_code.begin(), populations[i].genetic_code.begin() + NumberToMove);
-			populations[i].genetic_code.erase(populations[i].genetic_code.begin(), populations[i].genetic_code.begin() + NumberToMove);
+			populations[j].individuals = sommeJ;
+		
 	   }
+	   std::cout << sommeI << std::endl;
+	   if(sommeI > 0){
+		   for(auto& ind : populationI)
+				ind = ind/sommeI;
+		}
+		for(auto& ind : populationI)
+			std::cout << ' ' << ind << std::endl;
+		std::cout << std::endl;
+			
+		populations[i].frequence = populationI;
+		populations[i].individuals = sommeI;
    }
 }
 
@@ -137,12 +134,8 @@ void Migration::print_matrix() const
 	std::cout << std::endl;
 }
 
-std::random_device rd2;
-std::mt19937 rng2 = std::mt19937(rd2());
-
 double Migration::pick_ratio(int n)
 {
-std::uniform_int_distribution<> distribution(1, n-1);
-double val = distribution(rng2);
-return val/n;
+	double val = randomUniform(1,n-1);
+	return val/n;
 }

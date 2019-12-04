@@ -2,7 +2,7 @@
 #include "multibinomial.h"
 
 // uncomment to disable assert()
-// #define NDEBUG 
+//#define NDEBUG 
 
 std::random_device rd;
 std::mt19937 rng = std::mt19937(rd());
@@ -39,4 +39,10 @@ std::vector<double> multibinomial (int N, std::vector<double> f){
 		fre = fre/N;
 			
 	return new_frequences;
+}
+
+int randomUniform (int a, int b){
+	std::uniform_int_distribution<> distribution(a, b);
+	int val = distribution(rng);
+	return val;
 }
