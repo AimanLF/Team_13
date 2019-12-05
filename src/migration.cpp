@@ -17,66 +17,70 @@ void Migration::run()
 	for (size_t t(0); t< end; ++t){
 		print(t);
 		step();
-		//migrate();
+		migrate();
 	} 
 	printAlleles();
 }
 
 void Migration::migrate()   // fait migrer toutes les populations de la simulation
 {
-   for(size_t i(0); i < populations.size(); ++i) {
-	   std::vector<double> populationI;
-	   double sommeI(populations[i].getIndividuals());
-	   
-	   for(size_t k(0); k < populations[i].frequence.size(); ++k)
-				populationI.push_back(populations[i].frequence[k] * sommeI);
-	   
-	   for(size_t j(0); j < populations.size(); ++j) {
+	//Transforme les tableaux de fréquence en tableaux d'individus
+	std::vector<std::vector<double>> populationsInd;
+	for (size_t i(0); i < populations.size(); ++i){
+		std::vector<double> populationI;
+		
+		for (size_t j(0); j < populations[i].frequence.size(); ++j)
+			populationI.push_back(populations[i].frequence[j] * populations[i].getIndividuals());
+		
+		populationsInd.push_back(populationI);
+	}
+	
+	for (size_t i(0); i < populationsInd.size(); ++i){
+		for (size_t j(0); j < populationsInd.size(); ++j){
 			
-			if(i == j) { // exclure auto transfert
+			if(i==j) //pas d'auto transfert
 				break;
-			}
-			
-			std::vector<double> populationJ;
-			double sommeJ(populations[j].getIndividuals());
-			for(size_t k(0); k < populations[j].frequence.size(); ++k)
-				populationJ.push_back(populations[j].frequence[k] *sommeJ);
 			
 			//Determine nb à faire migrer
-			double NumberToMove(round(matrix[i][j] * sommeI));
+			std::cout << matrix[i][j] << std::endl;
+			double NumberToMove(round(matrix[i][j] * populations[i].getIndividuals()));
 			
 			//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
 			while(NumberToMove > 0){
-					int whichAllele = randomUniform(0,(populationI.size() - 1));
-					int toMoveAlleleI = randomUniform(0, std::min(NumberToMove,populationI[whichAllele])); 
+					int whichAllele = randomUniform(0,(populationsInd[i].size() - 1));
+					int toMove = randomUniform(0, std::min(NumberToMove,populationsInd[i][whichAllele])); 
 					
-					populationI[whichAllele] -= toMoveAlleleI;
-					sommeI -= toMoveAlleleI;
-					populationJ[whichAllele] += toMoveAlleleI;
-					sommeJ += toMoveAlleleI;
-					NumberToMove -= toMoveAlleleI;
+					populationsInd[i][whichAllele] -= toMove;
+					populationsInd[j][whichAllele] += toMove;
+					NumberToMove -= toMove;
 			}
-			
-			//Recalculer les fréquences 
-			for(auto& ind : populationJ)
-				ind = ind/sommeJ;
-				
-			populations[j].frequence = populationJ;
-			populations[j].individuals = sommeJ;
-		
-	   }
-	   std::cout << sommeI << std::endl;
-	   if(sommeI > 0){
-		   for(auto& ind : populationI)
-				ind = ind/sommeI;
 		}
-		for(auto& ind : populationI)
-			std::cout << ' ' << ind << std::endl;
-		std::cout << std::endl;
+	}
+	
+	//Recalcule les fréquences
+	std::vector<double> sommes;
+	for (size_t i(0); i < populationsInd.size(); ++i){
+		double nbIndividus(0);
+		for (size_t j(0); j < populationsInd[i].size(); ++j)
+			nbIndividus+=populationsInd[i][j];
+		sommes.push_back(nbIndividus);
+		
+		if(nbIndividus == populations[i].getIndividuals())
+			std::cout << "Yeah !" << std::endl;
 			
-		populations[i].frequence = populationI;
-		populations[i].individuals = sommeI;
-   }
+	}
+	
+	for (size_t i(0); i < populationsInd.size(); ++i){
+		for (size_t j(0); j < populationsInd[i].size(); ++j)
+			populationsInd[i][j] = populationsInd[i][j]/sommes[i];
+	}
+	
+	for(size_t i(0); i < populations.size(); ++i){
+		populations[i].frequence = populationsInd[i];
+		std::cout<< populations[i].individuals << '|' << sommes[i] << std::endl;
+		//populations[i].individuals = sommes[i];
+	}
+	
 }
 
 Matrix Migration::create_matrix(std::string matrix_type, size_t n) 

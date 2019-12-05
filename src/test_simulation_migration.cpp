@@ -73,7 +73,7 @@ TEST(migration_test, create_matrix){
 }
 
 TEST(migration, execution){
-	Migration simulation1(100,2,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"complete");
+	Migration simulation1(100,3,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"complete");
 	simulation1.run();
 	
 	/*Migration simulation2(1000,2,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"star");
