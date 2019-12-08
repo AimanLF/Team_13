@@ -38,21 +38,21 @@ void Migration::migrate()   // fait migrer toutes les populations de la simulati
 	for (size_t i(0); i < populationsInd.size(); ++i){
 		for (size_t j(0); j < populationsInd.size(); ++j){
 			
-			if(i==j) //pas d'auto transfert
-				break;
+			if(i!=j){ //pas d'auto transfert
+				
 			
-			//Determine nb à faire migrer
-			std::cout << matrix[i][j] << std::endl;
-			double NumberToMove(round(matrix[i][j] * populations[i].getIndividuals()));
-			
-			//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
-			while(NumberToMove > 0){
-					int whichAllele = randomUniform(0,(populationsInd[i].size() - 1));
-					int toMove = randomUniform(0, std::min(NumberToMove,populationsInd[i][whichAllele])); 
-					
-					populationsInd[i][whichAllele] -= toMove;
-					populationsInd[j][whichAllele] += toMove;
-					NumberToMove -= toMove;
+				//Determine nb à faire migrer
+				double NumberToMove(round(matrix[i][j] * populations[i].getIndividuals()));
+
+				//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
+				while(NumberToMove > 0){
+						int whichAllele = randomUniform(0,(populationsInd[i].size() - 1));
+						int toMove = randomUniform(0, std::min(NumberToMove,populationsInd[i][whichAllele])); 
+						
+						populationsInd[i][whichAllele] -= toMove;
+						populationsInd[j][whichAllele] += toMove;
+						NumberToMove -= toMove;
+				}
 			}
 		}
 	}
@@ -64,9 +64,6 @@ void Migration::migrate()   // fait migrer toutes les populations de la simulati
 		for (size_t j(0); j < populationsInd[i].size(); ++j)
 			nbIndividus+=populationsInd[i][j];
 		sommes.push_back(nbIndividus);
-		
-		if(nbIndividus == populations[i].getIndividuals())
-			std::cout << "Yeah !" << std::endl;
 			
 	}
 	
@@ -77,8 +74,7 @@ void Migration::migrate()   // fait migrer toutes les populations de la simulati
 	
 	for(size_t i(0); i < populations.size(); ++i){
 		populations[i].frequence = populationsInd[i];
-		std::cout<< populations[i].individuals << '|' << sommes[i] << std::endl;
-		//populations[i].individuals = sommes[i];
+		populations[i].individuals = sommes[i];
 	}
 	
 }
