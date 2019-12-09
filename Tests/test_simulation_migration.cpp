@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
-#include "migration.h"
+#include "../src/multibinomial.h"
+#include "../src/simulation.h"
+#include "../src/migration.h"
 
 /*!
   TOUS LES COMMENTAIRES DOIVENT ÊTRE SUPPRIMER DU CPP DONC EXPLIQUER LES TESTS DANS READ ME
