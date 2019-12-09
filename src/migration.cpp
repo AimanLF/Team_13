@@ -22,9 +22,8 @@ void Migration::run()
 	printAlleles();
 }
 
-void Migration::migrate()   // fait migrer toutes les populations de la simulation
+void Migration::migrate()  
 {
-	//Transforme les tableaux de fréquence en tableaux d'individus
 	std::vector<std::vector<double>> populationsInd;
 	for (size_t i(0); i < populations.size(); ++i){
 		std::vector<double> populationI;
@@ -38,13 +37,10 @@ void Migration::migrate()   // fait migrer toutes les populations de la simulati
 	for (size_t i(0); i < populationsInd.size(); ++i){
 		for (size_t j(0); j < populationsInd.size(); ++j){
 			
-			if(i!=j){ //pas d'auto transfert
+			if(i!=j){ 
 				
-			
-				//Determine nb à faire migrer
 				double NumberToMove(round(matrix[i][j] * populations[i].getIndividuals()));
-
-				//Choisi le nb d'individus à faire migrer pour une allèle spécifique + bouge individus
+				
 				while(NumberToMove > 0){
 						int whichAllele = randomUniform(0,(populationsInd[i].size() - 1));
 						int toMove = randomUniform(0, std::min(NumberToMove,populationsInd[i][whichAllele])); 
@@ -56,8 +52,7 @@ void Migration::migrate()   // fait migrer toutes les populations de la simulati
 			}
 		}
 	}
-	
-	//Recalcule les fréquences
+
 	std::vector<double> sommes;
 	for (size_t i(0); i < populationsInd.size(); ++i){
 		double nbIndividus(0);

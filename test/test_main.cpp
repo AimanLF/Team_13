@@ -1,5 +1,7 @@
 #include "test_simulation_migration.cpp"
 #include "test_multibinomial.cpp"
+#include "test_readfasta.cpp"
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

@@ -2,7 +2,6 @@
 #include "../src/multibinomial.h"
 
 /*!
-  TOUS LES COMMENTAIRES DOIVENT ÊTRE SUPPRIMER DU CPP DONC EXPLIQUER LES TESTS DANS READ ME
   TEST(MultibinomialTest,somme1): Test que la somme des allèles est toujours équales à 1 après 10 appels de multibinomial
   TEST(MultibinomialTest, fixation): Test qu'un allèle à 0 ne peut pas réapparaître
  */

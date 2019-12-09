@@ -4,7 +4,6 @@
 #include "../src/migration.h"
 
 /*!
-  TOUS LES COMMENTAIRES DOIVENT ÊTRE SUPPRIMER DU CPP DONC EXPLIQUER LES TESTS DANS READ ME
   TEST(simulationTest,sameAverage): Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
   TEST(simulationTest,fixation_time): Test si une allèle se fixe avec 3 allèles (9 fois au minimum sur 10) et Test si une allèle se fixe avec 5 allèles
   TEST(migration_test, create_matrix): Test si les matrices se font correctement
