@@ -82,6 +82,7 @@ void Migration::migrate()   // fait migrer toutes les populations de la simulati
 Matrix Migration::create_matrix(std::string matrix_type, size_t n) 
 {
 	Matrix matrice;
+	const double SEUIL(0.7);
 		
 	if (matrix_type == "star") {
 
@@ -121,6 +122,13 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n)
 			}
 		}
 	
+	for (size_t i(0) ; i < n ; ++i){	//normalisation
+		double somme(0);
+		for (size_t k(0) ; k < n ; ++k) somme += matrice[i][k];
+		if (somme >= 1) for (size_t m(0) ; m < n ; ++m) matrice[m][i] /= somme, matrice[i][m] /= somme;
+}
+	for (auto& ligne : matrice) for (auto& val : ligne) val *= SEUIL; 
+
 	return matrice;
 }
 
