@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(WrightFisher_13) 
+project(WrightFisher_team13) 
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
@@ -21,15 +21,8 @@ if (test)
     SET(GTEST_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/include)
     SET(GTEST_BOTH_LIBRARIES libgtest.a libgtest_main.a)
   endif(NOT GTEST_FOUND)
-  include_directories(${GTEST_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/src)
-  add_executable(testWrightFisher Test/test_main.cpp src/migration.cpp src/simulation src/population src/multibinomial.cpp)
+  include_directories(${GTEST_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/Tests)
+  add_executable(testWrightFisher Tests/test_main.cpp src/migration.cpp src/simulation src/population src/multibinomial.cpp)
   target_link_libraries(testWrightFisher ${GTEST_BOTH_LIBRARIES} pthread)
-  add_test(WrightFisher testWrightFisher)
+  add_test(WrightFisher_team13_tests testWrightFisher)
 endif(test)
-
-find_package(Doxygen)
-if (DOXYGEN_FOUND)
-  add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                    COMMENT "Generating API documentation with Doxygen" VERBATIM)
-endif(DOXYGEN_FOUND)
