@@ -14,6 +14,28 @@ char pick_nucleotide(){
 	return 'C';
 }
 
+void sort(std::vector<double>& frequence, std::vector<std::string>& genetic_code){
+std::vector<std::string> new_genetic_code(genetic_code);
+	std::sort(new_genetic_code.begin(),new_genetic_code.end());
+	std::vector<int>index;
+	
+	for (size_t i(0); i<genetic_code.size(); ++i){
+		std::string codon = genetic_code[i];
+		std::vector<std::string>::iterator it = std::find(new_genetic_code.begin(), new_genetic_code.end(), codon);
+		if (it != genetic_code.end())
+			  index.push_back(std::distance(new_genetic_code.begin(), it));
+	}
+	
+	std::vector<double> new_frequence(frequence.size());
+	for (size_t i(0); i<index.size(); ++i){
+		 int nb=index[i];
+		 new_frequence[nb]=frequence[i];
+	 }
+	 
+	 genetic_code=new_genetic_code;
+	 frequence=new_frequence;
+ }
+
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
@@ -44,6 +66,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 				for (size_t k(0) ; k < sequences.size() ; ++k) if (ALLELES[i] == sequences[k]) ++c;
 				F.push_back(c/sequences.size());
 			}
+			sort(F,ALLELES);
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
 			confstr.close();
 		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
