@@ -4,7 +4,7 @@
 #include <ctime>
 #include <stdlib.h>
 #include "read_fasta.h"
-#include <multibinomial.h>
+#include "multibinomial.h"
 
 char pick_nucleotide(){
 	double i = randomUniform(0,3);
