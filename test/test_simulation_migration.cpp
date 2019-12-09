@@ -13,7 +13,7 @@
 bool isEqual(double x, double y, double epsilon){return std::abs(x - y) < epsilon;}
 bool isEqual(double x, double y){return isEqual(x, y, 6e-2);}
 
-TEST(simulationTest,sameAverage){
+TEST(SimulationTest,sameAverage){
 	double freq1 (0.3);
 	double freq2 (0.4);
 	double freq3 (0.1);
@@ -42,7 +42,7 @@ TEST(simulationTest,sameAverage){
   }
 }
 
-TEST(simulationTest,fixation_time){
+TEST(SimulationTest,fixationTime){
 	int testOK(0);
 	for (size_t i(0); i < 10; ++i){
 		double freqx (0.85);
@@ -70,11 +70,28 @@ TEST(simulationTest,fixation_time){
 
 }
 
-TEST(migration_test, create_matrix){
-//à refaire
-}
+TEST(MigrationTest, createMatrix){
+	size_t individus (100);
+	std::vector<std::string> nameMatrice{"complete", "star", "ring"};
+	size_t k(0);
 
-TEST(migration, execution){
+	while(k<nameMatrice.size()) {
+		Migration simulation(1, 1, individus, 5, false, false, std::vector<double> {0.2, 0.15, 0.05, 0.5, 0.1}, std::vector<std::string> (5, "---"), nameMatrice[k]);
+		Matrix matrix(simulation.create_matrix(nameMatrice[k], individus));
+	
+		for(size_t i(0); i<matrix[0].size(); ++i) {
+			double ratio_line(0.0);
+			double ratio_column(0.0);
+			for(size_t j(0); j<matrix[0].size(); ++j) {
+				ratio_line += matrix[i][j];
+				ratio_column += matrix[j][i];
+			}
+			EXPECT_TRUE(ratio_line == ratio_column);
+		}
+		++k;
+	}
+}/*
+TEST(MigrationTest, execution){
 	Migration simulation1(1000,3,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"complete");
 	simulation1.run();
 	
@@ -84,3 +101,4 @@ TEST(migration, execution){
 	Migration simulation3(1000,2,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"ring");
 	simulation3.run();
 }
+*/
