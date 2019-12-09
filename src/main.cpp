@@ -20,15 +20,15 @@ int main(int argc, char ** argv) {
 	  //Affichage terminal et/ou fichier
 	  TCLAP::ValueArg <bool> terminal("T", "Terminal", "Print results in terminal.", false, false, "bool");
 	  cmd.add(terminal);
-	  TCLAP::ValueArg <bool> print_file("p", "print_file", "Print results in a file.", false, false, "bool");
+	  TCLAP::ValueArg <bool> print_file("P", "Print_file", "Print results in a file.", false, false, "bool");
 	  cmd.add(print_file);
 
 	  //Taille de la population
-	  TCLAP::ValueArg <int> population_size("n", "size", "Number of individuals.", false, 100, "int");
+	  TCLAP::ValueArg <int> population_size("N", "Size", "Number of individuals.", false, 100, "int");
 	  cmd.add(population_size);
 
 	  //Durée en nombre de générations 
-	  TCLAP::ValueArg <int> generation("g", "generations", "Number of generations.", false, 10, "int");
+	  TCLAP::ValueArg <int> generation("G", "Generations", "Number of generations.", false, 10, "int");
 	  cmd.add(generation);
 
 	  //Fréquences 
@@ -36,7 +36,7 @@ int main(int argc, char ** argv) {
 	  cmd.add(freq);
 
 	  //Répétitions de la simulation
-	  TCLAP::ValueArg <int> repetitions("r", "number_repetions", "Simulation will be repeated R times.", false, 3, "int");
+	  TCLAP::ValueArg <int> repetitions("R", "Repetions", "Simulation will be repeated R times.", false, 3, "int");
 	  cmd.add(repetitions);
 	  
 	  //marqueurs	
