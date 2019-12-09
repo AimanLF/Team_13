@@ -18,9 +18,9 @@ int main(int argc, char ** argv) {
 	  cmd.add(file_name);
 	  
 	  //Affichage terminal et/ou fichier
-	  TCLAP::ValueArg <bool> terminal("T", "Terminal", "Print results in terminal.", false, false, "bool");
+	  TCLAP::SwitchArg terminal("T", "Terminal", "Print results in terminal.", false);
 	  cmd.add(terminal);
-	  TCLAP::ValueArg <bool> print_file("P", "Print_file", "Print results in a file.", false, false, "bool");
+	  TCLAP::SwitchArg print_file("P", "Print_file", "Print results in a file.", false);
 	  cmd.add(print_file);
 
 	  //Taille de la population
