@@ -26,3 +26,10 @@ if (test)
   target_link_libraries(testWrightFisher ${GTEST_BOTH_LIBRARIES} pthread)
   add_test(WrightFisher_team13_tests testWrightFisher)
 endif(test)
+
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+  add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                    COMMENT "Generating API documentation with Doxygen" VERBATIM)
+endif(DOXYGEN_FOUND)
