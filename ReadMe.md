@@ -54,3 +54,10 @@ fixation: controls that if an allele disappear (ie. its frequence is null) it wo
 ```
 tbd
 ```
+
+### Algorithm of migrate
+1. Transform the vectors of frequencies into vectors of individuals
+2. Determine the number of total individuals to migrate.
+3. Chose the number of individualsto move of a given allele (which allele is radomly chosen).
+4. Move the individuals.
+5. Change the frequencies according to the modified vectors.
