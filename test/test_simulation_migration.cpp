@@ -71,14 +71,14 @@ TEST(SimulationTest,fixationTime){
 }
 
 TEST(MigrationTest, createMatrix){
-	size_t individus (100);
+	size_t individus (10);
 	std::vector<std::string> nameMatrice{"complete", "star", "ring"};
 	size_t k(0);
 
 	while(k<nameMatrice.size()) {
 		Migration simulation(1, 1, individus, 5, false, false, std::vector<double> {0.2, 0.15, 0.05, 0.5, 0.1}, std::vector<std::string> (5, "---"), nameMatrice[k]);
 		Matrix matrix(simulation.create_matrix(nameMatrice[k], individus));
-	
+		
 		for(size_t i(0); i<matrix[0].size(); ++i) {
 			double ratio_line(0.0);
 			double ratio_column(0.0);
@@ -87,9 +87,13 @@ TEST(MigrationTest, createMatrix){
 				ratio_column += matrix[j][i];
 			}
 			EXPECT_TRUE(ratio_line == ratio_column);
+			EXPECT_TRUE(ratio_line <= (0.7 +7e-2));
+			EXPECT_TRUE(ratio_column <= (0.7 +7e-2));
 		}
 		++k;
 	}
+	
+	
 }/*
 TEST(MigrationTest, execution){
 	Migration simulation1(1000,3,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"complete");
