@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "multibinomial.h"
+#include "../src/multibinomial.h"
 
 /*!
   TOUS LES COMMENTAIRES DOIVENT ÊTRE SUPPRIMER DU CPP DONC EXPLIQUER LES TESTS DANS READ ME
