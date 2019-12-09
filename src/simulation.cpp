@@ -7,7 +7,6 @@ Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool _termina
 {
 	for (size_t i(0); i<_r;++i){
 		Population pop (_n,_a,_f,_c);
-		//pop.sort();
 		populations.push_back(pop);
 	}	
 }
