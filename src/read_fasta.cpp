@@ -36,6 +36,21 @@ std::vector<std::string> new_genetic_code(genetic_code);
 	 frequence=new_frequence;
  }
 
+void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, std::vector<size_t>& marqueurs, std::ifstream& confstr){
+	std::string nextline;
+	std::getline(confstr, nextline);
+	nextline.erase(std::remove_if(nextline.begin(), nextline.end(), isspace), nextline.end());
+	std::transform(nextline.begin(), nextline.end(), nextline.begin(), ::toupper);
+	if (nextline[0] == 'A' or nextline[0] == 'T' or nextline[0] == 'G' or nextline[0] == 'C' or nextline[0] == 'N'){
+		for (size_t k(last_indice) ; k < marqueurs.size() ; ++k){
+			if (marqueurs[k]-1-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr);
+			else if (nextline[marqueurs[k]-1-last_size] == 'N') new_seq += pick_nucleotide();
+			else new_seq += nextline[marqueurs[k]-1-last_size];
+		}
+	}
+	else if (nextline[0] == '>' or nextline[0] == '<') throw std::invalid_argument("Markers refer to non-existant nucleotide.");							
+}
+
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
@@ -43,22 +58,27 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			std::vector<std::string> sequences, ALLELES;
 			std::vector<double> F;
 			size_t N_ind(0);
-			
+			bool new_ind(true);
 			std::string line;
 			
 			while(std::getline(confstr, line)){
 				line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
                 std::transform(line.begin(), line.end(), line.begin(), ::toupper);
-                if (line[0] == '>') ++N_ind;
+                if (line[0] == '>' or line[0] == '<') new_ind = true;
                 else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C' or line[0] == 'N'){
-					for (auto val : marqueurs) if (val > line.size()) throw std::invalid_argument("Markers refer to non-existant nucleotide.");
+					if (new_ind == true){
 					std::string new_seq("");
 					bool exist(false);
-					for (auto num : marqueurs)  if (line[num-1] == 'N') new_seq += pick_nucleotide();
-												else new_seq += line[num-1];
+					for (size_t i(0) ; i < marqueurs.size() ; ++i){
+						if (marqueurs[i] > line.size()) read_next_line(line.size(), new_seq, i, marqueurs, confstr);
+						else if (line[marqueurs[i]-1] == 'N') new_seq += pick_nucleotide();
+						else new_seq += line[marqueurs[i]-1];
+						}
 					sequences.push_back(new_seq);
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);
+					new_ind = false, ++N_ind;
+					}
 				} else throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
 			}
 			for (size_t i(0) ; i < ALLELES.size() ; ++i){
