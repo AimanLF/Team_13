@@ -40,7 +40,7 @@ int main(int argc, char ** argv) {
 	  cmd.add(repetitions);
 	  
 	  //marqueurs	
-	  TCLAP::MultiArg <size_t> markers("m", "markers", "Alleles' positions on the sequence.", false, "size_t" );
+	  TCLAP::MultiArg <int> markers("m", "markers", "Alleles' positions on the sequence.", false, "int" );
 	  cmd.add(markers);
 	  
 	  //Type de migration
@@ -57,7 +57,7 @@ int main(int argc, char ** argv) {
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
-	  std::vector<size_t> _markers(markers.getValue());
+	  std::vector<size_t> _markers;
 	  int _population_size(population_size.getValue());
 	  size_t _alleles_number((freq.getValue()).size());
 	  std::string _file_name(file_name.getValue());
@@ -66,6 +66,10 @@ int main(int argc, char ** argv) {
 			
 			try {
 				if (!markers.isSet()) throw TCLAP::ArgException("Expect markers to read the file");
+				for (auto val : markers.getValue()){
+					if (val > 0) _markers.push_back(val);
+					else throw TCLAP::ArgException("Markers must be strictly positive");
+					}
 				read_fasta(_freqs, _genetic_code, _markers, _population_size, _alleles_number, _file_name);
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
