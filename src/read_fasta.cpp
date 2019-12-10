@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "read_fasta.h"
 #include "multibinomial.h"
+#include <iostream>
 
 char pick_nucleotide(){
 	double i = randomUniform(0,3);
@@ -43,12 +44,12 @@ void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, 
 	std::transform(nextline.begin(), nextline.end(), nextline.begin(), ::toupper);
 	if (nextline[0] == 'A' or nextline[0] == 'T' or nextline[0] == 'G' or nextline[0] == 'C' or nextline[0] == 'N'){
 		for (size_t k(last_indice) ; k < marqueurs.size() ; ++k){
-			if (marqueurs[k]-1-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr);
+			if (marqueurs[k]-1-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
 			else if (nextline[marqueurs[k]-1-last_size] == 'N') new_seq += pick_nucleotide();
 			else new_seq += nextline[marqueurs[k]-1-last_size];
+			std::cerr << new_seq << std::endl;
 		}
-	}
-	else if (nextline[0] == '>' or nextline[0] == '<') throw std::invalid_argument("Markers refer to non-existant nucleotide.");							
+	}else if (nextline[0] == '>' or nextline[0] == '<') throw std::invalid_argument("Markers refer to non-existant nucleotide.");
 }
 
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
@@ -70,7 +71,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 					std::string new_seq("");
 					bool exist(false);
 					for (size_t i(0) ; i < marqueurs.size() ; ++i){
-						if (marqueurs[i] > line.size()) read_next_line(line.size(), new_seq, i, marqueurs, confstr);
+						if (marqueurs[i] > line.size()) read_next_line(line.size(), new_seq, i, marqueurs, confstr), i = marqueurs.size();
 						else if (line[marqueurs[i]-1] == 'N') new_seq += pick_nucleotide();
 						else new_seq += line[marqueurs[i]-1];
 						}
@@ -88,6 +89,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			}
 			sort(F,ALLELES);
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
+			for (auto val : alleles) std::cout << val << std::endl;
 			confstr.close();
 		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
 }
