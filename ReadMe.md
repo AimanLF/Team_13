@@ -25,7 +25,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 
 ## C.Usage and parameters
 
-### From the terminal
+### 1. From the terminal
 #### usage
 ``` ./WrightFisher  {-T|-P} [-N <int>] [-G <int>] [-f <double>] [-R <double>] ```
 #### parameters
@@ -43,7 +43,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 
 It is required to choose at least one of output localisation (-T and/or -P)
 
-### From fasta file
+### 2. From fasta file
 #### usage 
 ```./WrightFisher  {-T|-P} [-F <string>] [-G <int>] [-R <double>] [-m <int>] [-M <string>]```
 #### parameters
@@ -63,7 +63,7 @@ It is required to choose at least one of output localisation (-T and/or -P)
 
 It is required to choose at least one of output localisation (-T and/or -P)
 
-### Practical
+### 3. Practical
 #### usage 
 ```./WrightFisher[--] [--version][-h]```
 #### parameters
