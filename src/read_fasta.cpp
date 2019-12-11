@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "read_fasta.h"
 #include "multibinomial.h"
+#include <bits/stdc++.h>
 #include <iostream>
 
 char pick_nucleotide(){
@@ -13,6 +14,10 @@ char pick_nucleotide(){
 	if (i == 1) return 'T';
 	if (i == 2) return 'G';
 	return 'C';
+}
+
+int SortByAbs(const int& a,const int& b){
+    return abs(a)==abs(b)?a<b:(abs(a)<abs(b));
 }
 
 void sort(std::vector<double>& frequence, std::vector<std::string>& genetic_code){
@@ -42,23 +47,21 @@ void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, 
 	std::getline(confstr, nextline);
 	nextline.erase(std::remove_if(nextline.begin(), nextline.end(), isspace), nextline.end());
 	std::transform(nextline.begin(), nextline.end(), nextline.begin(), ::toupper);
-	if (nextline[0] == 'A' or nextline[0] == 'T' or nextline[0] == 'G' or nextline[0] == 'C' or nextline[0] == 'N'){
+	if (nextline[0] == 'A' or nextline[0] == 'T' or nextline[0] == 'G' or nextline[0] == 'C' or nextline[0] == 'N' or nextline.empty()){
 		for (size_t k(last_indice) ; k < marqueurs.size() ; ++k){
-			if (marqueurs[k]-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
+			if (marqueurs[k]-last_size > nextline.size()) std::cerr << "inin" << std::endl, read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
 			else if (nextline[marqueurs[k]-1-last_size] == 'N') new_seq += pick_nucleotide();
 			else new_seq += nextline[marqueurs[k]-1-last_size];
 		}
 	}else if (nextline[0] == '>' or nextline[0] == '<') throw std::invalid_argument("Markers refer to non-existant nucleotide.");
 }
-//sort(marqueurs)
-//lignes vides ?
+
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
-			
+			sort(marqueurs.begin(), marqueurs.end(), SortByAbs);
 			std::vector<std::string> sequences, ALLELES;
 			std::vector<double> F;
-			size_t N_ind(0);
 			bool new_ind(true);
 			std::string line;
 			
@@ -78,9 +81,9 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 					sequences.push_back(new_seq);
 					for (auto seq : ALLELES) if (new_seq == seq) exist = true;
 					if (not exist) ALLELES.push_back(new_seq);
-					new_ind = false, ++N_ind;
+					new_ind = false;
 					}
-				} else throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
+				} else if (not line.empty()) throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
 			}
 			for (size_t i(0) ; i < ALLELES.size() ; ++i){
 				double c(0);
@@ -88,7 +91,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 				F.push_back(c/sequences.size());
 			}
 			sort(F,ALLELES);
-			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
+			A = ALLELES.size(), N = sequences.size(), alleles = ALLELES, f = F;
 			confstr.close();
 		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
 }
