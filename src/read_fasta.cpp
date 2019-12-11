@@ -44,14 +44,14 @@ void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, 
 	std::transform(nextline.begin(), nextline.end(), nextline.begin(), ::toupper);
 	if (nextline[0] == 'A' or nextline[0] == 'T' or nextline[0] == 'G' or nextline[0] == 'C' or nextline[0] == 'N'){
 		for (size_t k(last_indice) ; k < marqueurs.size() ; ++k){
-			if (marqueurs[k]-1-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
+			if (marqueurs[k]-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
 			else if (nextline[marqueurs[k]-1-last_size] == 'N') new_seq += pick_nucleotide();
 			else new_seq += nextline[marqueurs[k]-1-last_size];
-			std::cerr << new_seq << std::endl;
 		}
 	}else if (nextline[0] == '>' or nextline[0] == '<') throw std::invalid_argument("Markers refer to non-existant nucleotide.");
 }
-
+//sort(marqueurs)
+//lignes vides ?
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
@@ -89,7 +89,6 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			}
 			sort(F,ALLELES);
 			A = ALLELES.size(), N = N_ind, alleles = ALLELES, f = F;
-			for (auto val : alleles) std::cout << val << std::endl;
 			confstr.close();
 		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
 }
