@@ -44,7 +44,7 @@ int main(int argc, char ** argv) {
 	  cmd.add(markers);
 	  
 	  //Type de migration
-	  TCLAP::ValueArg <std::string> migration_type("M", "Migration_type", "Choose a migration type (star/ring/complete).", false, "","string");
+	  TCLAP::ValueArg <std::string> migration_type("M", "Migration", "Choose a migration type (star/ring/complete).", false, "","string");
       cmd.add(migration_type);
       
 	  cmd.parse(argc, argv);		//trier les exeptions en fonctions du fasta/terminal
