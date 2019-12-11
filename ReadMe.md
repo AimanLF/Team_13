@@ -40,6 +40,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 ```-P -Print_file   <bool>    ``` Indicate if the output must be in a file. 
 
 ```-T -Terminal     <bool>    ``` Indicate if the output must be in terminal.
+
 It is required to choose at least one of output localisation (-T and/or -P)
 
 ### From fasta file
@@ -47,12 +48,19 @@ It is required to choose at least one of output localisation (-T and/or -P)
 ```./WrightFisher  {-T|-P} [-F <string>] [-G <int>] [-R <double>] [-m <int>] [-M <string>]```
 #### parameters
 ```-F -File_name    <string>   ```(required)Name of the fasta file.
+
 ```-G -Generations  <int>      ```Duration of the simulation, i.e: the number of generations.
+
 ```-R -Repetitions  <int>      ```Number of time the simulation is repeat with the same parameters. 
-```-m -markers      <int>      ```(required)(accepted multiple times)List of markers to read the fasta file
-```-M -Migration    <string>   ```A migration type between star ring or complete
+
+```-m -markers      <int>      ```(required)(accepted multiple times)List of markers to read the fasta file.
+
+```-M -Migration    <string>   ```A migration type between star ring or complete.
+
 ```-P -Print_file   <bool>     ```Indicate if the output must be in a file.
-```-T -Terminal     <bool>     ```Indicate if the output must be in terminal
+
+```-T -Terminal     <bool>     ```Indicate if the output must be in terminal.
+
 It is required to choose at least one of output localisation (-T and/or -P)
 
 ### Practical
@@ -60,7 +68,9 @@ It is required to choose at least one of output localisation (-T and/or -P)
 ```./WrightFisher[--] [--version][-h]```
 #### parameters
 ```-    --ignore_rest ```Ignores the rest of the labeled arguments following this flag.
+
 ```--version          ```Displays version information and exits.
+
 ```-h   --help        ```Displays usage information and exits.
 
 ## D. Tests
