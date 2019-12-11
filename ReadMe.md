@@ -30,10 +30,15 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 ``` ./WrightFisher  {-T|-P} [-N <int>] [-G <int>] [-f <double>] [-R <double>] ```
 #### parameters
 ```-N -Size         <int>     ``` The size of the population, i.e:  number of individuals per population.
+
 ```-G -Generations  <int>     ``` Duration of the simulation, i.e: the number of generations.
-```-f -frequences   <double>  ``` (required)(accepted multiple times)List of the initials frequencies of the alleles o
+
+```-f -frequences   <double>  ``` (required)(accepted multiple times)List of the initials frequencies of the alleles.
+
 ```-R -Repetitions  <int>     ``` Number of time the simulation is repeat with the same parameters. 
+
 ```-P -Print_file   <bool>    ``` Indicate if the output must be in a file. 
+
 ```-T -Terminal     <bool>    ``` Indicate if the output must be in terminal.
 It is required to choose at least one of output localisation (-T and/or -P)
 
