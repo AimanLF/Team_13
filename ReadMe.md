@@ -25,7 +25,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 
 ## C.Usage and parameters
 
-### 1. From the terminal
+### 1. From the terminal (without fasta file)
 #### usage
 ``` ./WrightFisher  {-T|-P} [-N <int>] [-G <int>] [-f <double>] [-R <double>] ```
 #### parameters
@@ -43,7 +43,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 
 It is required to choose at least one of output localisation (-T and/or -P)
 
-### 2. From fasta file
+### 2. From fasta file (with fasta file)
 #### usage 
 ```./WrightFisher  {-T|-P} [-F <string>] [-G <int>] [-R <double>] [-m <int>] [-M <string>]```
 #### parameters
@@ -63,7 +63,7 @@ It is required to choose at least one of output localisation (-T and/or -P)
 
 It is required to choose at least one of output localisation (-T and/or -P)
 
-### 3. Practical
+### 3. Useful
 #### usage 
 ```./WrightFisher[--] [--version][-h]```
 #### parameters
@@ -74,6 +74,6 @@ It is required to choose at least one of output localisation (-T and/or -P)
 ```-h   --help        ```Displays usage information and exits.
 
 ## D. Tests
-The tests check the fonctionnement of the program. The file test_main.cpp  execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests do:
+The tests check the fonctionnement of the program. The file test_main.cpp  execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests the commands is:
 
 ```./testWrightFisher```
