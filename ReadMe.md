@@ -1,5 +1,5 @@
 # Wright-Fisher Simulation
-The program is an implementation of the model of Wright-Fisher. This model does not take into account the environmental factors and focused only the generation drift, which is an evolutionary mechanism where the frequencies of alleles in a population vary randomly in time. That means the alleles does not change but only their frequencies. To define the new frequencies at each generation we use the multibinomial distribution.
+The program is an implementation of the model of Wright-Fisher. This model does not take into account the environmental factors and focuses only on the generation drift, which is an evolutionary mechanism where the frequencies of alleles in a population vary randomly in time. That means the alleles does not change but only their frequencies. To define the new frequencies at each generation we use the multibinomial distribution.
 
 ## A. Run the program
 These instructions allow to get a copy of the project, compile this one and create the documentation. 
@@ -47,13 +47,13 @@ It is required to choose at least one of output localisation (-T and/or -P)
 #### usage 
 ```./WrightFisher  {-T|-P} [-F <string>] [-G <int>] [-R <double>] [-m <int>] [-M <string>]```
 #### parameters
-```-F -File_name    <string>   ```(required)Name of the fasta file.
+```-F -File_name    <string>   ```(required) Name of the fasta file.
 
 ```-G -Generations  <int>      ```Duration of the simulation, i.e: the number of generations.
 
 ```-R -Repetitions  <int>      ```Number of time the simulation is repeat with the same parameters. 
 
-```-m -markers      <int>      ```(required)(accepted multiple times)List of markers to read the fasta file.
+```-m -markers      <int>      ```(required)(accepted multiple times) List of markers to read the fasta file.
 
 ```-M -Migration    <string>   ```A migration type between star ring or complete.
 
@@ -74,6 +74,6 @@ It is required to choose at least one of output localisation (-T and/or -P)
 ```-h   --help        ```Displays usage information and exits.
 
 ## D. Tests
-The tests check the fonctionnement of the program. The file test_main.cpp  execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests the commands is:
+The tests check the fonctionnement of the program. The file test_main.cpp execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests the command is:
 
 ```./testWrightFisher```
