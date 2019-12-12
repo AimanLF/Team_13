@@ -77,12 +77,12 @@ void Migration::migrate()
 Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r) 
 {
 	Matrix matrice;
-	const double SEUIL(0.7);
+	//const double SEUIL(0.7);
 		
 	if (matrix_type == "star") {
 
 		Ligne ligne1({0});
-		for (size_t i(1) ; i < r ; ++i) ligne1.push_back(pick_ratio(n));
+		for (size_t i(1) ; i < r ; ++i) ligne1.push_back(pick_ratio(n,r));
 		matrice.push_back(ligne1);
 		for (size_t k(1) ; k < r ; ++k){
 			Ligne ligne({ligne1[k]});
@@ -95,18 +95,18 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r)
 		Ligne ligne;
 		for (size_t i(0) ; i < r ; ++i) ligne.push_back(0);
 		for (size_t i(0) ; i < r ; ++i) matrice.push_back(ligne);
-		double ratio1 = pick_ratio(n);
+		double ratio1 = pick_ratio(n, r);
 		matrice[1][0] = ratio1, matrice[0][1] = ratio1;
 		
 		for (size_t p(2) ; p < r ; ++p){
-			matrice[p][p-1] = pick_ratio(n);
+			matrice[p][p-1] = pick_ratio(n, r);
 			matrice[p-1][p] = matrice[p][p-1];
 			}
-			double ratio = pick_ratio(n);
+			double ratio = pick_ratio(n, r);
 			matrice[r-1][0] = ratio, matrice[0][r-1] = ratio;
 		}	
 	else if (matrix_type == "complete"){
-		double x(pick_ratio(n));
+		double x(pick_ratio(n, r));
 		for (size_t i(0) ; i < r ; ++i){
 			Ligne ligne;
 			for (size_t k(0) ; k < r ; ++k){
@@ -116,14 +116,14 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r)
 				matrice.push_back(ligne);
 			}
 		}
-	
+/*	
 	for (size_t i(0) ; i < r ; ++i){	//normalisation
 		double somme(0);
 		for (size_t k(0) ; k < r ; ++k) somme += matrice[i][k];
 		if (somme >= 1) for (size_t m(0) ; m < r ; ++m) matrice[m][i] /= somme, matrice[i][m] /= somme;
 }
 	for (auto& ligne : matrice) for (auto& val : ligne) val *= SEUIL; 
-
+*/
 	return matrice;
 }
 
@@ -137,8 +137,8 @@ void Migration::print_matrix() const
 	std::cout << std::endl;
 }
 
-double Migration::pick_ratio(int n)
+double Migration::pick_ratio(double n, double r)
 {
-	double val = randomUniform(1,n-1);
+	double val = randomUniform(0, n/r);
 	return val/n;
 }

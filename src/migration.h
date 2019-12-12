@@ -42,11 +42,11 @@ public:
 /*!
   Create a matrix according to his type(complete, star or ring)
  */
-	static Matrix create_matrix(std::string matrix, size_t n); 
+	static Matrix create_matrix(std::string matrix, size_t n, size_t r); 
 /*!
-  Pick one or more rate of the matrix
+  Pick one or more rate of the matrix given the population size and the number of populations.
  */
-	static double pick_ratio(int n);
+	static double pick_ratio(double n, double r);
 private:
 	Matrix matrix;
 };
