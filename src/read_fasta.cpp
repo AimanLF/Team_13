@@ -16,7 +16,7 @@ char pick_nucleotide(){
 	return 'C';
 }
 
-int SortByAbs(const int& a,const int& b){
+int SortCroissant(const int& a,const int& b){
     return abs(a)==abs(b)?a<b:(abs(a)<abs(b));
 }
 
@@ -49,7 +49,7 @@ void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, 
 	std::transform(nextline.begin(), nextline.end(), nextline.begin(), ::toupper);
 	if (nextline[0] == 'A' or nextline[0] == 'T' or nextline[0] == 'G' or nextline[0] == 'C' or nextline[0] == 'N' or nextline.empty()){
 		for (size_t k(last_indice) ; k < marqueurs.size() ; ++k){
-			if (marqueurs[k]-last_size > nextline.size()) std::cerr << "inin" << std::endl, read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
+			if (marqueurs[k]-last_size > nextline.size()) read_next_line(last_size+nextline.size(), new_seq, k, marqueurs, confstr), k = marqueurs.size();
 			else if (nextline[marqueurs[k]-1-last_size] == 'N') new_seq += pick_nucleotide();
 			else new_seq += nextline[marqueurs[k]-1-last_size];
 		}
@@ -59,7 +59,7 @@ void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, 
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
-			sort(marqueurs.begin(), marqueurs.end(), SortByAbs);
+			sort(marqueurs.begin(), marqueurs.end(), SortCroissant);
 			std::vector<std::string> sequences, ALLELES;
 			std::vector<double> F;
 			bool new_ind(true);
@@ -70,7 +70,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
                 std::transform(line.begin(), line.end(), line.begin(), ::toupper);
                 if (line[0] == '>' or line[0] == '<') new_ind = true;
                 else if (line[0] == 'A' or line[0] == 'T' or line[0] == 'G' or line[0] == 'C' or line[0] == 'N'){
-					if (new_ind == true){
+					if (new_ind){
 					std::string new_seq("");
 					bool exist(false);
 					for (size_t i(0) ; i < marqueurs.size() ; ++i){
