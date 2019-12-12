@@ -7,7 +7,7 @@ TEST(ReadFastaTest, readNormalFasta){
 	std::vector<std::string> alle;
 	int nbInd(0);
 	size_t nbAll(0);
-	std::string fichier("../data_base/test.fa");
+	std::string fichier("../database/test.fa");
 	
 	read_fasta(freq, alle, {1,2,3}, nbInd, nbAll, fichier);
 	
@@ -23,7 +23,7 @@ TEST(ReadFastaTest, readBadlyWrittenFasta){
 	std::vector<std::string> alle;
 	int nbInd(0);
 	size_t nbAll(0);
-	std::string fichier("../data_base/test_bad.fa");
+	std::string fichier("../database/test_bad.fa");
 	
 	read_fasta(freq, alle, {1,2,3}, nbInd, nbAll, fichier);
 	
