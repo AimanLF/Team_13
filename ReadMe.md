@@ -27,7 +27,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 
 ### 1. From the terminal (without fasta file)
 #### usage
-``` ./WrightFisher  {-T|-P} [-N <int>] [-G <int>] [-f <double>] [-R <double>] ```
+``` ./WrightFisher  {-T|-P} [-N <int>] [-G <int>] [-f <double>] [-R <double>] [-M <string>]```
 #### parameters
 ```-N -Size         <int>     ``` The size of the population, i.e:  number of individuals per population.
 
@@ -36,6 +36,8 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 ```-f -frequences   <double>  ``` (required)(accepted multiple times)List of the initials frequencies of the alleles.
 
 ```-R -Repetitions  <int>     ``` Number of time the simulation is repeat with the same parameters. 
+
+```-M -Migration    <string>   ```A migration type between star ring or complete.
 
 ```-P -Print_file   <bool>    ``` Indicate if the output must be in a file. 
 
