@@ -8,7 +8,7 @@ Migration::Migration(size_t _t, size_t _r, size_t _n, size_t _a, bool terminal,b
 					std::string _matrix)
 :Simulation(_t, _r, _n, _a, terminal, file, _f, _c)
 {
-	matrix = create_matrix(_matrix, _n);
+	matrix = create_matrix(_matrix, _n, _r);
 }
 
 void Migration::run()
@@ -74,7 +74,7 @@ void Migration::migrate()
 	
 }
 
-Matrix Migration::create_matrix(std::string matrix_type, size_t n) 
+Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r) 
 {
 	Matrix matrice;
 	const double SEUIL(0.7);
@@ -82,34 +82,34 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n)
 	if (matrix_type == "star") {
 
 		Ligne ligne1({0});
-		for (size_t i(1) ; i < n ; ++i) ligne1.push_back(pick_ratio(n));
+		for (size_t i(1) ; i < r ; ++i) ligne1.push_back(pick_ratio(n));
 		matrice.push_back(ligne1);
-		for (size_t k(1) ; k < n ; ++k){
+		for (size_t k(1) ; k < r ; ++k){
 			Ligne ligne({ligne1[k]});
-			for (size_t i(1) ; i < n ; ++i) ligne.push_back(0);
+			for (size_t i(1) ; i < r ; ++i) ligne.push_back(0);
 			matrice.push_back(ligne);
 			}
 		}	
 	else if (matrix_type == "ring"){
 		
 		Ligne ligne;
-		for (size_t i(0) ; i < n ; ++i) ligne.push_back(0);
-		for (size_t i(0) ; i < n ; ++i) matrice.push_back(ligne);
+		for (size_t i(0) ; i < r ; ++i) ligne.push_back(0);
+		for (size_t i(0) ; i < r ; ++i) matrice.push_back(ligne);
 		double ratio1 = pick_ratio(n);
 		matrice[1][0] = ratio1, matrice[0][1] = ratio1;
 		
-		for (size_t p(2) ; p < n ; ++p){
+		for (size_t p(2) ; p < r ; ++p){
 			matrice[p][p-1] = pick_ratio(n);
 			matrice[p-1][p] = matrice[p][p-1];
 			}
 			double ratio = pick_ratio(n);
-			matrice[n-1][0] = ratio, matrice[0][n-1] = ratio;
+			matrice[r-1][0] = ratio, matrice[0][r-1] = ratio;
 		}	
 	else if (matrix_type == "complete"){
 		double x(pick_ratio(n));
-		for (size_t i(0) ; i < n ; ++i){
+		for (size_t i(0) ; i < r ; ++i){
 			Ligne ligne;
-			for (size_t k(0) ; k < n ; ++k){
+			for (size_t k(0) ; k < r ; ++k){
 				if (i == k) ligne.push_back(0);
 				else ligne.push_back(x);
 				}
@@ -117,10 +117,10 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n)
 			}
 		}
 	
-	for (size_t i(0) ; i < n ; ++i){	//normalisation
+	for (size_t i(0) ; i < r ; ++i){	//normalisation
 		double somme(0);
-		for (size_t k(0) ; k < n ; ++k) somme += matrice[i][k];
-		if (somme >= 1) for (size_t m(0) ; m < n ; ++m) matrice[m][i] /= somme, matrice[i][m] /= somme;
+		for (size_t k(0) ; k < r ; ++k) somme += matrice[i][k];
+		if (somme >= 1) for (size_t m(0) ; m < r ; ++m) matrice[m][i] /= somme, matrice[i][m] /= somme;
 }
 	for (auto& ligne : matrice) for (auto& val : ligne) val *= SEUIL; 
 
