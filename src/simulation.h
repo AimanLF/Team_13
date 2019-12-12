@@ -79,6 +79,12 @@ public:
   \return the total number of time-step 
  */	
     size_t getEndtime() const;
+        
+/*!
+  \return the number of individus in the population
+  \param index: index of the population of interest in \ref populations 
+ */	    
+    size_t getIndividusOfPopulation(size_t index) const;
 
 protected:
 	size_t endtime;			

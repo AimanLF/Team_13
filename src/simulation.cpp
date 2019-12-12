@@ -77,3 +77,8 @@ std::vector<double> Simulation:: getFreqPop(size_t nbSim) const{
 size_t Simulation::getEndtime() const{ 
 	return endtime; 
 }
+
+
+size_t Simulation::getIndividusOfPopulation(size_t index) const{
+	return populations[index].getIndividuals();
+}
