@@ -46,7 +46,7 @@ public:
 /*!
   Pick one or more rate of the matrix given the population size and the number of populations.
  */
-	static double pick_ratio(double n, double r);
+	static double pick_ratio(double n, double r, size_t indice);
 private:
 	Matrix matrix;
 };

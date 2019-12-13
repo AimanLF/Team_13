@@ -77,12 +77,11 @@ void Migration::migrate()
 Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r) 
 {
 	Matrix matrice;
-	//const double SEUIL(0.7);
-		
+
 	if (matrix_type == "star") {
 
 		Ligne ligne1({0});
-		for (size_t i(1) ; i < r ; ++i) ligne1.push_back(pick_ratio(n,r));
+		for (size_t i(1) ; i < r ; ++i) ligne1.push_back(pick_ratio(n,r, i));
 		matrice.push_back(ligne1);
 		for (size_t k(1) ; k < r ; ++k){
 			Ligne ligne({ligne1[k]});
@@ -95,14 +94,12 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r)
 		Ligne ligne;
 		for (size_t i(0) ; i < r ; ++i) ligne.push_back(0);
 		for (size_t i(0) ; i < r ; ++i) matrice.push_back(ligne);
-		double ratio1 = pick_ratio(n, r);
-		matrice[1][0] = ratio1, matrice[0][1] = ratio1;
 		
-		for (size_t p(2) ; p < r ; ++p){
-			matrice[p][p-1] = pick_ratio(n, r);
+		for (size_t p(1) ; p < r ; ++p){
+			matrice[p][p-1] = pick_ratio(n, r, p);
 			matrice[p-1][p] = matrice[p][p-1];
 			}
-			double ratio = pick_ratio(n, r);
+			double ratio = pick_ratio(n, r, r-1);
 			matrice[r-1][0] = ratio, matrice[0][r-1] = ratio;
 		}	
 	else if (matrix_type == "complete"){
@@ -112,20 +109,12 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r)
 		for (size_t i(0) ; i < r ; ++i){
 			for (size_t k(i) ; k < r ; ++k){
 				if (i != k){
-					matrice[i][k] = pick_ratio(n, r);
+					matrice[i][k] = pick_ratio(n, r, i);
 					matrice[k][i] = matrice[i][k];
 					}
 				}
 			}
 		}
-/*	
-	for (size_t i(0) ; i < r ; ++i){	//normalisation
-		double somme(0);
-		for (size_t k(0) ; k < r ; ++k) somme += matrice[i][k];
-		if (somme >= 1) for (size_t m(0) ; m < r ; ++m) matrice[m][i] /= somme, matrice[i][m] /= somme;
-}
-	for (auto& ligne : matrice) for (auto& val : ligne) val *= SEUIL; 
-*/
 	return matrice;
 }
 
@@ -139,7 +128,7 @@ void Migration::print_matrix() const
 	std::cout << std::endl;
 }
 
-double Migration::pick_ratio(double n, double r)
+double Migration::pick_ratio(double n, double r, size_t indice)
 {
 	double res(0);
 	if (n >= r){
@@ -147,9 +136,12 @@ double Migration::pick_ratio(double n, double r)
 	}else{
 			bool cond;
 			int _n(n), _r(r);
-			if (_r%_n == 0) cond = (randomUniform(1, r/n) == 1);
-			else cond = (randomUniform(1, r/n + 1) == 1);
-			if (cond) res = randomUniform(0, 1);
+			if (_r%_n == 0){ cond = ((indice+1) % (_r/_n) == 0);}
+			else{
+				size_t k = floor(r/n)+1;
+				cond = ((indice+1) % k == 0);
+			}
+			if (cond) res = 1;
 		}
 	return res/n; 
 }
