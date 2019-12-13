@@ -94,16 +94,47 @@ TEST(MigrationTest, createMatrix){
 	
 	
 }
+TEST(MigrationTest, populationNumbereOnlyMigrate){
+	size_t individus(200);
+	size_t population(5);
+	Migration simulation1(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "complete");
+	
+	for(size_t i(0); i < 1000; ++i)
+		simulation1.migrate();
+	
+	for(size_t i(0); i< population ;++i) {
+		size_t nbPopu(simulation1.getIndividusOfPopulation(i));
+		EXPECT_TRUE(nbPopu == individus);
+	}
+	
+	Migration simulation2(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "star");
+	
+	for(size_t i(0); i < 1000; ++i)
+		simulation2.migrate();
+	
+	for(size_t i(0); i< population ;++i) {
+		size_t nbPopu(simulation2.getIndividusOfPopulation(i));
+		EXPECT_TRUE(nbPopu == individus);
+	}
+	
+	Migration simulation3(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "ring");
+	
+	for(size_t i(0); i < 1000; ++i)
+		simulation3.migrate();
+	
+	for(size_t i(0); i< population ;++i) {
+		size_t nbPopu(simulation3.getIndividusOfPopulation(i));
+		EXPECT_TRUE(nbPopu == individus);
+	}
+}
 TEST(MigrationTest, populationNumberComplet)
 {
 	size_t individus(200);
 	size_t population(20);
 	Migration simulation(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "complete");
 	simulation.run();
-	simulation.print_matrix(); //à enlever
 	for(size_t i(0); i< population ;++i) {
 		size_t nbPopu(simulation.getIndividusOfPopulation(i));
-		std::cout << nbPopu << "    " << individus << std::endl;
 		EXPECT_TRUE(nbPopu == individus);
 	}
 }
@@ -114,10 +145,8 @@ TEST(MigrationTest, populationNumberStar)
 	size_t population(20);
 	Migration simulation(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "star");
 	simulation.run();
-	simulation.print_matrix(); //à enlever
 	for(size_t i(0); i< population ;++i) {
 		size_t nbPopu(simulation.getIndividusOfPopulation(i));
-		//std::cout << nbPopu << "    " << individus << std::endl;
 		EXPECT_TRUE(nbPopu == individus);
 	}
 }
@@ -128,22 +157,8 @@ TEST(MigrationTest, populationNumberRing)
 	size_t population(20);
 	Migration simulation(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "ring");
 	simulation.run();
-	simulation.print_matrix(); //à enlever
 	for(size_t i(0); i< population ;++i) {
 		size_t nbPopu(simulation.getIndividusOfPopulation(i));
-		//std::cout << nbPopu << "    " << individus << std::endl;
 		EXPECT_TRUE(nbPopu == individus);
 	}
 }
-/*
-TEST(MigrationTest, execution){
-	Migration simulation1(1000,3,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"complete");
-	simulation1.run();
-	
-	Migration simulation2(1000,2,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"star");
-	simulation2.run();
-	
-	Migration simulation3(1000,2,2000,2,false, false,std::vector<double> {0.8, 0.2}, std::vector<std::string> (2,"-"),"ring");
-	simulation3.run();
-}
-*/

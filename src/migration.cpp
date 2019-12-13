@@ -29,15 +29,13 @@ void Migration::migrate()
 		std::vector<double> populationI;
 		
 		for (size_t j(0); j < populations[i].frequence.size(); ++j)
-			populationI.push_back(populations[i].frequence[j] * populations[i].getIndividuals());
+			populationI.push_back(round(populations[i].frequence[j] * populations[i].getIndividuals()));
 		
 		populationsInd.push_back(populationI);
 	}
 	
 	for (size_t i(0); i < populationsInd.size(); ++i){
 		for (size_t j(0); j < populationsInd.size(); ++j){
-			
-			if(i!=j){ 
 				
 				double NumberToMove(round(matrix[i][j] * populations[i].getIndividuals()));
 				
@@ -49,7 +47,6 @@ void Migration::migrate()
 						populationsInd[j][whichAllele] += toMove;
 						NumberToMove -= toMove;
 				}
-			}
 		}
 	}
 
@@ -58,8 +55,8 @@ void Migration::migrate()
 		double nbIndividus(0);
 		for (size_t j(0); j < populationsInd[i].size(); ++j)
 			nbIndividus+=populationsInd[i][j];
-		sommes.push_back(nbIndividus);
 			
+		sommes.push_back(nbIndividus);	
 	}
 	
 	for (size_t i(0); i < populationsInd.size(); ++i){
