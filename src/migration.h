@@ -4,8 +4,8 @@
 #include "simulation.h"
 
 /*! \class Migration
-  This class herited from Simulation, a extension is added, the individuals now migrate from their population to another. 
-  The migration can be represented as a complete, star or ring network.
+  This class inherits Simulation, an extension is added, the individuals now migrate from their population to another. 
+  The migration can be represented as a star, ring or complete network.
   Migration parameters:
   - \ref matrix : Hold the rates, the fraction of population no i that is moving to no j at each generation
  */
