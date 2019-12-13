@@ -106,14 +106,16 @@ Matrix Migration::create_matrix(std::string matrix_type, size_t n, size_t r)
 			matrice[r-1][0] = ratio, matrice[0][r-1] = ratio;
 		}	
 	else if (matrix_type == "complete"){
-		double x(pick_ratio(n, r));
+		Ligne ligne;
+		for (size_t i(0) ; i < r ; ++i) ligne.push_back(0);
+		for (size_t i(0) ; i < r ; ++i) matrice.push_back(ligne);
 		for (size_t i(0) ; i < r ; ++i){
-			Ligne ligne;
-			for (size_t k(0) ; k < r ; ++k){
-				if (i == k) ligne.push_back(0);
-				else ligne.push_back(x);
+			for (size_t k(i) ; k < r ; ++k){
+				if (i != k){
+					matrice[i][k] = pick_ratio(n, r);
+					matrice[k][i] = matrice[i][k];
+					}
 				}
-				matrice.push_back(ligne);
 			}
 		}
 /*	
@@ -139,6 +141,15 @@ void Migration::print_matrix() const
 
 double Migration::pick_ratio(double n, double r)
 {
-	double val = randomUniform(0, n/r);
-	return val/n;
+	double res(0);
+	if (n >= r){
+		res = randomUniform(0, n/r);
+	}else{
+			bool cond;
+			int _n(n), _r(r);
+			if (_r%_n == 0) cond = (randomUniform(1, r/n) == 1);
+			else cond = (randomUniform(1, r/n + 1) == 1);
+			if (cond) res = randomUniform(0, 1);
+		}
+	return res/n; 
 }
