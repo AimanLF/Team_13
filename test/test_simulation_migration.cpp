@@ -4,15 +4,15 @@
 #include "../src/migration.h"
 
 /*!
-  TEST(simulationTest,sameAverage): Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
-  TEST(simulationTest,fixation_time): Test si une allèle se fixe avec 3 allèles (9 fois au minimum sur 10) et Test si une allèle se fixe avec 5 allèles
+  TEST(simulationTest, sameAverage): Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
+  TEST(simulationTest, fixation_time): Test si une allèle se fixe avec 3 allèles (9 fois au minimum sur 10) et Test si une allèle se fixe avec 5 allèles
   TEST(migration_test, create_matrix): Test si les matrices se font correctement
  */
  
 bool isEqual(double x, double y, double epsilon){return std::abs(x - y) < epsilon;}
 bool isEqual(double x, double y){return isEqual(x, y, 6e-2);}
 
-TEST(SimulationTest,sameAverage){
+TEST(SimulationTest, sameAverage){
 	double freq1 (0.3);
 	double freq2 (0.4);
 	double freq3 (0.1);
@@ -41,7 +41,7 @@ TEST(SimulationTest,sameAverage){
   }
 }
 
-TEST(SimulationTest,fixationTime){
+TEST(SimulationTest, fixationTime){
 	int testOK(0);
 	for (size_t i(0); i < 10; ++i){
 		double freqx (0.85);
