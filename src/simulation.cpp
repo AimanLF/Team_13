@@ -39,7 +39,7 @@ void Simulation::print_terminal(int t){
 
 void Simulation::print_file(int t){
 	std::ostream *_output = &std::cout; 
-	if(output.fail()) std::cerr << "ERROR output failed" << std::endl;
+	if(output.fail()) throw ("ERROR output failed");
 	if (output.is_open()) _output = &output;
 	(*_output) << t << "\t" ;
 	for (size_t i(0); i<populations.size();++i)
@@ -49,22 +49,31 @@ void Simulation::print_file(int t){
 
 
 void Simulation::printAlleles(){
-	if (terminal) print_terminal_alleles();
-	if (file) print_file_alleles();
+	std::string espace;
+	size_t a=getFreqPop(0).size()+1;
+	while (a > 0){
+		espace += "\t";
+		--a;
+	}
+	if (terminal) print_terminal_alleles(espace);
+	if (file) print_file_alleles(espace);
 }
 
-void Simulation:: print_terminal_alleles(){
-	for (size_t i(0); i<populations.size();++i)
-		std::cout << "\t" << populations[i].getCodons() << "\t";
+void Simulation:: print_terminal_alleles(std::string esp){
+	std::cout <<  "\t";
+	for (size_t i(0); i<populations.size();++i){
+		std::cout << populations[i].getCodons() << esp;
+	}
 	std::cout << std::endl;
 }
 
-void Simulation::print_file_alleles(){
+void Simulation::print_file_alleles(std::string esp){
 	std::ostream *_output = &std::cout; 
 	if (output.is_open()) _output = &output;
-	if(output.fail()) std::cerr << "ERROR output failed" << std::endl;
+	if(output.fail()) throw ("ERROR output failed");
+	(*_output)<< "\t";
 	for (size_t i(0); i<populations.size();++i)
-		(*_output) << populations[i].getCodons() << "\t";
+		(*_output) << populations[i].getCodons() << esp;
 	(*_output) << std::endl;
 	if (output.is_open()) output.close();
 }

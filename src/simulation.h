@@ -66,8 +66,8 @@ public:
   Or print in both in function of input.
  */
 	void printAlleles();
-	void print_terminal_alleles();
-	void print_file_alleles();
+	void print_terminal_alleles(std::string esp);
+	void print_file_alleles(std::string esp);
 	
 /*!
   \return the allelic frequencies of a given population
