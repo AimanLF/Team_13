@@ -54,6 +54,8 @@ int main(int argc, char ** argv) {
 	  if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified."); 
 	  if (generation.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive.");
 	  if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive.");
+	  for(auto f:freq.getValue())
+		if(population_size.getValue()*f != int(population_size.getValue()*f)) throw TCLAP::ArgException("Number of individus for each frequence must be an integer");
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
