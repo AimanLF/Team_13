@@ -130,7 +130,7 @@ TEST(MigrationTest, populationNumbereOnlyMigrate){
 TEST(MigrationTest, populationNumberComplet)
 {
 	size_t individus(200);
-	size_t population(20);
+	size_t population(40);
 	Migration simulation(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "complete");
 	simulation.run();
 	for(size_t i(0); i< population ;++i) {
@@ -142,7 +142,7 @@ TEST(MigrationTest, populationNumberComplet)
 TEST(MigrationTest, populationNumberStar)
 {
 	size_t individus(200);
-	size_t population(20);
+	size_t population(40);
 	Migration simulation(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "star");
 	simulation.run();
 	for(size_t i(0); i< population ;++i) {
@@ -154,11 +154,36 @@ TEST(MigrationTest, populationNumberStar)
 TEST(MigrationTest, populationNumberRing)
 {
 	size_t individus(200);
-	size_t population(20);
+	size_t population(40);
 	Migration simulation(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "ring");
 	simulation.run();
 	for(size_t i(0); i< population ;++i) {
 		size_t nbPopu(simulation.getIndividusOfPopulation(i));
 		EXPECT_TRUE(nbPopu == individus);
+	}
+}
+
+TEST(MigrationTest, sumOfFrequences)
+{
+	size_t time(500);
+	size_t individus(200);
+	size_t population(20);
+	std::vector<std::string> nameMatrice{"complete", "star", "ring"};
+	
+	for(size_t n(0); n < nameMatrice.size(); ++n) {
+		Migration simulation(time, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), nameMatrice[n]);
+	
+		for(size_t i(0); i < time; ++i) {
+			simulation.migrate();
+	
+			for(size_t i(0); i < population; ++i) {
+				std::vector<double> fre(simulation.getFreqPop(i));
+				double sum(0.0);
+				for(auto _f : fre) {
+					sum += _f;
+				}
+				EXPECT_NEAR(sum, 1.0, 7e-2);
+			}
+		}
 	}
 }
