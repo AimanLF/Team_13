@@ -39,7 +39,7 @@ void Simulation::print_terminal(int t){
 
 void Simulation::print_file(int t){
 	std::ostream *_output = &std::cout; 
-	if(output.fail()) throw ("ERROR output failed");
+	if(output.fail()) throw std::logic_error("ERROR output failed");
 	if (output.is_open()) _output = &output;
 	(*_output) << t << "\t" ;
 	for (size_t i(0); i<populations.size();++i)
@@ -69,7 +69,7 @@ void Simulation:: print_terminal_alleles(){
 void Simulation::print_file_alleles(){
 	std::ostream *_output = &std::cout; 
 	if (output.is_open()) _output = &output;
-	if(output.fail()) throw ("ERROR output failed");
+	if(output.fail()) throw std::logic_error("ERROR output failed");
 	(*_output)<< "\t";
 	for (size_t i(0); i<populations.size();++i)
 		(*_output) << populations[i].getCodons() << "\t";
