@@ -76,6 +76,9 @@ int main(int argc, char ** argv) {
 			} catch(std::invalid_argument &e) {
 				std::cerr << e.what() << std::endl;
 				return -2;
+			} catch(std::logic_error &e){
+				std::cerr << e.what() << std::endl;
+				return -3;
 			}
 			
 		} else {
