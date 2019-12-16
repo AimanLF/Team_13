@@ -69,6 +69,58 @@ TEST(SimulationTest, fixationTime){
 
 }
 
+TEST(SimulationTest, output_file){
+	std::vector<double> _f {0.3, 0.4, 0.1, 0.05, 0.15};
+	std::vector<std::string> _c {"AAA", "CCC", "GGG", "TTT", "ATG"};
+	int time(0);
+	std::string alleles;
+	std::string space("\t");
+	
+	Simulation simulation(6, 1, 100, 4, false, true, _f, _c);
+	
+	while(time <= 6) {
+		simulation.print(time);
+		_f = simulation.getFreqPop(0);
+		alleles += (std::to_string(time) + space);
+		
+		for(auto f: _f)
+			alleles += std::to_string(f);
+			
+		alleles += "\t";
+		++time;
+		simulation.step();
+	}
+	
+	simulation.printAlleles();
+	
+	alleles += space;
+	for(auto c: _c)
+		alleles += c;
+	
+	std::ifstream input;
+	input.open("test.txt");
+	
+	std::string allele_input;
+	
+	if(input.fail()) {
+		std::cerr << "error" << std::endl;
+	} else {
+		    std::string key, value, line;
+				while (std::getline(input, line)) {		 
+					std::stringstream ss(line);
+					while (std::getline(ss, key, '|')) { 
+							allele_input += key;
+					}
+				}
+			}
+	input.close();
+
+	for(size_t i(0); i< alleles.size(); i++) {
+		EXPECT_TRUE(alleles[i] == allele_input[i]);
+	}
+	
+}
+
 TEST(MigrationTest, createMatrix){
 	size_t individus (10);
 	std::vector<std::string> nameMatrice{"complete", "star", "ring"};
@@ -94,6 +146,7 @@ TEST(MigrationTest, createMatrix){
 	
 	
 }
+
 TEST(MigrationTest, populationNumbereOnlyMigrate){
 	size_t individus(200);
 	size_t population(5);
@@ -187,3 +240,4 @@ TEST(MigrationTest, sumOfFrequences)
 		}
 	}
 }
+
