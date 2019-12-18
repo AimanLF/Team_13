@@ -8,12 +8,6 @@
 /*! \class Population
   A population is a number of \ref individuals with each a number of \ref alleles.
   Share its attributs with friend class \ref Migration.
-  
-   Population parameters:
-  - \ref individuals : total number of individuals
-  - \ref alleles : total number of alleles
-  - \ref frequence : the initial frequencies
-  - \ref genetic_code : list of the different codons
  */
 
 class Population{
@@ -57,9 +51,9 @@ public :
 	std::size_t getIndividuals() const;
 
 private :
-	size_t individuals; 
-	size_t alleles; 
-	std::vector<double> frequence; 
-	std::vector<std::string> genetic_code; 
+	size_t individuals; //!<total number of individuals
+	size_t alleles; //!<total number of alleles
+	std::vector<double> frequence; //!< the current frequencies
+	std::vector<std::string> genetic_code; //!<list of the different codons
 };
 #endif

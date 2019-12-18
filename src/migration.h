@@ -32,9 +32,9 @@ public:
  */			
 	void run(); 
 /*!
-  Do one step of migration of the simulation.
+  Do one step of migration.
  */
-	void migrate();	// fait migrer toutes les populations de la simulation
+	void migrate();	
 /*!
   Display the matrix of the simulation
  */
@@ -48,7 +48,8 @@ public:
  */
 	static double pick_ratio(double n, double r, size_t indice);
 private:
-	Matrix matrix;
+
+	Matrix matrix; //!< the matrix is initialized using the create_matrix function, according to the type of the matrix (complete, star or ring) and so the type of network that the populations forms.
 };
 
 #endif

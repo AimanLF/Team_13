@@ -7,14 +7,6 @@
 /*! \class Simulation
   This class defines the simulation parameters and constructs all the \ref Population in \ref populations.
   It then runs the simulation and prints the results on \ref terminal, \ref file or both.
-
-  Simulation parameters:
-  - \ref endtime : total number of time-steps
-  - \ref repetition : total number of simulation (number of populations)
-  - \ref populations: vector which contains all simulations of one population
-  - \ref terminal : indication to print in terminal or not
-  - \ref file : indication to print in file or not
-  - \ref output : output to write on file 
  */
 
 class Simulation {
@@ -87,12 +79,12 @@ public:
     size_t getIndividusOfPopulation(size_t index) const;
 
 protected:
-	size_t endtime;			
-	size_t repetition;	
-	std::vector<Population> populations;	
-	bool terminal;	
-	bool file;
-	std::ofstream output;
+	size_t endtime;	//!<total number of time-steps i.e number of generations		
+	size_t repetition; //!<total number of simulation (number of populations)
+	std::vector<Population> populations; //!<vector which containing all populations
+	bool terminal;//!<indication to print in terminal or not
+	bool file;//!<indication to print in terminal or not
+	std::ofstream output;//!<output to write on file 
 };
 
 #endif
