@@ -4,7 +4,7 @@ The program is an implementation of the model of Wright-Fisher. This model does 
 ## A.Requirements
 The Wright-Fisher program required the following to run :
 * CMake to compile
-* tclap to handle the user options management
+* TCLAP to handle the user options management. TCLAP is a small library providing a simple interface for defining and accessing command line arguments (see examples bellow).
 * gtest for the unit tests
 * doxygen to generate the documentation
 
@@ -22,7 +22,7 @@ These instructions allow to get a copy of the project, compile and create the do
 ```
 
 ## C. Use read_fasta
-The fasta file have to contain nucleotides sequences composed of A, T, C, G or N. Note that N will be replaces randomly by an other nucleotide. Before each nucleotides sequence, the user must put a line with a ">" symbol.
+The fasta file has to contain nucleotides sequences composed of A, T, C, G or N. Note that an undefined nucleotide N will be replaces randomly by an other nucleotide. Before each nucleotides sequence, the user must insert a line with a ">" symbol.
 Example:
 ```
 >chr11 
@@ -37,7 +37,7 @@ AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 #### usage
 ``` ./WrightFisher  {-T|-P} [-N <int>] [-G <int>] [-f <double>] [-R <double>] [-M <string>]```
 #### parameters
-```-N -Size         <int>     ``` The size of the population, i.e:  number of individuals per population.
+```-N -Size         <int>     ``` The size of the population, i.e: number of individuals per population.
 
 ```-G -Generations  <int>     ``` Duration of the simulation, i.e: the number of generations.
 
@@ -59,9 +59,9 @@ It is required to choose at least one of output localisation (-T and/or -P)
 #### parameters
 ```-F -File_name    <string>   ```(required) Name of the fasta file.
 
-```-G -Generations  <int>      ```Duration of the simulation, i.e: the number of generations.
+```-G -Generations  <int>      ```Duration of the simulation, i.e: number of generations.
 
-```-R -Repetitions  <int>      ```Number of time the simulation is repeat with the same parameters. 
+```-R -Repetitions  <int>      ```Number of time the simulation is repeated with the same parameters. 
 
 ```-m -markers      <int>      ```(required)(accepted multiple times) List of markers to read the fasta file.
 
@@ -84,6 +84,6 @@ It is required to choose at least one of output localisation (-T and/or -P)
 ```-h   --help        ```Displays usage information and exits.
 
 ## E. Tests
-The tests check the fonctionnement of the program. The file test_main.cpp execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests the command is:
+The tests check the correct functioning of the program. The file test_main.cpp execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute those tests enter the command:
 
 ```./testWrightFisher``` or ```make test```
