@@ -86,4 +86,4 @@ It is required to choose at least one of output localisation (-T and/or -P)
 ## E. Tests
 The tests check the fonctionnement of the program. The file test_main.cpp execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests the command is:
 
-```./testWrightFisher or make test```
+```./testWrightFisher``` or ```make test```
