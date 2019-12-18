@@ -4,11 +4,7 @@
 #include "migration.h"
 
 int main(int argc, char ** argv) {
-	
-	float temps;
-    clock_t ti, tf;
-	ti=clock();
-	
+
 	bool warning_frequence(false);
 	bool warning_population_size(false);
 	
@@ -57,8 +53,11 @@ int main(int argc, char ** argv) {
 	  if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified."); 
 	  if (generation.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive.");
 	  if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive.");
-	  for(auto f:freq.getValue())
-		if(population_size.getValue()*f != int(population_size.getValue()*f)) throw TCLAP::ArgException("Number of individus for each frequence must be an integer");
+	  for(double f:freq.getValue()){
+		double a =  population_size.getValue()*f;
+		double b = (int)(population_size.getValue()*f); 
+		if( std::abs(a - b)>1e-6 ) throw TCLAP::ArgException("Number of individus for each frequence must be an integer"  );	
+	}
 	  
 	  if((freq.getValue().empty() == false) and (file_name.getValue().empty() == false )) {
 		  warning_frequence = true;
@@ -66,6 +65,7 @@ int main(int argc, char ** argv) {
 	  if((population_size.isSet() == true) and (file_name.getValue().empty() == false )) {
 		  warning_population_size = true;
 	  }
+	  
 	  
 	  std::vector<std::string> _genetic_code;
 	  std::vector<double> _freqs(freq.getValue());
@@ -119,10 +119,6 @@ int main(int argc, char ** argv) {
 		std::cerr << "error: " << e.error() << std::endl;
 		return -1;
 	}
-	
-	tf=clock();
-	temps = (tf-ti)/CLOCKS_PER_SEC;
-	printf("temps = %f\n", temps);
 	
 	if(warning_frequence) {
 		  std::cout << "\033[1;33mWARNING: frequences in terminal are not used, they are taken from the fasta file\033[0m" << std::endl;

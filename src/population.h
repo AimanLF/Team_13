@@ -36,12 +36,6 @@ public :
  */
 	void step();
 
-	
-/*! 
-  Sort aphabetically the genetic code and the associated frequencies 
- */	
-	void sort();
-
 /*! 
    \return the sequence of alleles frequencies of the population
 */
