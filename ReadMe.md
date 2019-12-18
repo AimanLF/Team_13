@@ -1,7 +1,11 @@
 # Wright-Fisher Simulation
 The program is an implementation of the model of Wright-Fisher. This model does not take into account the environmental factors and focuses only on the generation drift, which is an evolutionary mechanism where the frequencies of alleles in a population vary randomly in time. That means the alleles does not change but only their frequencies. To define the new frequencies at each generation we use the multibinomial distribution.
 
-## A. Run the program
+## A. Environnement to install, ctime, 
+### libary use
+To use our program, you will need to use differents libary: tcalp, vector, string, fstream, sstream, algorithm, ctime, random and iostream.
+
+## B. Run the program
 These instructions allow to get a copy of the project, compile this one and create the documentation. 
 ```
 0 _git clone https://github.com/EPFL-SV-cpp-projects/Team_13.git   
@@ -13,7 +17,7 @@ These instructions allow to get a copy of the project, compile this one and crea
 6 make doc  
 ```
 
-## B. Use read_fasta
+## C. Use read_fasta
 The fasta file have to contain nucleotides sequences composed of A, T, C, G or N. In this last case, N will be replaces randomly by an other nucleotide. Other lines (chromosome number) have to start with ">" symbol.
 Example:
 ```
@@ -23,7 +27,7 @@ CACTGTGTNTGATGATCAACAAAAACCTGGGGGGGGTAGTAGTAGTCC
 AAATGGTGCGTGATGCCCCCCCCCCCCNCCTTGTGAAAA
 ```
 
-## C.Usage and parameters
+## D.Usage and parameters
 
 ### 1. From the terminal (without fasta file)
 #### usage
@@ -75,7 +79,7 @@ It is required to choose at least one of output localisation (-T and/or -P)
 
 ```-h   --help        ```Displays usage information and exits.
 
-## D. Tests
+## E. Tests
 The tests check the fonctionnement of the program. The file test_main.cpp execute all the tests, which are split into three seperate files: test_readfasta.cpp, test_multibinomial and test_simulation_migration.cpp. To execute thoses tests the command is:
 
 ```./testWrightFisher```
