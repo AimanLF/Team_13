@@ -5,13 +5,13 @@
 #include <string>
 
 /*!
-  returns a nucleotide (A, T, G or C) using a uniform distribution.
+  \return a nucleotide (A, T, G or C) using uniform distribution.
  */
 char pick_nucleotide();
 
 /*!
   When reading a fasta, sorts the alleles in alphabetic order and adapts the 
-  frequency vector to that new order.
+  frequencies vector to that new order.
  */
 void sort(std::vector<double>& frequence, std::vector<std::string>& genetic_code);
 
@@ -24,14 +24,14 @@ int SortCroissant(const int& a,const int& b);
 /*!
   Recurrent function that allows reading the next line of the fasta looking for
   the next nucleotide indicated by the markers vector.
-  calls \ref pick_nucleotide()
+  Also calls \ref pick_nucleotide().
  */
 void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, std::vector<size_t>& marqueurs, std::ifstream& confstr);
 
 /*!
-  Reads a fasta file using genome markers to modify by reference the parameters of a population :
-  number of individuals, alleles, number of alleles, frequencies of alleles.
-  calls \ref read_next_line(), \ref SortCroissant(), \ref pick_nucleotide(), \ref sort(). 
+  Reads a fasta file using genome markers to modify by reference the parameters of a population:
+  number of individuals, alleles and their number and frequencies.
+  Also calls \ref read_next_line(), \ref SortCroissant(), \ref pick_nucleotide() and \ref sort(). 
  */
 void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file);
 

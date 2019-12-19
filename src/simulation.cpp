@@ -11,12 +11,14 @@ Simulation::Simulation(size_t _t, size_t _r, size_t _n, size_t _a, bool _termina
 	}	
 }
 
-void Simulation::step() {
+void Simulation::step()
+{
 	for (size_t i(0); i<populations.size();++i)
 		populations[i].step();
 }
 
-void Simulation::run() {
+void Simulation::run()
+{
 	for (size_t t(0); t<endtime +1; ++t){
 		print(t);
 		step();
@@ -24,12 +26,14 @@ void Simulation::run() {
 	printAlleles();
 }
 
-void Simulation::print(int t) {
+void Simulation::print(int t)
+{
 	if (terminal) print_terminal(t);
 	if (file) print_file(t);
 }
 
-void Simulation::print_terminal(int t){
+void Simulation::print_terminal(int t)
+{
 	std::cout << t << "\t" ;
 	for (size_t i(0); i<populations.size();++i)
 		std::cout << populations[i].getAllelesFreq() << "\t";
@@ -37,7 +41,8 @@ void Simulation::print_terminal(int t){
 }
 
 
-void Simulation::print_file(int t){
+void Simulation::print_file(int t)
+{
 	std::ostream *_output = &std::cout; 
 	if(output.fail()) throw std::logic_error("ERROR output failed");
 	if (output.is_open()) _output = &output;
@@ -48,12 +53,14 @@ void Simulation::print_file(int t){
 }
 
 
-void Simulation::printAlleles(){
+void Simulation::printAlleles()
+{
 	if (terminal) print_terminal_alleles();
 	if (file) print_file_alleles();
 }
 
-void Simulation:: print_terminal_alleles(){
+void Simulation:: print_terminal_alleles()
+{
 	std::string espace;
 	size_t a=getFreqPop(0).size()+1;
 	while (a > 0){
@@ -66,7 +73,8 @@ void Simulation:: print_terminal_alleles(){
 	std::cout << std::endl;
 }
 
-void Simulation::print_file_alleles(){
+void Simulation::print_file_alleles()
+{
 	std::ostream *_output = &std::cout; 
 	if (output.is_open()) _output = &output;
 	if(output.fail()) throw std::logic_error("ERROR output failed");
@@ -77,16 +85,19 @@ void Simulation::print_file_alleles(){
 	if (output.is_open()) output.close();
 }
 		
-std::vector<double> Simulation:: getFreqPop(size_t nbSim) const{
+std::vector<double> Simulation:: getFreqPop(size_t nbSim) const
+{
 	assert(populations.size() > nbSim);
 	return populations[nbSim].getFreq(); 
 }
 
-size_t Simulation::getEndtime() const{ 
+size_t Simulation::getEndtime() const
+{ 
 	return endtime; 
 }
 
 
-size_t Simulation::getIndividusOfPopulation(size_t index) const{
+size_t Simulation::getIndividusOfPopulation(size_t index) const
+{
 	return populations[index].getIndividuals();
 }

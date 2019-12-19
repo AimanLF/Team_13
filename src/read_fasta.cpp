@@ -8,7 +8,8 @@
 #include <bits/stdc++.h>
 #include <iostream>
 
-char pick_nucleotide(){
+char pick_nucleotide()
+{
 	double i = randomUniform(0,3);
 	if (i == 0) return 'A';
 	if (i == 1) return 'T';
@@ -16,11 +17,13 @@ char pick_nucleotide(){
 	return 'C';
 }
 
-int SortCroissant(const int& a,const int& b){
+int SortCroissant(const int& a,const int& b)
+{
     return abs(a)==abs(b)?a<b:(abs(a)<abs(b));
 }
 
-void sort(std::vector<double>& frequence, std::vector<std::string>& genetic_code){
+void sort(std::vector<double>& frequence, std::vector<std::string>& genetic_code)
+{
 std::vector<std::string> new_genetic_code(genetic_code);
 	std::sort(new_genetic_code.begin(),new_genetic_code.end());
 	std::vector<int>index;
@@ -42,7 +45,8 @@ std::vector<std::string> new_genetic_code(genetic_code);
 	 frequence=new_frequence;
  }
 
-void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, std::vector<size_t>& marqueurs, std::ifstream& confstr){
+void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, std::vector<size_t>& marqueurs, std::ifstream& confstr)
+{
 	std::string nextline;
 	std::getline(confstr, nextline);
 	nextline.erase(std::remove_if(nextline.begin(), nextline.end(), isspace), nextline.end());
@@ -56,7 +60,8 @@ void read_next_line(size_t last_size, std::string& new_seq, size_t last_indice, 
 	}else if (nextline[0] == '>' or nextline[0] == '<') throw std::invalid_argument("Markers refer to non-existant nucleotide.");
 }
 
-void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file){
+void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::vector<size_t> marqueurs, int& N, size_t& A, std::string& file)
+{
 		std::ifstream confstr(file.c_str());
 		if (confstr.is_open()){
 			sort(marqueurs.begin(), marqueurs.end(), SortCroissant);
@@ -83,7 +88,7 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 					if (not exist) ALLELES.push_back(new_seq);
 					new_ind = false;
 					}
-				} else if (not line.empty()) throw std::invalid_argument("The file " + file + " does not have the required content.");			//fichier contenant autre chose rejeté
+				} else if (not line.empty()) throw std::invalid_argument("The file " + file + " does not have the required content.");
 			}
 			for (size_t i(0) ; i < ALLELES.size() ; ++i){
 				double c(0);
@@ -93,6 +98,6 @@ void read_fasta(std::vector<double>& f, std::vector<std::string>& alleles, std::
 			sort(F,ALLELES);
 			A = ALLELES.size(), N = sequences.size(), alleles = ALLELES, f = F;
 			confstr.close();
-		} else throw std::invalid_argument("Could not open configuration file " + file);									//fichier impossible à ouvrir rejeté
+		} else throw std::invalid_argument("Could not open configuration file " + file);
 }
 

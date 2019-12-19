@@ -1,13 +1,11 @@
 #include <assert.h>
 #include "multibinomial.h"
 
-// uncomment to disable assert()
-//#define NDEBUG 
-
 std::random_device rd;
 std::mt19937 rng = std::mt19937(rd());
 
-std::vector<double> multibinomial (int N, std::vector<double> f){	
+std::vector<double> multibinomial (int N, std::vector<double> f)
+{	
 	
 	double sommefreq(0);
 	for (auto freq : f)
@@ -41,7 +39,8 @@ std::vector<double> multibinomial (int N, std::vector<double> f){
 	return new_frequences;
 }
 
-int randomUniform (int a, int b){
+int randomUniform (int a, int b)
+{
 	std::uniform_int_distribution<> distribution(a, b);
 	int val = distribution(rng);
 	return val;

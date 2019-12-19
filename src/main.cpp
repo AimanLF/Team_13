@@ -11,57 +11,49 @@ int main(int argc, char ** argv) {
 	try {
 	
 	  TCLAP::CmdLine cmd("commande");
-  
-	  //Saisie par l'utilisateur
+
 	  TCLAP::ValueArg <std::string> file_name("F", "File_name", "Fasta file containing sequences.", false, "", "string");
 	  cmd.add(file_name);
 	  
-	  //Affichage terminal et/ou fichier
 	  TCLAP::SwitchArg terminal("T", "Terminal", "Print results in terminal.", false);
 	  cmd.add(terminal);
 	  TCLAP::SwitchArg print_file("P", "Print_file", "Print results in a file.", false);
 	  cmd.add(print_file);
-
-	  //Taille de la population
+	  
 	  TCLAP::ValueArg <int> population_size("N", "Size", "Number of individuals.", false, 100, "int");
 	  cmd.add(population_size);
 
-	  //Durée en nombre de générations 
 	  TCLAP::ValueArg <int> generation("G", "Generations", "Number of generations.", false, 10, "int");
 	  cmd.add(generation);
-
-	  //Fréquences 
+	  
 	  TCLAP::MultiArg<double> freq("f", "frequences", "Frequencies (as fraction of the population).", false, "double" );
 	  cmd.add(freq);
-
-	  //Répétitions de la simulation
+	  
 	  TCLAP::ValueArg <int> repetitions("R", "Repetions", "Simulation will be repeated R times.", false, 3, "int");
 	  cmd.add(repetitions);
-	  
-	  //marqueurs	
+	  	
 	  TCLAP::MultiArg <int> markers("m", "markers", "Alleles' positions on the sequence.", false, "int" );
 	  cmd.add(markers);
 	  
-	  //Type de migration
 	  TCLAP::ValueArg <std::string> migration_type("M", "Migration", "Choose a migration type (star/ring/complete).", false, "","string");
       cmd.add(migration_type);
       
-	  cmd.parse(argc, argv);		//trier les exeptions en fonctions du fasta/terminal
+	  cmd.parse(argc, argv);
 	   
-	   
-	  //Gestion d'erreurs 	
+	  	
 	  if (!terminal.isSet() and !print_file.isSet()) throw TCLAP::ArgException("At least one output (terminal/file) has to specified."); 
 	  if (generation.getValue() < 1) throw TCLAP::ArgException("Simulation duration must be strictly positive.");
 	  if (repetitions.getValue() < 1) throw TCLAP::ArgException("Number of repetitions must be strictly positive.");
 	  for(double f:freq.getValue()){
-		double a =  population_size.getValue()*f;
+		double a = population_size.getValue()*f;
 		double b = (int)(population_size.getValue()*f); 
-		if( std::abs(a - b)>1e-6 ) throw TCLAP::ArgException("Number of individus for each frequence must be an integer"  );	
+		if(std::abs(a - b)>1e-6 ) throw TCLAP::ArgException("Number of individus for each frequence must be an integer");	
 	}
 	  
 	  if((freq.getValue().empty() == false) and (file_name.getValue().empty() == false )) {
 		  warning_frequence = true;
 	  }
+	  
 	  if((population_size.isSet() == true) and (file_name.getValue().empty() == false )) {
 		  warning_population_size = true;
 	  }
@@ -74,7 +66,7 @@ int main(int argc, char ** argv) {
 	  size_t _alleles_number((freq.getValue()).size());
 	  std::string _file_name(file_name.getValue());
 	  
-		if(file_name.isSet()) {													//option fasta
+		if(file_name.isSet()) {											
 			
 			try {
 				if (!markers.isSet()) throw TCLAP::ArgException("Expect markers to read the file");
