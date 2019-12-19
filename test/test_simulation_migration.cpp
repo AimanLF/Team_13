@@ -4,11 +4,15 @@
 #include "../src/migration.h"
 
 /*!
-  TEST(simulationTest, sameAverage): Test if after 1, 2 and 3 generation(s) same average frequencies on 100 populations with same frequencies
-  TEST(simulationTest, fixation_time): Test si une allèle se fixe avec 3 allèles (9 fois au minimum sur 10) et Test si une allèle se fixe avec 5 allèles
-  TEST(migration_test, create_matrix): Test si les matrices se font correctement
+  * TEST(SimulationTest, sameAverage): tests if after 1, 2 and 3 generations the frequencies' average is the same on 100 populations with equal frequencies.
+  * TEST(SimulationTest, fixationTime): tests that one allele will reach a frequency of 1 after a sufficient amount of time.
+  * TEST(SimulationTest, outputFile): checks that the output corresponds to the expected values.
+  * TEST(migration_test, create_matrix): tests if the matrices are correctly initialized.
+  * TEST(MigrationTest, sumOfFreq): checks that sum of frequencies is always 1.
+  * TEST(MigrationTest, OnlyMigrate): tests the extension Migration alone (no call to mulibinomial).
+  * TEST(MigrationTest, popNum[Type]): controls  the  stability  of  the  populations  sizes  after migration ([Type] = ”Complete”, ”Star” or ”Ring”).
  */
- 
+
 bool isEqual(double x, double y, double epsilon){return std::abs(x - y) < epsilon;}
 bool isEqual(double x, double y){return isEqual(x, y, 6e-2);}
 

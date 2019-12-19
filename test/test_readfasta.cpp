@@ -2,6 +2,12 @@
 #include "../src/read_fasta.h"
 #include <vector>
 
+/*!
+ * TEST(ReadFastaTest, readNormalFasta): tests correct reading of test.fa (file with expected formatting).
+ * TEST(ReadFastaTest, readBadlyWrittenFasta): tests correct reading of test_bad.fa (file with various formatting anomalies).
+ * TEST(ReadFastaTest, sort): controls that the alleles are alphabetically sorted.
+*/
+
 TEST(ReadFastaTest, readNormalFasta){
 	std::vector<double> freq;
 	std::vector<std::string> alle;

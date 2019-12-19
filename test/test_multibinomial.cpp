@@ -2,10 +2,12 @@
 #include "../src/multibinomial.h"
 
 /*!
-  TEST(MultibinomialTest,somme1): Test que la somme des allèles est toujours équales à 1 après 10 appels de multibinomial
-  TEST(MultibinomialTest, fixation): Test qu'un allèle à 0 ne peut pas réapparaître
+  TEST(MultibinomialTest,somme1): tests if the sum of the alleles’ frequencies is always equal to 1.00 after a given
+several calls of multibinomial.
+  TEST(MultibinomialTest, fixation): tests that if an allele won’t reappear if its frequence equals 0.
+in the simulation.
  */
- 
+
 TEST(MultibinomialTest, somme1){
 	std::vector<double> test = {0.3,0.2,0.4,0.1};
 	for(size_t i(0); i < 10; i++) {
