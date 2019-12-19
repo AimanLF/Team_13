@@ -69,7 +69,7 @@ TEST(SimulationTest, fixationTime){
 
 }
 
-TEST(SimulationTest, output_file){
+TEST(SimulationTest, outputFile){
 	std::vector<double> _f {0.3, 0.4, 0.1, 0.05, 0.15};
 	std::vector<std::string> _c {"AAA", "CCC", "GGG", "TTT", "ATG"};
 	int time(0);
@@ -147,7 +147,7 @@ TEST(MigrationTest, createMatrix){
 	
 }
 
-TEST(MigrationTest, populationNumbereOnlyMigrate){
+TEST(MigrationTest, OnlyMigrate){
 	size_t individus(200);
 	size_t population(5);
 	Migration simulation1(1000, population, individus, 4, false, false,std::vector<double> {0.4, 0.2, 0.15, 0.25}, std::vector<std::string> (5, "---"), "complete");
@@ -180,7 +180,7 @@ TEST(MigrationTest, populationNumbereOnlyMigrate){
 		EXPECT_TRUE(nbPopu == individus);
 	}
 }
-TEST(MigrationTest, populationNumberComplet)
+TEST(MigrationTest, popNumComplete)
 {
 	size_t individus(200);
 	size_t population(40);
@@ -192,7 +192,7 @@ TEST(MigrationTest, populationNumberComplet)
 	}
 }
 
-TEST(MigrationTest, populationNumberStar)
+TEST(MigrationTest, popNumStar)
 {
 	size_t individus(200);
 	size_t population(40);
@@ -204,7 +204,7 @@ TEST(MigrationTest, populationNumberStar)
 	}
 }
 
-TEST(MigrationTest, populationNumberRing)
+TEST(MigrationTest, popNumRing)
 {
 	size_t individus(200);
 	size_t population(40);
@@ -216,7 +216,7 @@ TEST(MigrationTest, populationNumberRing)
 	}
 }
 
-TEST(MigrationTest, sumOfFrequences)
+TEST(MigrationTest, sumOfFreq)
 {
 	size_t time(500);
 	size_t individus(200);
