@@ -44,35 +44,37 @@ TEST(SimulationTest, sameAverage){
     EXPECT_NEAR(freq5, f5/nbPop, 7e-2);
   }
 }
-
 TEST(SimulationTest, fixationTime){
+	
 	int testOK(0);
+	double freqx (0.85);
+	double freqy (0.15);
 	for (size_t i(0); i < 10; ++i){
-		double freqx (0.85);
-		double freqy (0.15);
-		Simulation simulation1(10000,1,5000,2,false, false,std::vector<double> {freqx, freqy}, std::vector<std::string> (2,"-"));
+		Simulation simulation1(30000,1,5000,2,false, false,std::vector<double> {freqx, freqy}, std::vector<std::string> (2,"-"));
 		simulation1.run();
 
 		std::vector <double> f1 (simulation1.getFreqPop(0));
 		if(isEqual(1.0,f1[0]) or isEqual(1.0,f1[1])) ++testOK;
 	}		
 
+	int testOK2(0);
 	double freq1 (0.3);
 	double freq2 (0.4);
 	double freq3 (0.1);
 	double freq4 (0.05);
 	double freq5 (0.15);
-	Simulation simulation2(30000,1,5000,5, false, false, std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"));
-	simulation2.run();
-	
-	std::vector <double> f2 (simulation2.getFreqPop(0));
-	bool cond2(isEqual(1.0,f2[0]) or isEqual(1.0,f2[1]) or isEqual(1.0,f2[2]) or isEqual(1.0,f2[3]) or isEqual(1.0,f2[4]));
+	for (size_t i(0); i < 10; ++i){
+		Simulation simulation2(30000,1,5000,5, false, false, std::vector<double> {freq1, freq2, freq3, freq4, freq5}, std::vector<std::string> (5,"-"));
+		simulation2.run();
+		
+		std::vector <double> f2 (simulation2.getFreqPop(0));
+		if(isEqual(1.0,f2[0]) or isEqual(1.0,f2[1]) or isEqual(1.0,f2[2]) or isEqual(1.0,f2[3]) or isEqual(1.0,f2[4])) ++testOK2;
+	}
 
-	EXPECT_TRUE(testOK >= 8);
-	EXPECT_TRUE(cond2);
+	EXPECT_TRUE(testOK >= 6);
+	EXPECT_TRUE(testOK2 >= 6);
 
 }
-
 TEST(SimulationTest, outputFile){
 	std::vector<double> _f {0.3, 0.4, 0.1, 0.05, 0.15};
 	std::vector<std::string> _c {"AAA", "CCC", "GGG", "TTT", "ATG"};
